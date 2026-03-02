@@ -1,7 +1,7 @@
 Symbolic Machine Code Loader for the Commodore 64
 
 Tokens
-- @ + a single PETSCII character, saves the current address in `O`
+- @ + a single PETSCII character, saves the current address stored in variable `O`
 - ! + a single PETSCII character, recall and store the saved address (as a word) in memory 
 - ? + a single PETSCII character, calculate and store a relative address between current and the stored address
 - any other two character token is stored as a HEX byte
