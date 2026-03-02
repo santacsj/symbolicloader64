@@ -11,6 +11,7 @@ Learn C64 assembly the hard way, by programming on paper :). You are the assembl
 
 ### Example
 ```
+                * = $C000
 A2 FF       @1  ldx #$ff
 A9 40           lda #$40  ; the @ char
 20 D2 FF    @2  jsr $ffd2
@@ -30,5 +31,5 @@ DATA "END"
 ```
 which in turn is loaded to memory as
 ```
-c000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
+C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 ```
