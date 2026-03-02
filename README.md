@@ -1,0 +1,26 @@
+Symbolic Machine Code Loader for the Commodore 64
+
+Tokens
+- @ + a single PETSCII character, saves the current address in `O`
+- ! + a single PETSCII character, recall and store the saved address (as a word) in memory 
+- ? + a single PETSCII character, calculate and store a relative address between current and the stored address
+- any other two character token is stored as a HEX byte
+- "END" should be the last DATA line
+
+Example
+```
+@1  ldx #$ff
+    lda #$40  ; the @ char
+@2  jsr $ffd2
+    dex
+    bne @2
+    jmp @1
+```
+is loaded as
+```
+DATA "@1 A2 FF"
+DATA "A9 40"
+DATA "@2 20 D2 FF CA D0 ?2"
+DATA "4C !1"
+DATA "END"
+```
