@@ -24,7 +24,7 @@
 56 ln=ln-48:if ln>9 then ln=ln-7
 58 hn=asc(left$(c$,1))
 60 hn=hn-48:if hn>9 then hn=hn-7
-62 by=(hn*16) + ln
+62 by=(hn*16)+ln
 64 poke o,by
 66 o=o+1
 68 if len(s$)>0 then 22
