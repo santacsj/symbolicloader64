@@ -18,11 +18,13 @@ CA              dex
 D0 FA           bne @2
 4C 00 C0        jmp @1
 ```
-should be stored in BASIC as
+can be stored in BASIC as
 ```
 DATA "@1 A2 FF"
 DATA "A9 40"
-DATA "@2 20 D2 FF CA D0 ?2"
+DATA "@2 20 D2 FF"
+DATA "CA"
+DATA "D0 ?2"
 DATA "4C !1"
 DATA "END"
 ```
