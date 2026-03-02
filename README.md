@@ -9,12 +9,12 @@ Tokens
 
 Example
 ```
-@1  ldx #$ff
-    lda #$40  ; the @ char
-@2  jsr $ffd2
-    dex
-    bne @2
-    jmp @1
+A2 FF       @1  ldx #$ff
+A9 40           lda #$40  ; the @ char
+20 D2 FF    @2  jsr $ffd2
+CA              dex
+D0 FA           bne @2
+4C 00 C0        jmp @1
 ```
 is stored in BASIC as
 ```
