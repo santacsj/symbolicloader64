@@ -1,6 +1,6 @@
 # Symbolic Machine Code Loader for the Commodore 64
 
-Learn C64 machine code the hard way, by programming on paper :). You are the assembler, but this short BASIC program can automate the annoying address calculations for you. Copy and paste the BASIC source to Vice start practicing!
+Learn C64 machine code the hard way, by programming on paper :). You are the assembler, but this short BASIC program can automate the annoying address calculations for you. Copy and paste the BASIC source to Vice and start practicing!
 
 ### Tokens
 - @ + a single PETSCII character, saves the current address stored in variable `O`
