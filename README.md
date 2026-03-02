@@ -11,7 +11,7 @@ Learn C64 assembly the hard way, by programming on paper :). You are the assembl
 
 ### Example
 ```
-                * = $C000
+                * = $c000
 A2 FF       @1  ldx #$ff
 A9 40           lda #$40  ; the @ char
 20 D2 FF    @2  jsr $ffd2
