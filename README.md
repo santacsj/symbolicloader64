@@ -16,7 +16,7 @@ Example
     bne @2
     jmp @1
 ```
-is loaded as
+is stored in BASIC as
 ```
 DATA "@1 A2 FF"
 DATA "A9 40"
@@ -24,7 +24,7 @@ DATA "@2 20 D2 FF CA D0 ?2"
 DATA "4C !1"
 DATA "END"
 ```
-which in turn is store in memory as
+which in turn is loaded to memory as
 ```
 c000: a2 ff a9 40 20 d2 ff ca d0 fa 4c 00 c0
 ```
