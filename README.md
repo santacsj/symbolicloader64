@@ -1,5 +1,7 @@
 Symbolic Machine Code Loader for the Commodore 64
 
+Learn C64 assembly the hard way, by programming on paper :).
+
 Tokens
 - @ + a single PETSCII character, saves the current address stored in variable `O`
 - ! + a single PETSCII character, recall and store the saved address (as a word) in memory 
@@ -16,7 +18,7 @@ CA              dex
 D0 FA           bne @2
 4C 00 C0        jmp @1
 ```
-is stored in BASIC as
+should be stored in BASIC as
 ```
 DATA "@1 A2 FF"
 DATA "A9 40"
