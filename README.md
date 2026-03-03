@@ -2,12 +2,18 @@
 
 Learn C64 machine code the hard way, by programming on paper :). You are the assembler, but this short BASIC program can automate the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
 
+### Start address and Program Counter
+Variable `O` (as origin), in line 12, is used to store the start address and is used as the PC when loading the data.
+
 ### Tokens
-- @ + a single PETSCII character, saves the current address stored in variable `O`
-- ! + a single PETSCII character, recall and store the saved address (as a word) in memory 
-- ? + a single PETSCII character, calculate and store a relative address between current and the stored address
-- any other two character token is stored as a HEX byte
-- "END" should be the last DATA line
+- `[label]` a single PETSCII character
+- `@[label]` saves the current address stored in variable `O` for a `[label]`
+- `![label]` recall and store the saved address (a word) in memory 
+- `?[label]` calculate and store a relative address between current and the stored address
+- `>[label]` recall and store the saved address' low byte in memory 
+- `<[label]` recall and store the saved address high byte in memory 
+- any other two character token is stored as a byte in memory
+- `"END"` marks the end of the data
 
 ### Example
 ```
