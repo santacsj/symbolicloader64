@@ -3,7 +3,7 @@
 Learn C64 machine code the hard way, by programming on paper :). You are the assembler, but this short BASIC program can automate the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
 
 ### Start address and Program Counter
-Variable `O` (as origin), in line 12, is used to store the start address and is used as the PC when loading the data.
+Variable `O` (as origin), in line 12, is used to store the start address and it holds PC value when loading the data.
 
 ### Tokens
 - `[label]` a single PETSCII character
