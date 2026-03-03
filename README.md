@@ -6,18 +6,17 @@ Learn C64 machine code the hard way, by programming on paper :). You are the ass
 Variable `O` (as origin), in line 12, is used to store the start address and it holds PC value when loading the data.
 
 ### Syntax
-`[label]` is one single PETSCII character.
-`[hex]` is a single PETSCII character, can only be 0-9 or A-F
-
-1. Token (fixed length, two characters)
+1. Hex, a single PETSCII character, can only be 0-9 or A-F
+2. Label, one single PETSCII character
+3. Token, fixed length, two characters
     - `@[label]` save the current address in variable `O` for a label
     - `![label]` recall and store the saved address (a word) in memory 
     - `?[label]` calculate and store a relative address between the current and the address saved stored for label
     - `>[label]` recall and store the saved address' low byte in memory 
     - `<[label]` recall and store the saved address' high byte in memory 
     - `[hex][hex]` stored as a byte in memory
-2. `"[token] [token] ... [token]"` a series of tokens can be stored in a single string separated by a single space character
-3. `"END"` marks the end of the data
+4. `"[token] [token] ... [token]"` a series of tokens, should be separated by a single space character
+5. `"END"` marks the end of the data
 
 ### Example
 ```
