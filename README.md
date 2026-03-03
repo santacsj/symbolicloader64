@@ -5,15 +5,19 @@ Learn C64 machine code the hard way, by programming on paper :). You are the ass
 ### Start address and Program Counter
 Variable `O` (as origin), in line 12, is used to store the start address and it holds PC value when loading the data.
 
-### Tokens
-- `[label]` a single PETSCII character
-- `@[label]` save the current address in variable `O` for a `[label]`
-- `![label]` recall and store the saved address (a word) in memory 
-- `?[label]` calculate and store a relative address between the current and the address saved stored for `[label]`
-- `>[label]` recall and store the saved address' low byte in memory 
-- `<[label]` recall and store the saved address' high byte in memory 
-- any other two character token is stored as a byte in memory
-- `"END"` marks the end of the data
+### Syntax
+`[label]` is one single PETSCII character.
+`[hex]` is a single PETSCII character, can only be 0-9 or A-F
+
+1. Token (fixed length, two characters)
+    - `@[label]` save the current address in variable `O` for a `[label]`
+    - `![label]` recall and store the saved address (a word) in memory 
+    - `?[label]` calculate and store a relative address between the current and the address saved stored for `[label]`
+    - `>[label]` recall and store the saved address' low byte in memory 
+    - `<[label]` recall and store the saved address' high byte in memory 
+    - `[hex][hex]` stored as a byte in memory
+2. `"[token] [token] ... [token]"` a series of tokens can be stored in a single string separated by a single space character
+3. `"END"` marks the end of the data
 
 ### Example
 ```
