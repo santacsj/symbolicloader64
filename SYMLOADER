@@ -5,33 +5,45 @@
 18 print s$
 20 if s$="end" then end
 22 c$=mid$(s$,1,2)
-24 s$=mid$(s$,4)
-26 if left$(c$,1)<>"@" then 32
-28 sy(asc(right$(c$,1)))=o
+23 s$=mid$(s$,4)
+24 le$=left$(c$,1)
+25 ri$=right$(c$,1)
+26 if le$<>"@" then 32
+28 sy(asc(ri$))=o
 30 goto 22
-32 if left$(c$,1)<>"?" then 42
-34 ta=sy(asc(right$(c$,1)))
+32 if le$<>"?" then 42
+34 ta=sy(asc(ri$))
 36 fm=o+1
 38 by=(255 and not abs(ta-fm))+1
-40 goto 64
-42 if left$(c$,1)<>"!" then 54
-44 ta=sy(asc(right$(c$,1)))
+40 goto 84
+42 if le$<>"!" then 54
+44 ta=sy(asc(ri$))
 46 hb=int(ta/256)
 48 poke o,ta-hb*256:o=o+1
 50 poke o,hb:o=o+1
-52 goto 68
-54 ln=asc(right$(c$,1))
-56 ln=ln-48:if ln>9 then ln=ln-7
-58 hn=asc(left$(c$,1))
-60 hn=hn-48:if hn>9 then hn=hn-7
-62 by=(hn*16)+ln
-64 poke o,by
-66 o=o+1
-68 if len(s$)>0 then 22
-70 goto 16
-80 data "@1 a2 ff"
-82 data "a9 40"
-84 data "@2 20 d2 ff ca d0 ?2"
-86 data "4c !1"
-88 data "end"
+52 goto 88
+54 if le$<>"<" then 62
+56 ta=sy(asc(ri$))
+58 by=int(ta/256)
+60 goto 84
+62 if le$<>">" then 74
+64 ta=sy(asc(ri$))
+68 hb=int(ta/256)
+70 by=ta-hb*256
+72 goto 84
+74 ln=asc(ri$)
+76 ln=ln-48:if ln>9 then ln=ln-7
+78 hn=asc(le$)
+80 hn=hn-48:if hn>9 then hn=hn-7
+82 by=(hn*16)+ln
+84 poke o,by
+86 o=o+1
+88 if len(s$)>0 then 22
+90 goto 16
+100 data "@1 a2 ff"
+102 data "a9 40"
+104 data "@2 20 d2 ff ca d0 ?2"
+106 data "4c !1"
+108 data "a9 >1 a9 <1"
+110 data "end"
 
