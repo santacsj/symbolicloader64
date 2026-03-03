@@ -10,7 +10,7 @@ Variable `O` (as origin), in line 12, is used to store the start address and it 
 `[hex]` is a single PETSCII character, can only be 0-9 or A-F
 
 1. Token (fixed length, two characters)
-    - `@[label]` save the current address in variable `O` for a `[label]`
+    - `@[label]` save the current address in variable `O` for a label
     - `![label]` recall and store the saved address (a word) in memory 
     - `?[label]` calculate and store a relative address between the current and the address saved stored for label
     - `>[label]` recall and store the saved address' low byte in memory 
