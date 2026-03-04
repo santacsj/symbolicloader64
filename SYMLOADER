@@ -10,7 +10,7 @@
 25 ri$=right$(c$,1)
 26 if le$<>"@" then 32
 28 sy(asc(ri$))=o
-30 goto 22
+30 goto 88
 32 if le$<>"?" then 42
 34 ta=sy(asc(ri$))
 36 fm=o+1
