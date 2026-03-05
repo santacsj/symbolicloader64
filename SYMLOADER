@@ -22,11 +22,11 @@
 48 poke o,ta-hb*256:o=o+1
 50 poke o,hb:o=o+1
 52 goto 88
-54 if le$<>"<" then 62
+54 if le$<>">" then 62
 56 ta=sy(asc(ri$))
 58 by=int(ta/256)
 60 goto 84
-62 if le$<>">" then 74
+62 if le$<>"<" then 74
 64 ta=sy(asc(ri$))
 68 hb=int(ta/256)
 70 by=ta-hb*256
@@ -41,4 +41,3 @@
 88 if len(s$)>0 then 22
 90 goto 16
 100 data "end"
-
