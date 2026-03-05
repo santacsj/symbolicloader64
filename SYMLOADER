@@ -1,6 +1,7 @@
 10 rem symloader
 12 o=49152
 14 dim sy(256)
+15 gosub100:restore
 16 read s$
 18 print s$
 20 if s$="end" then end
@@ -9,12 +10,12 @@
 24 le$=left$(c$,1)
 25 ri$=right$(c$,1)
 26 if le$<>"@" then 32
-28 sy(asc(ri$))=o
 30 goto 88
 32 if le$<>"?" then 42
 34 ta=sy(asc(ri$))
 36 fm=o+1
-38 by=(255 and not abs(ta-fm))+1
+37 by=ta-fm
+38 if by<0 then by=(255 and not abs(by))+1
 40 goto 84
 42 if le$<>"!" then 54
 44 ta=sy(asc(ri$))
@@ -40,4 +41,18 @@
 86 o=o+1
 88 if len(s$)>0 then 22
 90 goto 16
-100 data "end"
+100 pc=o
+102 read s$
+104 if s$="end" then return
+106 c$=mid$(s$,1,2)
+108 s$=mid$(s$,4)
+110 le$=left$(c$,1)
+112 if le$<>"@" then 118
+114 sy(asc(right$(c$,1)))=pc
+116 goto 124
+118 if le$<>"!" then 122
+120 pc=pc+1
+122 pc=pc+1
+124 if len(s$)>0 then 106
+126 goto 102
+200 data "end"
