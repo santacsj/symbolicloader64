@@ -12,8 +12,8 @@ Variable `O` (as origin), in line 12, is used to store the start address and it 
     - `@[label]` save the current address in variable `O` for a label
     - `![label]` recall and store the saved address (a word) in memory 
     - `?[label]` calculate and store a relative address between the current and the address saved for label
-    - `>[label]` recall and store the saved address' low byte in memory 
-    - `<[label]` recall and store the saved address' high byte in memory 
+    - `<[label]` recall and store the saved address' low byte in memory 
+    - `>[label]` recall and store the saved address' high byte in memory 
     - `[hex][hex]` stored as a byte in memory
 4. `"[token] [token] ... [token]"` a series of tokens, should be separated by one single space character
 5. `"END"` marks the end of the data
