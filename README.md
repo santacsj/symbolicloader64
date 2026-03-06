@@ -41,5 +41,5 @@ DATA "END"
 ```
 which in turn is loaded to memory as
 ```
-C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0 A9 00 A9 C0
+C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 ```
