@@ -27,7 +27,7 @@ A9 40           lda #$40  ; the @ char
 20 D2 FF    @2  jsr $ffd2
 CA              dex
 D0 FA           bne @2
-4C 00 C0        jmp <1 >1
+4C 00 C0        jmp @1
 ```
 can be stored in BASIC as
 ```
