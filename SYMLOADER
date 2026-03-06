@@ -11,18 +11,12 @@
 25 ri$=right$(c$,1)
 26 if le$<>"@" then 32
 30 goto 88
-32 if le$<>"?" then 42
+32 if le$<>"?" then 54
 34 ta=sy(asc(ri$))
 36 fm=o+1
 37 by=ta-fm
 38 if by<0 then by=(255 and not abs(by))+1
 40 goto 84
-42 if le$<>"!" then 54
-44 ta=sy(asc(ri$))
-46 hb=int(ta/256)
-48 poke o,ta-hb*256:o=o+1
-50 poke o,hb:o=o+1
-52 goto 88
 54 if le$<>">" then 62
 56 ta=sy(asc(ri$))
 58 by=int(ta/256)
@@ -47,12 +41,9 @@
 106 c$=mid$(s$,1,2)
 108 s$=mid$(s$,4)
 110 le$=left$(c$,1)
-112 if le$<>"@" then 118
+112 if le$<>"@" then 122
 114 sy(asc(right$(c$,1)))=pc
 116 goto 124
-118 if le$<>"!" then 122
-120 pc=pc+1
 122 pc=pc+1
 124 if len(s$)>0 then 106
 126 goto 102
-200 data "end"
