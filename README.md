@@ -10,7 +10,6 @@ Variable `O` (as origin), in line 12, is used to store the start address and it 
 2. Label, one single PETSCII character
 3. Token, fixed length, two characters
     - `@[label]` save the current address in variable `O` for a label
-    - `![label]` recall and store the saved address (a word) in memory 
     - `?[label]` calculate and store a relative address between the current and the address saved for label
     - `<[label]` recall and store the saved address' low byte in memory 
     - `>[label]` recall and store the saved address' high byte in memory 
@@ -28,9 +27,7 @@ A9 40           lda #$40  ; the @ char
 20 D2 FF    @2  jsr $ffd2
 CA              dex
 D0 FA           bne @2
-4C 00 C0        jmp @1
-A9 00           lda #>@1
-A9 C0           lda #<@1
+4C 00 C0        jmp <1 >1
 ```
 can be stored in BASIC as
 ```
@@ -39,9 +36,7 @@ DATA "A9 40"
 DATA "@2 20 D2 FF"
 DATA "CA"
 DATA "D0 ?2"
-DATA "4C !1"
-DATA "A9 >1"
-DATA "A9 <1"
+DATA "4C <1 >1"
 DATA "END"
 ```
 which in turn is loaded to memory as
