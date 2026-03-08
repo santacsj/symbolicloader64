@@ -13,8 +13,7 @@
 30 goto 88
 32 if le$<>"?" then 54
 34 ta=sy(asc(ri$))
-36 fm=o+1
-37 by=ta-fm
+36 by=ta-fm+1
 38 if by<0 then by=(255 and not abs(by))+1
 40 goto 84
 54 if le$<>">" then 62
