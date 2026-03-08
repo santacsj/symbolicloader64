@@ -12,7 +12,7 @@
 26 if le$<>"@" then 32
 30 goto 88
 32 if le$<>"?" then 54
-35 by=sy(asc(ri$))-(o+1)
+35 by=sy(asc(ri$))-o-1
 38 if by<0 then by=(255 and not abs(by))+1
 40 goto 84
 54 if le$<>">" then 62
