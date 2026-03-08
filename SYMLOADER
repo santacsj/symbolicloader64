@@ -12,8 +12,7 @@
 26 if le$<>"@" then 32
 30 goto 88
 32 if le$<>"?" then 54
-34 ta=sy(asc(ri$))
-36 by=ta-o+1
+35 by=sy(asc(ri$))-(o+1)
 38 if by<0 then by=(255 and not abs(by))+1
 40 goto 84
 54 if le$<>">" then 62
@@ -37,8 +36,7 @@
 104 if s$="end" then return
 106 c$=mid$(s$,1,2)
 108 s$=mid$(s$,4)
-110 le$=left$(c$,1)
-112 if le$<>"@" then 122
+112 if left$(c$,1)<>"@" then 122
 114 sy(asc(right$(c$,1)))=pc
 116 goto 124
 122 pc=pc+1
