@@ -23,10 +23,10 @@
 64 ta=sy(asc(ri$))
 70 by=ta-int(ta/256)*256
 72 goto 84
-74 ln=asc(ri$)
-76 ln=ln-48:if ln>9 then ln=ln-7
-78 hn=asc(le$)
-80 hn=hn-48:if hn>9 then hn=hn-7
+74 ln=asc(ri$)-48
+76 if ln>9 then ln=ln-7
+78 hn=asc(le$)-48
+80 if hn>9 then hn=hn-7
 82 by=(hn*16)+ln
 84 poke o,by
 86 o=o+1
