@@ -22,7 +22,7 @@
 50 if len(s$)>0 then 22
 52 goto 16
 60 by=sy(asc(right$(c$,1)))-o-1
-62 if -128>by or by>127 then print"?branch out of range":stop
+62 if -128>by or by>127 then print"?out of range":stop
 64 if by<0 then by=(255 and not abs(by))+1
 68 goto 46
 70 by=int(sy(asc(right$(c$,1)))/256)
