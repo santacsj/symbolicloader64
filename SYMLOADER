@@ -8,40 +8,39 @@
 22 c$=mid$(s$,1,2)
 23 s$=mid$(s$,4)
 24 le$=left$(c$,1)
-25 ri$=right$(c$,1)
-26 if le$<>"@" then 32
-30 goto 88
-32 if le$<>"?" then 54
-34 by=sy(asc(ri$))-o-1
-36 if -128>by or by>127 then print"?branch out of range":stop
-38 if by<0 then by=(255 and not abs(by))+1
-40 goto 84
-54 if le$<>">" then 62
-58 by=int(sy(asc(ri$))/256)
-60 goto 84
-62 if le$<>"<" then 74
-64 ta=sy(asc(ri$))
-70 by=ta-int(ta/256)*256
-72 goto 84
-74 ln=asc(ri$)-48
-76 if ln>9 then ln=ln-7
-78 hn=asc(le$)-48
-80 if hn>9 then hn=hn-7
-82 by=(hn*16)+ln
-84 poke o,by
-86 o=o+1
-88 if len(s$)>0 then 22
-90 goto 16
+26 ri$=right$(c$,1)
+28 if le$="@" then 50
+30 if le$="?" then 60
+32 if le$=">" then 70
+34 if le$="<" then 80
+36 ln=asc(ri$)-48
+38 if ln>9 then ln=ln-7
+40 hn=asc(le$)-48
+42 if hn>9 then hn=hn-7
+44 by=(hn*16)+ln
+46 poke o,by
+48 o=o+1
+50 if len(s$)>0 then 22
+52 goto 16
+60 by=sy(asc(ri$))-o-1
+62 if -128>by or by>127 then print"?branch out of range":stop
+64 if by<0 then by=(255 and not abs(by))+1
+68 goto 46
+70 by=int(sy(asc(ri$))/256)
+72 goto 46
+80 ta=sy(asc(ri$))
+82 by=ta-int(ta/256)*256
+84 goto 46
 100 pc=o
 102 read s$
 104 if s$="end" then return
 106 c$=mid$(s$,1,2)
 108 s$=mid$(s$,4)
-112 if left$(c$,1)<>"@" then 122
-114 sy(asc(right$(c$,1)))=pc
-116 goto 124
-122 pc=pc+1
-124 if len(s$)>0 then 106
-126 goto 102
+110 if left$(c$,1)="@" then 118
+112 pc=pc+1
+114 if len(s$)>0 then 106
+116 goto 102
+118 sy(asc(right$(c$,1)))=pc
+120 goto 114
 200 data "end"
 
