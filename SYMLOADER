@@ -27,8 +27,8 @@
 68 goto 46
 70 by=int(sy(asc(right$(c$,1)))/256)
 72 goto 46
-80 ta=sy(asc(right$(c$,1)))
-82 by=ta-int(ta/256)*256
+80 hb=sy(asc(right$(c$,1)))
+82 by=hb-int(hb/256)*256
 84 goto 46
 100 pc=o
 102 read s$
