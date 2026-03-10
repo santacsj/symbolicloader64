@@ -2,19 +2,19 @@
 
 Learn C64 machine code the hard way, by programming on paper :). You do the assembing and this short BASIC program automates the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
 
-### Start address and Program Counter
-Variable `O` (as origin), in line 12, holds the start address and the PC value when loading the data.
+### Start address
+Variable `O` (as origin), in line 12, holds the start address for the program.
 
 ### Syntax
 1. Hex, one single PETSCII character, can only be 0-9 or A-F
 2. Label, one single PETSCII character
-3. Token, fixed length, two characters
-    - `@[label]` save the current address in variable `O` for a label
-    - `?[label]` calculate and store a relative address between the current and the address saved for label
-    - `<[label]` recall and store the saved address' low byte in memory 
-    - `>[label]` recall and store the saved address' high byte in memory 
-    - `[hex][hex]` stored as a byte in memory
-4. `"[token] [token] ... [token]"` a series of tokens, should be separated by one single space character
+3. Token, fixed length, two characters, can be any of ...
+    - `@[label]` save the address of the next byte as 'label'
+    - `?[label]` calculate and store a relative address between the current and the saved address
+    - `<[label]` recall and store the saved address' low byte
+    - `>[label]` recall and store the saved address' high byte
+    - `[hex][hex]` stored as a byte
+4. `"[token] [token] ... [token]"` a series of tokens, should be separated by one single space
 5. `"END"` marks the end of the data
 
 ### Example
