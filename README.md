@@ -13,6 +13,7 @@ Variable `O` (as origin), in line 12, holds the start address for the program.
     - `?[label]` calculate and store a relative address between the current and the saved address
     - `<[label]` recall and store the saved address' low byte
     - `>[label]` recall and store the saved address' high byte
+    - `+[label]` recall and store the saved address' low byte + 1
     - `[hex][hex]` stored as a byte
 4. `"[token] [token] ... [token]"` a series of tokens, should be separated by one single space
 5. `"END"` marks the end of the data
