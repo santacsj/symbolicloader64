@@ -1,45 +1,45 @@
 10 rem symloader
 12 o=49152
 14 dim sy(256)
-15 gosub100:restore
-16 read s$
-18 print s$
-20 if s$="end" then end
+16 pc=o
+18 read s$
+20 if s$="end" then 38
 22 c$=mid$(s$,1,2)
-23 s$=mid$(s$,4)
-24 le$=left$(c$,1)
-28 if le$="@" then 50
-30 if le$="?" then 60
-32 if le$=">" then 70
-34 if le$="<" then 80
-36 ln=asc(right$(c$,1))-48
-38 if ln>9 then ln=ln-7
-40 hn=asc(le$)-48
-42 if hn>9 then hn=hn-7
-44 by=(hn*16)+ln
-46 poke o,by
-48 o=o+1
-50 if len(s$)>0 then 22
-52 goto 16
-60 by=sy(asc(right$(c$,1)))-o-1
-62 if -128>by or by>127 then print"?out of range":stop
-64 if by<0 then by=(255 and not abs(by))+1
-68 goto 46
-70 by=int(sy(asc(right$(c$,1)))/256)
-72 goto 46
-80 hb=sy(asc(right$(c$,1)))
-82 by=hb-int(hb/256)*256
-84 goto 46
-100 pc=o
-102 read s$
-104 if s$="end" then return
-106 c$=mid$(s$,1,2)
-108 s$=mid$(s$,4)
-110 if left$(c$,1)="@" then 118
-112 pc=pc+1
-114 if len(s$)>0 then 106
-116 goto 102
-118 sy(asc(right$(c$,1)))=pc
-120 goto 114
-200 data "end"
-
+24 s$=mid$(s$,4)
+26 if left$(c$,1)="@" then 34
+28 pc=pc+1
+30 if len(s$)>0 then 22
+32 goto 18
+34 sy(asc(right$(c$,1)))=pc
+36 goto 30
+38 restore
+40 pc=o
+42 read s$
+44 print s$
+46 if s$="end" then end
+48 c$=mid$(s$,1,2)
+50 s$=mid$(s$,4)
+52 le$=left$(c$,1)
+54 if le$="@" then 76
+56 if le$="?" then 80
+58 if le$=">" then 88
+60 if le$="<" then 92
+62 ln=asc(right$(c$,1))-48
+64 if ln>9 then ln=ln-7
+66 hn=asc(le$)-48
+68 if hn>9 then hn=hn-7
+70 by=(hn*16)+ln
+72 poke pc,by
+74 pc=pc+1
+76 if len(s$)>0 then 48
+78 goto 42
+80 by=sy(asc(right$(c$,1)))-pc-1
+82 if -128>by or by>127 then print"?out of range":stop
+84 if by<0 then by=(255 and not abs(by))+1
+86 goto 72
+88 by=int(sy(asc(right$(c$,1)))/256)
+90 goto 72
+92 ta=sy(asc(right$(c$,1)))
+94 by=ta-int(ta/256)*256
+96 goto 72
+100 data "end"
