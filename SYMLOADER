@@ -13,6 +13,7 @@
 34 sy(asc(right$(c$,1)))=pc
 36 goto 30
 38 restore
+39 of=0
 40 pc=o
 42 read s$
 44 print s$
@@ -20,26 +21,26 @@
 48 c$=mid$(s$,1,2)
 50 s$=mid$(s$,4)
 52 le$=left$(c$,1)
-54 if le$="@" then 76
-56 if le$="?" then 80
-58 if le$=">" then 88
-60 if le$="<" then 92
-62 ln=asc(right$(c$,1))-48
-64 if ln>9 then ln=ln-7
-66 hn=asc(le$)-48
-68 if hn>9 then hn=hn-7
-70 by=(hn*16)+ln
-72 poke pc,by
-74 pc=pc+1
-76 if len(s$)>0 then 48
-78 goto 42
-80 by=sy(asc(right$(c$,1)))-pc-1
-82 if -128>by or by>127 then print"?out of range":stop
-84 if by<0 then by=(255 and not abs(by))+1
-86 goto 72
-88 by=int(sy(asc(right$(c$,1)))/256)
-90 goto 72
-92 ta=sy(asc(right$(c$,1)))
-94 by=ta-int(ta/256)*256
-96 goto 72
-100 data "end"
+54 if le$="@" then 80
+56 if le$="?" then 84
+58 if le$=">" then 92
+60 if le$="<" then of=0:goto 96
+62 if le$="+" then of=1:goto 96
+66 ln=asc(right$(c$,1))-48
+68 if ln>9 then ln=ln-7
+70 hn=asc(le$)-48
+72 if hn>9 then hn=hn-7
+74 by=(hn*16)+ln
+76 poke pc,by
+78 pc=pc+1
+80 if len(s$)>0 then 48
+82 goto 42
+84 by=sy(asc(right$(c$,1)))-pc-1
+86 if -128>by or by>127 then print"?out of range":stop
+88 if by<0 then by=(255 and not abs(by))+1
+90 goto 76
+92 by=int(sy(asc(right$(c$,1)))/256)
+94 goto 76
+96 ta=sy(asc(right$(c$,1)))+of
+98 by=ta-int(ta/256)*256
+99 goto 76
