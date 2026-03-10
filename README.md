@@ -1,9 +1,9 @@
 # Symbolic Machine Code Loader for the Commodore 64
 
-Learn C64 machine code the hard way, by programming on paper :). You are the assembler, but this short BASIC program can automate the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
+Learn C64 machine code the hard way, by programming on paper :). You do the assembing and this short BASIC program automates the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
 
 ### Start address and Program Counter
-Variable `O` (as origin), in line 12, is used to store the start address and it holds PC value when loading the data.
+Variable `O` (as origin), in line 12, holds the start address and the PC value when loading the data.
 
 ### Syntax
 1. Hex, one single PETSCII character, can only be 0-9 or A-F
