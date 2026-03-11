@@ -1,5 +1,6 @@
 10 rem symloader
-12 o=49152:m=o
+12 o=49152
+13 m=49152
 14 dim sy(256)
 16 pc=o
 18 read s$
