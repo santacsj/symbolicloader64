@@ -2,8 +2,9 @@
 
 Learn C64 machine code the hard way, by programming on paper :). You do the assembing and this short BASIC program automates the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
 
-### Start address
-Variable `O` (as origin), in line 12, holds the start address for the program.
+### Addresses
+Variable `O` (as origin), in line 12, holds the start address for address calculations.
+Variable 'M' (as memory) holds the address where the program is loaded to. By default it equals with `O`.
 
 ### Syntax
 1. Hex, one single PETSCII character, can only be 0-9 or A-F
@@ -14,6 +15,7 @@ Variable `O` (as origin), in line 12, holds the start address for the program.
     - `<[label]` recall and store the saved address' low byte
     - `>[label]` recall and store the saved address' high byte
     - `+[label]` recall and store the saved address' low byte + 1
+    - `#[label]` recall and store the saved address' low byte + 2
     - `[hex][hex]` stored as a byte
 4. `"[token] [token] ... [token]"` a series of tokens, should be separated by one single space
 5. `"END"` marks the end of the data
