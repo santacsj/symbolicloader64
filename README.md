@@ -34,13 +34,13 @@ D0 FA           bne @2
 ```
 can be stored in BASIC as
 ```
-DATA "@1 A2 FF"
-DATA "A9 40"
-DATA "@2 20 D2 FF"
-DATA "CA"
-DATA "D0 ?2"
-DATA "4C <1 >1"
-DATA "END"
+DATA @1,A2,FF
+DATA A9,40
+DATA @2,20,D2,FF
+DATA CA
+DATA D0,?2
+DATA 4C,<1,>1
+DATA END
 ```
 which in turn is loaded to memory as
 ```
