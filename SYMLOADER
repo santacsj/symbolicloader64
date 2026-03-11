@@ -14,6 +14,7 @@
 39 of=0
 40 pc=o
 42 read c$
+44 print c$ spc(2);
 46 if c$="end" then end
 52 le$=left$(c$,1)
 54 if le$="@" then 42
