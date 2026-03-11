@@ -1,5 +1,5 @@
 10 rem symloader
-12 o=49152:mp=o
+12 o=49152:m=o
 14 dim sy(256)
 16 pc=o
 18 read s$
@@ -32,8 +32,8 @@
 70 hn=asc(le$)-48
 72 if hn>9 then hn=hn-7
 74 by=(hn*16)+ln
-76 poke mp,by
-78 mp=mp+1:pc=pc+1
+76 poke m,by
+78 m=m+1:pc=pc+1
 80 if len(s$)>0 then 48
 82 goto 42
 84 by=sy(asc(right$(c$,1)))-pc-1
@@ -45,3 +45,4 @@
 96 ta=sy(asc(right$(c$,1)))+of
 98 by=ta-int(ta/256)*256
 99 goto 76
+
