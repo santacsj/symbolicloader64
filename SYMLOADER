@@ -3,26 +3,20 @@
 13 m=49152
 14 dim sy(256)
 16 pc=o
-18 read s$
-20 if s$="end" then 38
-22 c$=mid$(s$,1,2)
-24 s$=mid$(s$,4)
+18 read c$
+20 if c$="end" then 38
 26 if left$(c$,1)="@" then 34
 28 pc=pc+1
-30 if len(s$)>0 then 22
 32 goto 18
 34 sy(asc(right$(c$,1)))=pc
-36 goto 30
+36 goto 18
 38 restore
 39 of=0
 40 pc=o
-42 read s$
-44 print s$
-46 if s$="end" then end
-48 c$=mid$(s$,1,2)
-50 s$=mid$(s$,4)
+42 read c$
+46 if c$="end" then end
 52 le$=left$(c$,1)
-54 if le$="@" then 80
+54 if le$="@" then 42
 56 if le$="?" then 84
 58 if le$=">" then 92
 60 if le$="<" then of=0:goto 96
@@ -35,7 +29,6 @@
 74 by=(hn*16)+ln
 76 poke m,by
 78 m=m+1:pc=pc+1
-80 if len(s$)>0 then 48
 82 goto 42
 84 by=sy(asc(right$(c$,1)))-pc-1
 86 if -128>by or by>127 then print"?out of range":stop
@@ -46,4 +39,3 @@
 96 ta=sy(asc(right$(c$,1)))+of
 98 by=ta-int(ta/256)*256
 99 goto 76
-
