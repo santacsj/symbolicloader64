@@ -3,8 +3,8 @@
 Learn C64 machine code the hard way, by programming on paper :). You do the assembling and this short BASIC program automates the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
 
 ### Addresses
-Variable `O` (as origin), in line 12, holds the start address for address calculations.
-Variable `M` (as memory) holds the address where the program is loaded to. By default it equals with `O`.
+Variable `M` (as memory) holds the address where the program is loaded to.
+Variable `O` (as origin), holds the start address for address calculations. By default `O` equals `M`.
 
 ### Syntax
 1. Hex, one single PETSCII character, can only be 0-9 or A-F
