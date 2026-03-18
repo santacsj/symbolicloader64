@@ -1,6 +1,6 @@
 # Symbolic Machine Code Loader for the Commodore 64
 
-Learn C64 machine code the hard way, by programming on paper :). You do the assembing and this short BASIC program automates the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
+Learn C64 machine code the hard way, by programming on paper :). You do the assembling and this short BASIC program automates the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
 
 ### Addresses
 Variable `O` (as origin), in line 12, holds the start address for address calculations.
