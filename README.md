@@ -4,7 +4,7 @@ Learn C64 machine code the hard way, by programming on paper :). You do the asse
 
 ### Addresses
 Variable `M` (as memory) holds the address where the program is loaded to.
-Variable `O` (as origin), holds the start address for address calculations. By default `O` equals `M`.
+Variable `O` (as origin), holds the start address for the PC which is used for address calculations. By default `O` equals `M`.
 
 ### Syntax
 1. Hex, one single PETSCII character, can only be 0-9 or A-F
@@ -24,7 +24,7 @@ Variable `O` (as origin), holds the start address for address calculations. By d
 
 The following program
 ```
-                * = $c000
+                *=  $c000
 A2 FF       @1  ldx #$ff
 A9 40           lda #$40  ; the @ char
 20 D2 FF    @2  jsr $ffd2
