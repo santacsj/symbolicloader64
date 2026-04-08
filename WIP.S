@@ -203,23 +203,16 @@ jsr $0079
 
 
 
-	; set pointers to A$
+	; set pointer to A$
 	;
  	lda #<s 		a9,<s
- 	sta $5f 		85,5f
- 	lda #>s 		a9,>s
- 	sta $60 		85,60
-
- 	lda ##s 		a9,#s
- 	sta $47 		85,47
  	sta $49 		85,49
  	lda #>s 		a9,>s
- 	sta $48 		85,48
  	sta $4a 		85,4a
 
 	; READ A$
 	;
- 	lda #$98 		a9,98  ; c014 49172
+ 	lda #$98 		a9,98
  	sta $11 		85,11
 
  	lda #$ff 		a9,ff
@@ -242,15 +235,14 @@ jsr $0079
 
 	; A$
 	;
-@s 	41,80,00,00,00,00,00
+@s 	00,00,00
 
 
-200 data a9,<s,85,5f,a9,>s,85,60
-205 data a9,#s,85,47,85,49,a9,>s,85,48,85,4a
+205 data a9,<s,85,49,a9,>s,85,4a
 210 data a9,98,85,11,a9,ff,85,0d
 215 data a5,7a,85,4b,a5,7b,85,4c
 220 data a5,41,85,43,85,7a,a5,42,85,44,85,7b
-225 data 20,2c,ac,60,@s,41,80,00,00,00,00,00
+225 data 20,2c,ac,60,@s,00,00,00
 230 data end
 
 
