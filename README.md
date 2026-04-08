@@ -18,7 +18,7 @@ Variable `O` (as origin), holds the start address for the PC which is used for a
     - `#[label]` recall and store the saved address' low byte + 2
     - `[hex][hex]` stored as a byte
 4. `"[token] [token] ... [token]"` a series of tokens, should be separated by one single space
-5. `"END"` marks the end of the data
+5. `";"` marks the end of the data
 
 ### Example
 
@@ -40,7 +40,7 @@ DATA @2,20,D2,FF
 DATA CA
 DATA D0,?2
 DATA 4C,<1,>1
-DATA END
+DATA ;
 ```
 which in turn is loaded to memory as
 ```
