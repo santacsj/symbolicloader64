@@ -4,7 +4,7 @@
 14 dim sy(256)
 16 pc=o
 18 read c$
-20 if c$="end" then 38
+20 if c$=";" then 38
 26 if left$(c$,1)="@" then 34
 28 pc=pc+1
 32 goto 18
@@ -15,7 +15,7 @@
 40 pc=o
 42 read c$
 44 print c$ spc(2);
-46 if c$="end" then end
+46 if c$=";" then end
 52 le$=left$(c$,1)
 54 if le$="@" then 42
 56 if le$="?" then 84
