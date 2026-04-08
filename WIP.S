@@ -203,8 +203,12 @@ jsr $0079
 
 
 
-	; set pointer to A$
+
+	; use variable A$
 	;
+ 	lda #$ff 		a9,ff
+ 	sta $0d 		85,0d
+
  	lda #<s 		a9,<s
  	sta $49 		85,49
  	lda #>s 		a9,>s
@@ -214,9 +218,6 @@ jsr $0079
 	;
  	lda #$98 		a9,98
  	sta $11 		85,11
-
- 	lda #$ff 		a9,ff
- 	sta $0d 		85,0d
 
  	lda $7a 		a5,7a
  	sta $4b 		85,4b
@@ -238,8 +239,8 @@ jsr $0079
 @s 	00,00,00
 
 
-205 data a9,<s,85,49,a9,>s,85,4a
-210 data a9,98,85,11,a9,ff,85,0d
+205 data a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a
+210 data a9,98,85,11
 215 data a5,7a,85,4b,a5,7b,85,4c
 220 data a5,41,85,43,85,7a,a5,42,85,44,85,7b
 225 data 20,2c,ac,60,@s,00,00,00
