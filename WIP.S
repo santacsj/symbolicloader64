@@ -14,7 +14,7 @@
 	;
 @s 	00,00,00
 
-	; READ A$
+	; READ S$
 	;
  	lda #$98 		a9,98 	; data entry method is READ
  	sta $11 		85,11
