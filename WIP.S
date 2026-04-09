@@ -117,7 +117,6 @@
 
  	rts 			60
 
-
 200 data @f,a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
 202 data @s,00,00,00
 206 data @g,a9,98,85,11
@@ -193,7 +192,6 @@
 245 data @o,00,00,@m,00,00
 250 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
 251 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
-252 data 60
 
 
 	; fd/fe = address of I-th word in ARYTAB
