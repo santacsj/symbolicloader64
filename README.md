@@ -12,13 +12,13 @@ Variable `O` (as origin), holds the start address for the PC which is used for a
 3. Token, fixed length, two characters, can be any of ...
     - `@[label]` save the address of the next byte as 'label'
     - `?[label]` calculate and store a relative address between the current and the saved address
-    - `<[label]` recall and store the saved address' low byte
     - `>[label]` recall and store the saved address' high byte
+    - `<[label]` recall and store the saved address' low byte
     - `+[label]` recall and store the saved address' low byte + 1
     - `#[label]` recall and store the saved address' low byte + 2
     - `[hex][hex]` stored as a byte
 4. `"[token] [token] ... [token]"` a series of tokens, should be separated by one single space
-5. `";"` marks the end of the data
+5. `";"` marks end of data
 
 ### Example
 
