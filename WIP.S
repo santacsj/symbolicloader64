@@ -140,7 +140,7 @@
 
 
 
-	; use variable A$
+	; use variable S$
 	;
  	lda #$ff 		a9,ff 	; variable is a string
  	sta $0d 		85,0d
@@ -151,7 +151,7 @@
  	sta $4a 		85,4a
  	rts 			60
 
-	; A$
+	; S$
 	;
 @s 	00,00,00
 
