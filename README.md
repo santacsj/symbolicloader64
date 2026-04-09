@@ -17,7 +17,7 @@ Variable `O` (as origin), holds the start address for the PC which is used for a
     - `+[label]` recall and store the saved address' low byte + 1
     - `#[label]` recall and store the saved address' low byte + 2
     - `[hex][hex]` stored as a byte
-4. `"[token] [token] ... [token]"` a series of tokens, should be separated by comma
+4. `"[token],[token], ... ,[token]"` a series of tokens, should be separated by comma
 5. `";"` marks end of data
 
 ### Example
