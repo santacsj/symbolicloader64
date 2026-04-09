@@ -1,6 +1,47 @@
 
+	; use variable S$
+	;
+ 	lda #$ff 		a9,ff 	; variable is a string
+ 	sta $0d 		85,0d
 
-	; Read BASIC variables
+ 	lda #<s 		a9,<s
+ 	sta $49 		85,49
+ 	lda #>s 		a9,>s
+ 	sta $4a 		85,4a
+ 	rts 			60
+
+	; S$
+	;
+@s 	00,00,00
+
+	; READ A$
+	;
+ 	lda #$98 		a9,98 	; data entry method is READ
+ 	sta $11 		85,11
+
+ 	lda $7a 		a5,7a 	; save current CHRGET position to temp
+ 	sta $4b 		85,4b
+ 	lda $7b 		a5,7b
+ 	sta $4c 		85,4c
+
+ 	lda $41 		a5,41 	; set current CHRGET position to next DATA element
+ 	sta $7a 		85,7a
+ 	lda $42 		a5,42
+ 	sta $7b 		85,7b
+
+ 	jsr $ac2c 		20,2c,ac
+ 	rts 			60
+
+200 data a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
+202 data @s,00,00,00
+206 data a9,98,85,11
+208 data a5,7a,85,4b,a5,7b,85,4c
+210 data a5,41,85,7a,a5,42,85,7b
+212 data 20,2c,ac,60
+220 data ;
+
+
+	; get BASIC variables
 	; 	O defaults to C000, if not set
 	; 	M defaults to O, if not set
 	;
@@ -70,42 +111,41 @@
 252 data 60,;
 
 
-
-	; fd/fe = address of i-th element
+	; fd/fe = address of I-th word in ARYTAB
 	;	
-	; fd/fe = 2f/30, end of vartab
-@a 	lda $2f 		a5,2f
+@a 	lda $2f 		a5,2f 		; fd/fe = 2f/30, ARYTAB
 	sta $fd 		85,fd
 	lda $30 		a5,30
 	sta $fe 		85,fe
 
 	lda @i 			ad,<i,>i
+	beq @1			f0,?1 		; if i = 0, end
 
-	; if i = 0, end
-	beq @1			f0,?1
-
-	; t = i * 2
-	clc 			18
-	asl a 			0a
+	asl a 			0a 			; t = i * 2
 	sta @t 			8d,<t,>t
-	lda #$00 		a9,00
-	adc @t+1 		6d,+t,>t
+	lda @t+1 		ad,+t,>t
+	rol a 			2a
 	sta @t+1 		8d,+t,>t
 
-	; fd/fe = fd/fe + t
-	clc 			18
+	clc 			18 			; fd/fe = fd/fe + t
 	lda $fd 		a5,fd
 	adc @t 			6d,<t,>t
 	sta $fd 		85,fd
 	lda $fe 		a5,fe
 	adc @t+1 		6d,+t,>t
 	sta $fe 		85,fe
-
 @1	rts 			60
 
+	; I, Index
+	;
+@i	00
 
-; v = (fd/fe)
-;
+	; T, Temp
+	;
+@t  00,00
+
+	; V = (fd/fe)
+	;
 @b	ldy #$00  		a0,00
 	lda ($fd),y 	b1,fd
 	sta @v 			8d,<v,>v
@@ -114,8 +154,8 @@
 	sta @v+1 		8d,+v,>v
 	rts 			60
 
-; (fd/fe) = v
-;
+	; (fd/fe) = V
+	;
 @c	ldy #$00 		a0,00
 	lda @v 			ad,<v,>v
 	sta ($fd),y 	91,fd
@@ -124,60 +164,17 @@
 	sta ($fd),y 	91,fd
 	rts 			60
 
-@i	0
+	; V, Value
+	;	
 @v 	0,0
-@t  0,0
-
 
 200 data @a,a5,2f,85,fd,a5,30,85,fe
 201 data ad,<i,>i,f0,?1
-202 data 18,0a,8d,<t,>t,a9,00,6d,+t,>t,8d,+t,>t
-203 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe,@1,60
+202 data 0a,8d,<t,>t,ad,+t,>t,2a,8d,+t,>t
+203 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
+204 data @1,60
+205 data @i,00,@t,00,00
 210 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
 220 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
-230 data @i,00,@v,00,00,@t,00,00
-900 data end
-
-
-
-	; use variable S$
-	;
- 	lda #$ff 		a9,ff 	; variable is a string
- 	sta $0d 		85,0d
-
- 	lda #<s 		a9,<s
- 	sta $49 		85,49
- 	lda #>s 		a9,>s
- 	sta $4a 		85,4a
- 	rts 			60
-
-	; S$
-	;
-@s 	00,00,00
-
-	; READ A$
-	;
- 	lda #$98 		a9,98 	; data entry method is READ
- 	sta $11 		85,11
-
- 	lda $7a 		a5,7a 	; save current CHRGET position to temp
- 	sta $4b 		85,4b
- 	lda $7b 		a5,7b
- 	sta $4c 		85,4c
-
- 	lda $41 		a5,41 	; set current CHRGET position to next DATA element
- 	sta $7a 		85,7a
- 	lda $42 		a5,42
- 	sta $7b 		85,7b
-
- 	jsr $ac2c 		20,2c,ac
- 	rts 			60
-
-
-200 data a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
-202 data @s,00,00,00
-206 data a9,98,85,11
-208 data a5,7a,85,4b,a5,7b,85,4c
-210 data a5,41,85,7a,a5,42,85,7b
-212 data 20,2c,ac,60
-220 data ;
+230 data @v,00,00
+240 data ;
