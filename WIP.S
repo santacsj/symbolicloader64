@@ -123,7 +123,7 @@
 
 	asl a 			0a 			; t = i * 2
 	sta @t 			8d,<t,>t
-	lda @t+1 		ad,+t,>t
+	lda #$00 		a9,00
 	rol a 			2a
 	sta @t+1 		8d,+t,>t
 
@@ -170,7 +170,7 @@
 
 200 data @a,a5,2f,85,fd,a5,30,85,fe
 201 data ad,<i,>i,f0,?1
-202 data 0a,8d,<t,>t,ad,+t,>t,2a,8d,+t,>t
+202 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
 203 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
 204 data @1,60
 205 data @i,00,@t,00,00
