@@ -1,7 +1,40 @@
 
+	; PC
+	;
+@p 	00,00
+
+	; PC = O
+	;
+@h	lda @o  		ad,<o,>o
+	sta @p 			8d,<p,>p
+	lda @o+1 		ad,+o,>o
+	sta @p+1 		8d,+p,>p
+	rts 			60
+
+	; V = PC
+	;
+@j	lda @p  		ad,<p,>p
+	sta @v 			8d,<v,>v
+	lda @p+1 		ad,+p,>p
+	sta @v+1 		8d,+v,>v
+	rts 			60
+
+	; PC++
+	;
+@k	inc @p 			ee,<p,>p
+	bne @4 			d0,?4
+	inc @p+1 		ee,+p,>p
+@4	rts 			60
+
+200 data @p,00,00
+210 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
+220 data @j,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v,60
+230 data @k,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
+
+
 	; use variable S$
 	;
- 	lda #$ff 		a9,ff 	; variable is a string
+@f 	lda #$ff 		a9,ff 	; variable is a string
  	sta $0d 		85,0d
 
  	lda #<s 		a9,<s
@@ -16,20 +49,29 @@
 
 	; READ S$
 	;
- 	lda #$98 		a9,98 	; data entry method is READ
+	; out:
+	; 	$fb/fc - points to S$ data
+	;
+@g	lda #$98 		a9,98 		; data entry method is READ
  	sta $11 		85,11
 
- 	lda $7a 		a5,7a 	; save current CHRGET position to temp
+ 	lda $7a 		a5,7a 		; save current CHRGET position to temp
  	sta $4b 		85,4b
  	lda $7b 		a5,7b
  	sta $4c 		85,4c
 
- 	lda $41 		a5,41 	; set current CHRGET position to next DATA element
+ 	lda $41 		a5,41 		; set current CHRGET position to next DATA element
  	sta $7a 		85,7a
  	lda $42 		a5,42
  	sta $7b 		85,7b
 
  	jsr $ac2c 		20,2c,ac
+
+ 	lda @s+1 		ad,+s,>s 	; $fb/fc = $S
+	sta $fb 		85,fb
+	lda @s+2 		ad,#s,>s
+	sta $fc 		85,fc
+
  	rts 			60
 
 200 data a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
@@ -37,15 +79,14 @@
 206 data a9,98,85,11
 208 data a5,7a,85,4b,a5,7b,85,4c
 210 data a5,41,85,7a,a5,42,85,7b
-212 data 20,2c,ac,60
-220 data ;
+212 data 20,2c,ac,ad,+s,>s,85,fb,ad,#s,>s,85,fc
 
 
 	; get BASIC variables
 	; 	O defaults to C000, if not set
 	; 	M defaults to O, if not set
 	;
- 	lda #$00 		a9,00
+@e 	lda #$00 		a9,00
 	ldx #$c0 		a2,c0
 	sta @2+1 		8d,+2,>2
 	stx @3+1 		8e,+3,>3
@@ -108,7 +149,7 @@
 245 data @o,00,00,@m,00,00
 250 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
 251 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
-252 data 60,;
+252 data 60
 
 
 	; fd/fe = address of I-th word in ARYTAB
@@ -177,4 +218,3 @@
 210 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
 220 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
 230 data @v,00,00
-240 data ;
