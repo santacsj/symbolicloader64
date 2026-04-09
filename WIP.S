@@ -127,86 +127,9 @@
 RESTORE
 $A81D–A82B
 
-READ
-$AC06–ACFB
-
-$11 	= #$98
-$0d 	= #$ff
-$49/4a 	= memoria mutato ahova az olvasas tortenjen / variable data ptr
-$43/44 	= $7a/7b
-$7a/7b 	= $41/42
-
-ac2c-n kezd el olvasni
-	$0d-nak be kell lennie allitva $ff-re (string valtozo)
-	ra kell mutatni 49/4a-val a string hossz/mutato-t az elemre
-
-
-$0041-$0042	65-66		next DATA item for READ
-$00A9		169	Flag	RS-232 start bit 0 = received, 144 = not received
-$0011		17	Flag	Designates data entry method; 0 = INPUT, 64 = GET or 152 = READ
-$0043-$0044	67-68		temporary storage for INPUT/ pointer (41/42-hoz hasonlo)
-$0049-$004A	73-74		Index variable of FOR ... NEXT loop/variable data pointer
-$007a-$007b 			chrget/got-on belul az aktualis karakter mutato
-$004b-$004c 			7a/7b atmeneti taroloja (ha le akarja menteni)
-$000D		13	Flag	Variable type; 0 = numeric, 255 = character string
-
-bff1 49137
-bffd 49188
-
-$B08B
-Output: ax/yr pointer to variable data
-Fetch name of variable from BASIC program and find it; if found, address of variable is written into memory addresses $005F-$0060, address of value into memory addressesd $0047-$0048; if not found and the caller was $AF28, return empty value (0 for numerical or empty string for string variables), otherwise create new variable with empty value.
-
-
-
-https://www.c64-wiki.com/wiki/Zeropage
-https://sta.c64.org/cbm64basconv.html
-https://sta.c64.org/cbm64pet.html
-
-A$="OK" -> 41 80 02 09 08 00 00, ahol
-	41 80	valtozo neve
-	02 		$ ertek hossza
-	09 08 	$ ertek cime
-	00 00 	$ valtozonal nem hasznalt
-
-
-READ
-$AC06–ACFB
-
-xr/yr 	:= $41/42
-
-ac 		:= $98
-
-$11 	:= ac
-
-$43/44 	:= xr/yr
-
-jsr $b08b
-	$5f/60 	:= variable address
-	$47/48 	:= variable value address
-	ac/yr 	:= variable value address
-
-$49/4a 	:= ac/yr
-
-ac/yr 	:= $7a/7b
-
-$4b/4c 	:= ac/yr
-
-xr/yr 	:= $43/44
-
-$7a/7b 	:= xr/yr
-
-jsr $0079
-	ac 		:= CHRGET character read
-	C 		:= 0 if decimal digit
-	Z 		:= 1 if end of instruction 
-
-
-
-
 	; use variable A$
 	;
- 	lda #$ff 		a9,ff
+ 	lda #$ff 		a9,ff 	; variable is a string
  	sta $0d 		85,0d
 
  	lda #<s 		a9,<s
@@ -216,15 +139,15 @@ jsr $0079
 
 	; READ A$
 	;
- 	lda #$98 		a9,98
+ 	lda #$98 		a9,98 	; data entry method is READ
  	sta $11 		85,11
 
- 	lda $7a 		a5,7a
+ 	lda $7a 		a5,7a 	; save current CHRGET position to temp
  	sta $4b 		85,4b
  	lda $7b 		a5,7b
  	sta $4c 		85,4c
 
- 	lda $41 		a5,41
+ 	lda $41 		a5,41 	; set current CHRGET position to next DATA element
  	sta $7a 		85,7a
  	lda $42 		a5,42
  	sta $7b 		85,7b
@@ -244,14 +167,3 @@ jsr $0079
 225 data 20,2c,ac,60,@s,00,00,00
 230 data ;
 
-
-
-Name:	CHRGET / CHRGOT
-Description:	Read characters from BASIC text
-Entry point:	$73 / 115 (CHRGET)
-$79 / 121 (CHRGOT)
-Passed arguments:
-Return values:
-Accumulator:	Character read
-carry flag:	0 = decimal digit
-zero flag:	1 = end of instruction
