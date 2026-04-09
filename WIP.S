@@ -123,7 +123,7 @@
 206 data @g,a9,98,85,11
 208 data a5,7a,85,4b,a5,7b,85,4c
 210 data a5,41,85,7a,a5,42,85,7b
-212 data 20,2c,ac,ad,+s,>s,85,fb,ad,#s,>s,85,fc
+212 data 20,2c,ac,ad,+s,>s,85,fb,ad,#s,>s,85,fc,60
 
 
 	; get BASIC variables
