@@ -127,7 +127,7 @@
 RESTORE
 $A81D–A82B
 
-	; use variable A$
+	; use variable S$
 	;
  	lda #$ff 		a9,ff 	; variable is a string
  	sta $0d 		85,0d
@@ -137,7 +137,7 @@ $A81D–A82B
  	lda #>s 		a9,>s
  	sta $4a 		85,4a
 
-	; READ A$
+	; READ S$
 	;
  	lda #$98 		a9,98 	; data entry method is READ
  	sta $11 		85,11
@@ -155,7 +155,7 @@ $A81D–A82B
  	jsr $ac2c 		20,2c,ac
  	rts 			60
 
-	; A$
+	; S$
 	;
 @s 	00,00,00
 
