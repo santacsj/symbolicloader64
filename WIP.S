@@ -1,8 +1,14 @@
 
+
 	; Read BASIC variables
 	; 	O defaults to C000, if not set
 	; 	M defaults to O, if not set
 	;
+ 	lda #$00 		a9,00
+	ldx #$c0 		a2,c0
+	sta @2+1 		8d,+2,>2
+	stx @3+1 		8e,+3,>3
+
 	lda #$4f 		a9,4f
 	ldx #$00 		a2,00
 	jsr @d 			20,<d,>d
@@ -53,11 +59,12 @@
 @3	ldx #$c0 		a2,c0
 	rts				60
 
-240 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
-241 data 8d,+2,>2,8e,+3,>3
-242 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
-243 data 60
-244 data @o,00,00,@m,00,00
+240 data a9,00,a2,c0,8d,+2,>2,8e,+3,>3
+241 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
+242 data 8d,+2,>2,8e,+3,>3
+243 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
+244 data 60
+245 data @o,00,00,@m,00,00
 250 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
 251 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 252 data 60,;
