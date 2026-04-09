@@ -1,4 +1,46 @@
 
+	jsr @e 			20,<e,>e 	; get BASIC variables
+
+	; Pass 1
+	;
+	jsr @h 			20,<h,>h 	; PC = O
+	jsr @f 			20,<f,>f 	; use variable S$
+	jsr @a81d 		20,1d,a8 	; RESTORE
+
+@5	jsr @g 			20,<g,>g 	; READ S$
+
+	ldy #$00 		a0,00
+	lda ($fb),y 	b1,fb
+
+	cmp #$3b 		c9,3b 		; end of pass 1?
+	beq @7 			f0,?7
+
+	cmp #$40 		c9,40 		; symbol?
+	beq @6 			f0,?6
+
+	jsr @k 			20,<k,>k 	; PC++
+
+	jmp @5 			4c,<5,>5
+
+@6 	iny 			c8 			; store PC to symbol table
+	lda ($fb),y 	b1,fb
+	sta @i 			8d,<i,>i
+	jsr @a 			20,<a,>a
+	jsr @j 			20,<j,>j
+	jsr @c 			20,<c,>c
+	
+	jmp @5 			4c,<5,>5
+
+@7 	rts 			60
+
+200 data 20,<e,>e,20,<h,>h,20,<f,>f,20,1d,a8
+202 data @5,20,<g,>g,a0,00,b1,fb
+204 data c9,3b,f0,?7,c9,40,f0,?6
+206 data 20,<k,>k,4c,<5,>5
+208 data @6,c8,b1,fb,8d,<i,>i,20,<a,>a,20,<j,>j,20,<c,>c
+210 data 4c,<5,>5,@7,60
+
+
 	; PC
 	;
 @p 	00,00
@@ -25,6 +67,7 @@
 	bne @4 			d0,?4
 	inc @p+1 		ee,+p,>p
 @4	rts 			60
+
 
 200 data @p,00,00
 210 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
@@ -74,9 +117,10 @@
 
  	rts 			60
 
-200 data a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
+
+200 data @f,a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
 202 data @s,00,00,00
-206 data a9,98,85,11
+206 data @g,a9,98,85,11
 208 data a5,7a,85,4b,a5,7b,85,4c
 210 data a5,41,85,7a,a5,42,85,7b
 212 data 20,2c,ac,ad,+s,>s,85,fb,ad,#s,>s,85,fc
@@ -141,7 +185,7 @@
 @3	ldx #$c0 		a2,c0
 	rts				60
 
-240 data a9,00,a2,c0,8d,+2,>2,8e,+3,>3
+240 data @e,a9,00,a2,c0,8d,+2,>2,8e,+3,>3
 241 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
 242 data 8d,+2,>2,8e,+3,>3
 243 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
@@ -218,3 +262,5 @@
 210 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
 220 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
 230 data @v,00,00
+
+
