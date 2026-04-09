@@ -1,14 +1,16 @@
 
-
-
-	; read address from basic variables M and O
-	; default to $c000, if not set
+	; Read BASIC variables
+	; 	O defaults to C000, if not set
+	; 	M defaults to O, if not set
 	;
 	lda #$4f 		a9,4f
 	ldx #$00 		a2,00
 	jsr @d 			20,<d,>d
 	sta @o 			8d,<o,>o
 	stx @o+1 		8e,+o,>o
+
+	sta @2+1 		8d,+2,>2
+	stx @3+1 		8e,+3,>3
 
 	lda #$4f 		a9,4d
 	ldx #$00 		a2,00
@@ -17,13 +19,22 @@
 	stx @m+1 		8e,+m,>m
 	rts 			60
 
-	; fac = (int) var
+	; O, Origin
+	;
+@o 	00,00
+
+	; M, Memory
+	;
+@m 	00,00
+
+	; ac/xr = (int) var
+	;
 	; in:
-	; ax - variable name 1st byte
-	; xr - variable name 2nd byte
+	; 	ac - variable name 1st byte
+	; 	xr - variable name 2nd byte
 	; out:
-	; ax - low byte, default $00
-	; xr - high byte, default $c0
+	; 	ac - low byte, default $00
+	; 	xr - high byte, default $c0
 	;
 @d	ldy #$00 		a0,00
 	sta $45 		85,45
@@ -39,19 +50,17 @@
 	ldx $64 		a6,64
 	rts 			60
 @2 	lda #$00 		a9,00
-	ldx #$c0 		a2,c0
+@3	ldx #$c0 		a2,c0
 	rts				60
 
-@o 	00,00
-@m 	00,00
-
-
 240 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
-241 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m,60
+241 data 8d,+2,>2,8e,+3,>3
+242 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
+243 data 60
+244 data @o,00,00,@m,00,00
 250 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
-251 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,a2,c0,60
-260 data @o,00,00,@m,00,00
-900 data end
+251 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
+252 data 60,;
 
 
 
