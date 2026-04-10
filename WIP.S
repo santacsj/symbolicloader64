@@ -1,5 +1,5 @@
 
-	jsr @e 			20,<e,>e 	; get BASIC variables
+	jsr @e 			20,<e,>e 	; set O and M
 
 	; Pass 1
 	;
@@ -10,7 +10,7 @@
 @5	jsr @g 			20,<g,>g 	; READ S$
 
 	ldy #$00 		a0,00
-	lda ($fb),y 	b1,fb
+	lda ($4b),y 	b1,4b
 
 	cmp #$3b 		c9,3b 		; end of pass 1?
 	beq @7 			f0,?7
@@ -23,7 +23,7 @@
 	jmp @5 			4c,<5,>5
 
 @6 	iny 			c8 			; store PC to symbol table
-	lda ($fb),y 	b1,fb
+	lda ($4b),y 	b1,4b
 	
 	sta @i 			8d,<i,>i 	; I = ASC(symbol)
 
@@ -40,10 +40,10 @@
 @7 	rts 			60
 
 200 data 20,<e,>e,20,<h,>h,20,<f,>f,20,1d,a8
-201 data @5,20,<g,>g,a0,00,b1,fb
+201 data @5,20,<g,>g,a0,00,b1,4b
 202 data c9,3b,f0,?7,c9,40,f0,?6
 203 data 20,<k,>k,4c,<5,>5
-204 data @6,c8,b1,fb,8d,<i,>i
+204 data @6,c8,b1,4b,8d,<i,>i
 205 data 8d,<i,>i,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v
 206 data 20,<a,>a,20,<c,>c,4c,<5,>5,60
 210 data @7,60
@@ -109,10 +109,10 @@
 
  	jsr $ac2c 		20,2c,ac
 
- 	lda @s+1 		ad,+s,>s 	; $fb/fc = $S
-	sta $fb 		85,fb
+ 	lda @s+1 		ad,+s,>s 	; $4b/4c = $S
+	sta $fb 		85,4b
 	lda @s+2 		ad,#s,>s
-	sta $fc 		85,fc
+	sta $fc 		85,4c
 
  	rts 			60
 
@@ -121,7 +121,7 @@
 206 data @g,a9,98,85,11
 208 data a5,7a,85,4b,a5,7b,85,4c
 210 data a5,41,85,7a,a5,42,85,7b
-212 data 20,2c,ac,ad,+s,>s,85,fb,ad,#s,>s,85,fc,60
+212 data 20,2c,ac,ad,+s,>s,85,4b,ad,#s,>s,85,4c,60
 
 
 	; get BASIC variables
