@@ -32,7 +32,7 @@
 	lda @p+1 		ad,+p,>p
 	sta @v+1 		8d,+v,>v
 
-	jsr @a 			20,<a,>a	; fd/fe = address of I-th word in ARYTAB
+	jsr @a 			20,<a,>a	; fd/fe = symbol table address for I
 	jsr @c 			20,<c,>c 	; (fd/fe) = V
 	
 	jmp @5 			4c,<5,>5
@@ -92,7 +92,7 @@
 	; READ S$
 	;
 	; out:
-	; 	$fb/fc - points to S$ data
+	; 	$4b/4c - points to S$ data
 	;
 @g	lda #$98 		a9,98 		; data entry method is READ
  	sta $11 		85,11
