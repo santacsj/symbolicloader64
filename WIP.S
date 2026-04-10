@@ -1,10 +1,10 @@
 
 	jsr @e 			20,<e,>e 	; set O and M
+	jsr @f 			20,<f,>f 	; use variable S$
 
 	; Pass 1
 	;
 	jsr @h 			20,<h,>h 	; PC = O
-	jsr @f 			20,<f,>f 	; use variable S$
 	jsr @a81d 		20,1d,a8 	; RESTORE
 
 @5	jsr @g 			20,<g,>g 	; READ S$
@@ -39,7 +39,7 @@
 
 @7 	rts 			60
 
-200 data 20,<e,>e,20,<h,>h,20,<f,>f,20,1d,a8
+200 data 20,<e,>e,20,<f,>f,20,<h,>h,20,1d,a8
 201 data @5,20,<g,>g,a0,00,b1,4b
 202 data c9,3b,f0,?7,c9,40,f0,?6
 203 data 20,<k,>k,4c,<5,>5
