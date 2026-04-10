@@ -18,27 +18,35 @@
 	cmp #$40 		c9,40 		; symbol?
 	beq @6 			f0,?6
 
-	jsr @k 			20,<k,>k 	; PC++
+	jsr @j 			20,<j,>j 	; PC++
 
 	jmp @5 			4c,<5,>5
 
 @6 	iny 			c8 			; store PC to symbol table
 	lda ($fb),y 	b1,fb
-	sta @i 			8d,<i,>i
-	jsr @a 			20,<a,>a
-	jsr @j 			20,<j,>j
-	jsr @c 			20,<c,>c
+	
+	sta @i 			8d,<i,>i 	; I = ASC(symbol)
+
+	lda @p  		ad,<p,>p 	; V = PC
+	sta @v 			8d,<v,>v
+	lda @p+1 		ad,+p,>p
+	sta @v+1 		8d,+v,>v
+
+	jsr @a 			20,<a,>a	; fd/fe = address of I-th word in ARYTAB
+	jsr @c 			20,<c,>c 	; (fd/fe) = V
 	
 	jmp @5 			4c,<5,>5
 
 @7 	rts 			60
 
 200 data 20,<e,>e,20,<h,>h,20,<f,>f,20,1d,a8
-202 data @5,20,<g,>g,a0,00,b1,fb
-204 data c9,3b,f0,?7,c9,40,f0,?6
-206 data 20,<k,>k,4c,<5,>5
-208 data @6,c8,b1,fb,8d,<i,>i,20,<a,>a,20,<j,>j,20,<c,>c
-210 data 4c,<5,>5,@7,60
+201 data @5,20,<g,>g,a0,00,b1,fb
+202 data c9,3b,f0,?7,c9,40,f0,?6
+203 data 20,<k,>k,4c,<5,>5
+204 data @6,c8,b1,fb,8d,<i,>i
+205 data 8d,<i,>i,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v
+206 data 20,<a,>a,20,<c,>c,4c,<5,>5,60
+210 data @7,60
 
 
 	; PC
@@ -53,17 +61,9 @@
 	sta @p+1 		8d,+p,>p
 	rts 			60
 
-	; V = PC
-	;
-@j	lda @p  		ad,<p,>p
-	sta @v 			8d,<v,>v
-	lda @p+1 		ad,+p,>p
-	sta @v+1 		8d,+v,>v
-	rts 			60
-
 	; PC++
 	;
-@k	inc @p 			ee,<p,>p
+@j	inc @p 			ee,<p,>p
 	bne @4 			d0,?4
 	inc @p+1 		ee,+p,>p
 @4	rts 			60
@@ -71,8 +71,7 @@
 
 200 data @p,00,00
 210 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
-220 data @j,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v,60
-230 data @k,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
+220 data @j,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
 
 
 	; use variable S$
@@ -260,5 +259,3 @@
 210 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
 220 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
 230 data @v,00,00
-
-
