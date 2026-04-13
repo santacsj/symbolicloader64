@@ -195,8 +195,7 @@
 @(	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
 
-	; v = symbol(i)
-	sta @i 			8d,<i,>i
+	sta @i 			8d,<i,>i 	; v = symbol(i)
 	jsr @a 			20,<a,>a
 	jsr @b 			20,<b,>b
 
@@ -211,14 +210,10 @@
 
 	; <,+,# - low byte
 	;
-	; in:
-	; 	@x - offset
-	;	
 @'	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
 
-	; v = symbol(i)
-	sta @i 			8d,<i,>i
+	sta @i 			8d,<i,>i 	; v = symbol(i)
 	jsr @a 			20,<a,>a
 	jsr @b 			20,<b,>b
 
