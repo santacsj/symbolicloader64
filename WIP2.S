@@ -80,7 +80,7 @@
 	ldx #$00 		a2,00 		; of = 0
 	stx @x 			8e,<x,>x
 
-	jmp ;
+	jmp @' 			4c,<',>'
 
 @.	cmp #$2b 		c9,2b 		; +
 	bne @- 			d0,?-
@@ -88,7 +88,7 @@
 	ldx #$01 		a2,01 		; of = 1
 	stx @x 			8e,<x,>x
 
-	jmp ;
+	jmp @' 			4c,<',>'
 
 @-	cmp #$23 		c9,23 		; #
 	bne @+ 			d0,?+
@@ -96,7 +96,8 @@
 	ldx #$02 		a2,02 		; of = 2
 	stx @x 			8e,<x,>x
 
-	jmp ;
+	jmp @' 			4c,<',>'
+
 
 	; 2 char hex str to byte
 	;
@@ -203,7 +204,28 @@
 
 	jmp @& 			4c,<&,>&
 
+	
+	; X, Offset
+	;
+@x 	00
 
+	; <,+,# - low byte
+	;
+	; in:
+	; 	@x - offset
+	;	
+@'	ldy #$01 		a0,01
+	lda ($4b),y 	b1,4b
+
+	; v = symbol(i)
+	sta @i 			8d,<i,>i
+	jsr @a 			20,<a,>a
+	jsr @b 			20,<b,>b
+
+	lda @v 			ad,<v,>v
+	adc @x 			6d,<x,>x
+
+	jmp @& 			4c,<&,>&
 
 
 
