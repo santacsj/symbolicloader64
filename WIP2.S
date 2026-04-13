@@ -222,6 +222,7 @@
 	jsr @a 			20,<a,>a
 	jsr @b 			20,<b,>b
 
+	clc 			18
 	lda @v 			ad,<v,>v
 	adc @x 			6d,<x,>x
 
