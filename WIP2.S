@@ -1,5 +1,4 @@
 
-
 	jsr @e 			20,<e,>e 	; set O and M
 
 	jsr @f 			20,<f,>f 	; use S$ as a string variable
@@ -68,7 +67,7 @@
 	cmp #$3f 		c9,3f 		; ?
 	bne @0 			d0,?0
 
-	jmp ;
+	jmp @$ 			4c,<$,>$
 
 @0	cmp #$3e 		c9,3e 		; >
 	bne @/ 			d0,?/
@@ -98,7 +97,6 @@
 	stx @x 			8e,<x,>x
 
 	jmp ;
-
 
 	; 2 char hex str to byte
 	;
@@ -140,6 +138,55 @@
 
 @% 	jmp @8 			4c,<8,>8
 
+
+	; ? - relative address
+	;	
+@$	ldy #$01 		a0,01
+	lda ($4b),y 	b1,4b
+	
+	sta @i 			8d,<i,>i 	; v = symbol(i)
+	jsr @a 			20,<a,>a
+	jsr @b 			20,<b,>b
+
+	sec   			38 			; v = v - pc
+	lda @v 			ad,<v,>v
+	sbc @p 			ed,<p,>p
+	sta @v 			8d,<v,>v
+	lda @v+1 		ad,+v,>v
+	sbc @p+1 		ed,+p,>p
+	sta @v+1 		8d,+v,>v
+
+	dec @v 			ce,<v,>v 	; v = v - 1
+	bne @# 			d0,?#
+	dec @v+1 		ce,+v,>v
+
+@# 	lda @v 			ad,<v,>v 	; v < -128, overflow error if N = 1
+	cmp #$80		c9,80
+	lda @v+1 		ad,+v,>v
+	sbc #$ff 		e9,ff
+	bvc @" 			50,?"
+	eor #$80 		49,80
+
+@" 	bpl @! 			10,?!
+
+	ldx #$0f  		a2,0f 		; ?OVERFLOW ERROR
+ 	jmp $a437 		4c,37,a4
+
+@! 	lda @v 			ad,<v,>v 	; v >= 128, overflow error if N = 0
+	cmp #$80		c9,80
+	lda @v+1 		ad,+v,>v
+	sbc #$00 		e9,00
+	bvc @: 			50,?:
+	eor #$80 		49,80
+
+@: 	bmi @; 			30,?;
+
+	ldx #$0f  		a2,0f 		; ?OVERFLOW ERROR
+ 	jmp $a437 		4c,37,a4
+
+@;  lda @v 			ad,<v,>v
+
+	jmp @& 			4c,<&,>&
 
 
 
