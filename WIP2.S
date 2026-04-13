@@ -1,5 +1,7 @@
 
+
 	jsr @e 			20,<e,>e 	; set O and M
+
 	jsr @f 			20,<f,>f 	; use S$ as a string variable
 
 	; Pass 1
@@ -40,7 +42,13 @@
 
 	; Pass 2
 	;
-@7 	jsr @h 			20,<h,>h 	; pc = O
+@7	lda @m 			ad,<m,>m 	; $fb/fc = m
+	sta $fb 		85,fb
+	lda @m 			ad,+m,>m
+	sta $fc 		85,fc
+
+ 	jsr @h 			20,<h,>h 	; pc = O
+
 	jsr @a81d 		20,1d,a8 	; RESTORE
 
 @8	jsr @g 			20,<g,>g 	; READ S$
@@ -78,7 +86,7 @@
 @.	cmp #$2b 		c9,2b 		; +
 	bne @- 			d0,?-
 
-	ldx #$01 		a2,00 		; of = 1
+	ldx #$01 		a2,01 		; of = 1
 	stx @x 			8e,<x,>x
 
 	jmp ;
@@ -86,7 +94,7 @@
 @-	cmp #$23 		c9,23 		; #
 	bne @+ 			d0,?+
 
-	ldx #$02 		a2,00 		; of = 2
+	ldx #$02 		a2,02 		; of = 2
 	stx @x 			8e,<x,>x
 
 	jmp ;
@@ -126,9 +134,15 @@
 
 	jsr @j 			20,<j,>j 	; pc++
 
-	inc @m 			ee,<m,>m 	; m++
+	inc $fb 		e6,fb 		; m++
 	bne @% 			d0,?%
-	inc @m+1 		ee,+m,>m
+	inc $fc 		e6,fc
 
 @% 	jmp @8 			4c,<8,>8
+
+
+
+
+
+
 
