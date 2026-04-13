@@ -1,42 +1,12 @@
 
 
-	; set O and M
-	;
-	lda #$00 		a9,00 		
-	ldx #$c0 		a2,c0
-	sta @2+1 		8d,+2,>2
-	stx @3+1 		8e,+3,>3
+	jsr @e 			20,<e,>e 	; set O and M
 
-	lda #$4f 		a9,4f
-	ldx #$00 		a2,00
-	jsr @d 			20,<d,>d
-	sta @o 			8d,<o,>o
-	stx @o+1 		8e,+o,>o
-
-	sta @2+1 		8d,+2,>2
-	stx @3+1 		8e,+3,>3
-
-	lda #$4f 		a9,4d
-	ldx #$00 		a2,00
-	jsr @d 			20,<d,>d
-	sta @m 			8d,<m,>m
-	stx @m+1 		8e,+m,>m
-
-
-	; S$ is a string	
-	;
-	lda #$ff 		a9,ff 		
- 	sta $0d 		85,0d
-
- 	lda #<s 		a9,<s
- 	sta $49 		85,49
- 	lda #>s 		a9,>s
- 	sta $4a 		85,4a
-
+	jsr @f 			20,<f,>f 	; use S$ as a string variable
 
 	; Pass 1
 	;
-	jsr @h 			20,<h,>h 	; PC = O
+	jsr @h 			20,<h,>h 	; pc = O
 	jsr @a81d 		20,1d,a8 	; RESTORE
 
 @5	jsr @g 			20,<g,>g 	; READ S$
@@ -50,29 +20,29 @@
 	cmp #$40 		c9,40 		; symbol?
 	beq @6 			f0,?6
 
-	jsr @j 			20,<j,>j 	; PC++
+	jsr @j 			20,<j,>j 	; pc++
 
 	jmp @5 			4c,<5,>5
 
-@6 	iny 			c8 			; store PC to symbol table
+@6 	iny 			c8 			; store pc to symbol table
 	lda ($4b),y 	b1,4b
 	
-	sta @i 			8d,<i,>i 	; I = ASC(symbol)
+	sta @i 			8d,<i,>i 	; i = asc(symbol)
 
-	lda @p  		ad,<p,>p 	; V = PC
+	lda @p  		ad,<p,>p 	; v = pc
 	sta @v 			8d,<v,>v
 	lda @p+1 		ad,+p,>p
 	sta @v+1 		8d,+v,>v
 
-	jsr @a 			20,<a,>a	; fd/fe = symbol table address for I
-	jsr @c 			20,<c,>c 	; (fd/fe) = V
+	jsr @a 			20,<a,>a	; fd/fe = symbol table address for i
+	jsr @c 			20,<c,>c 	; (fd/fe) = v
 	
 	jmp @5 			4c,<5,>5
 
 
 	; Pass 2
 	;
-@7 	jsr @h 			20,<h,>h 	; PC = O
+@7 	jsr @h 			20,<h,>h 	; pc = O
 	jsr @a81d 		20,1d,a8 	; RESTORE
 
 @8	jsr @g 			20,<g,>g 	; READ S$
@@ -99,7 +69,7 @@
 
 	jmp ;
 
-@/	cmp #$3c 		c9,3c 		; >
+@/	cmp #$3c 		c9,3c 		; <
 	bne @. 			d0,?.
 
 	ldx #$00 		a2,00 		; of = 0
