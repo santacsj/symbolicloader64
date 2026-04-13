@@ -1,7 +1,5 @@
 
-
 	jsr @e 			20,<e,>e 	; set O and M
-
 	jsr @f 			20,<f,>f 	; use S$ as a string variable
 
 	; Pass 1
