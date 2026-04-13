@@ -72,7 +72,7 @@
 @0	cmp #$3e 		c9,3e 		; >
 	bne @/ 			d0,?/
 
-	jmp ;
+	jmp @( 			4c,<(,>(
 
 @/	cmp #$3c 		c9,3c 		; <
 	bne @. 			d0,?.
@@ -185,6 +185,21 @@
  	jmp $a437 		4c,37,a4
 
 @;  lda @v 			ad,<v,>v
+
+	jmp @& 			4c,<&,>&
+
+
+	; > - high byte
+	;	
+@(	ldy #$01 		a0,01
+	lda ($4b),y 	b1,4b
+
+	; v = symbol(i)
+	sta @i 			8d,<i,>i
+	jsr @a 			20,<a,>a
+	jsr @b 			20,<b,>b
+
+	lda @v+1		ad,+v,>v
 
 	jmp @& 			4c,<&,>&
 
