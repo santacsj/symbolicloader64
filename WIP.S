@@ -1,10 +1,12 @@
 
 	jsr @e 			20,<e,>e 	; set O and M
-	jsr @f 			20,<f,>f 	; use variable S$
+	jsr @f 			20,<f,>f 	; use S$ as a string variable
+
+200 data 20,<e,>e,20,<f,>f
 
 	; Pass 1
 	;
-	jsr @h 			20,<h,>h 	; PC = O
+	jsr @h 			20,<h,>h 	; pc = O
 	jsr @a81d 		20,1d,a8 	; RESTORE
 
 @5	jsr @g 			20,<g,>g 	; READ S$
@@ -12,42 +14,259 @@
 	ldy #$00 		a0,00
 	lda ($4b),y 	b1,4b
 
-	cmp #$3b 		c9,3b 		; end of pass 1?
+	cmp #$3b 		c9,3b 		; end of pass?
 	beq @7 			f0,?7
 
 	cmp #$40 		c9,40 		; symbol?
 	beq @6 			f0,?6
 
-	jsr @j 			20,<j,>j 	; PC++
+	jsr @j 			20,<j,>j 	; pc++
 
 	jmp @5 			4c,<5,>5
 
-@6 	iny 			c8 			; store PC to symbol table
+@6 	iny 			c8 			; store pc to symbol table
 	lda ($4b),y 	b1,4b
 	
-	sta @i 			8d,<i,>i 	; I = ASC(symbol)
+	sta @i 			8d,<i,>i 	; i = asc(symbol)
 
-	lda @p  		ad,<p,>p 	; V = PC
+	lda @p  		ad,<p,>p 	; v = pc
 	sta @v 			8d,<v,>v
 	lda @p+1 		ad,+p,>p
 	sta @v+1 		8d,+v,>v
 
-	jsr @a 			20,<a,>a	; fd/fe = symbol table address for I
-	jsr @c 			20,<c,>c 	; (fd/fe) = V
+	jsr @a 			20,<a,>a	; fd/fe = symbol table address for i
+	jsr @c 			20,<c,>c 	; (fd/fe) = v
 	
 	jmp @5 			4c,<5,>5
 
-@7 	rts 			60
+220 data 20,<h,>h,20,1d,a8
+222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6,20,<j,>j,4c,<5,>5
+224 data @6,c8,b1,4b,8d,<i,>i,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v
+226 data 20,<a,>a,20,<c,>c,4c,<5,>5
 
-200 data 20,<e,>e,20,<f,>f,20,<h,>h,20,1d,a8
-201 data @5,20,<g,>g,a0,00,b1,4b
-202 data c9,3b,f0,?7,c9,40,f0,?6
-203 data 20,<k,>k,4c,<5,>5
-204 data @6,c8,b1,4b,8d,<i,>i
-205 data 8d,<i,>i,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v
-206 data 20,<a,>a,20,<c,>c,4c,<5,>5,60
-210 data @7,60
+	; Pass 2
+	;
+@7	lda @m 			ad,<m,>m 	; $fb/fc = m
+	sta $fb 		85,fb
+	lda @m 			ad,+m,>m
+	sta $fc 		85,fc
 
+ 	jsr @h 			20,<h,>h 	; pc = O
+
+	jsr @a81d 		20,1d,a8 	; RESTORE
+
+@8	jsr @g 			20,<g,>g 	; READ S$
+
+	ldy #$00 		a0,00
+	lda ($4b),y 	b1,4b
+	jsr $ffd2 		20,d2,ff
+	iny 			c8
+	lda ($4b),y 	b1,4b
+	jsr $ffd2 		20,d2,ff
+	lda #$20 		a9,20
+	jsr $ffd2 		20,d2,ff
+	jsr $ffd2 		20,d2,ff
+
+	ldy #$00 		a0,00
+	lda ($4b),y 	b1,4b
+
+	cmp #$3b 		c9,3b 		; end of pass?
+	bne @9 			d0,?9
+
+	ldx #$80  		a2,80 		; END
+ 	jmp $a437 		4c,37,a4
+
+@9	cmp #$40 		c9,40 		; @
+	beq @8 			f0,?8
+
+	cmp #$3f 		c9,3f 		; ?
+	bne @0 			d0,?0
+
+	jmp @$ 			4c,<$,>$
+
+@0	cmp #$3e 		c9,3e 		; >
+	bne @/ 			d0,?/
+
+	jmp @( 			4c,<(,>(
+
+@/	cmp #$3c 		c9,3c 		; <
+	bne @. 			d0,?.
+
+	ldx #$00 		a2,00 		; of = 0
+	stx @x 			8e,<x,>x
+
+	jmp @' 			4c,<',>'
+
+@.	cmp #$2b 		c9,2b 		; +
+	bne @- 			d0,?-
+
+	ldx #$01 		a2,01 		; of = 1
+	stx @x 			8e,<x,>x
+
+	jmp @' 			4c,<',>'
+
+@-	cmp #$23 		c9,23 		; #
+	bne @+ 			d0,?+
+
+	ldx #$02 		a2,02 		; of = 2
+	stx @x 			8e,<x,>x
+
+	jmp @' 			4c,<',>'
+
+230 data @7,ad,<m,>m,85,fb,ad,+m,>m,85,fc,20,<h,>h,20,1d,a8
+232 data @8,20,<g,>g
+233 data a0,00,b1,4b,20,d2,ff,c8,b1,4b,20,d2,ff,a9,20,20,d2,ff,20,d2,ff
+234 data a0,00,b1,4b,c9,3b,d0,?9,a2,80,4c,37,a4
+236 data @9,c9,40,f0,?8,c9,3f,d0,?0,4c,<$,>$
+238 data @0,c9,3e,d0,?/,4c,<(,>(
+240 data @/,c9,3c,d0,?.,a2,00,8e,<x,>x,4c,<',>'
+242 data @.,c9,2b,d0,?-,a2,01,8e,<x,>x,4c,<',>'
+244 data @-,c9,23,d0,?+,a2,02,8e,<x,>x,4c,<',>'
+
+	; 2 char hex str to byte
+	;
+@+	ldy #$01 		a0,01
+	lda ($4b),y 	b1,4b
+
+	sec 			38
+	sbc #$30 		e9,30
+	cmp #$0a 		c9,0a
+	bcc @* 			90,?*
+	sbc #$07 		e9,07
+
+@*	sta $02			85,02		; unused zero-page byte as temp
+
+	dey 			88
+	lda ($4b),y 	b1,4b
+
+	sec 			38
+	sbc #$30 		e9,30
+	cmp #$0a 		c9,0a
+	bcc @) 			90,?)
+	sbc #$07 		e9,07
+
+@)	asl a 			0a
+	asl a 			0a
+	asl a 			0a
+	asl a 			0a
+
+ 	clc 			18
+	adc $02 		65,02
+
+@&	ldy #$00 		a0,00
+	sta ($fb),y 	91,fb 		; store by to m
+
+	jsr @j 			20,<j,>j 	; pc++
+
+	inc $fb 		e6,fb 		; m++
+	bne @% 			d0,?%
+	inc $fc 		e6,fc
+
+@% 	jmp @8 			4c,<8,>8
+
+260 data @+,a0,01,b1,4b
+262 data 38,e9,30,c9,0a,90,?*,e9,07
+264 data @*,85,02,88,b1,4b
+266 data 38,e9,30,c9,0a,90,?),e9,07
+268 data @),0a,0a,0a,0a,18,65,02
+270 data @&,a0,00,91,fb,20,<j,>j,e6,fb,d0,?%,e6,fc
+272 data @%,4c,<8,>8
+
+	; ? - relative address
+	;	
+@$	ldy #$01 		a0,01
+	lda ($4b),y 	b1,4b
+	
+	sta @i 			8d,<i,>i 	; v = symbol(i)
+	jsr @a 			20,<a,>a
+	jsr @b 			20,<b,>b
+
+	sec   			38 			; v = v - pc
+	lda @v 			ad,<v,>v
+	sbc @p 			ed,<p,>p
+	sta @v 			8d,<v,>v
+	lda @v+1 		ad,+v,>v
+	sbc @p+1 		ed,+p,>p
+	sta @v+1 		8d,+v,>v
+
+	dec @v 			ce,<v,>v 	; v = v - 1
+	bne @# 			d0,?#
+	dec @v+1 		ce,+v,>v
+
+@# 	lda @v 			ad,<v,>v 	; v < -128, overflow error if N = 1
+	cmp #$80		c9,80
+	lda @v+1 		ad,+v,>v
+	sbc #$ff 		e9,ff
+	bvc @= 			50,?=
+	eor #$80 		49,80
+
+@= 	bpl @! 			10,?!
+
+	ldx #$0f  		a2,0f 		; ?OVERFLOW ERROR
+ 	jmp $a437 		4c,37,a4
+
+@! 	lda @v 			ad,<v,>v 	; v >= 128, overflow error if N = 0
+	cmp #$80		c9,80
+	lda @v+1 		ad,+v,>v
+	sbc #$00 		e9,00
+	bvc @: 			50,?<
+	eor #$80 		49,80
+
+@< 	bmi @; 			30,?;
+
+	ldx #$0f  		a2,0f 		; ?OVERFLOW ERROR
+ 	jmp $a437 		4c,37,a4
+
+@;  lda @v 			ad,<v,>v
+
+	jmp @& 			4c,<&,>&
+
+280 data @$,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
+282 data 38,ad,<v,>v,ed,<p,>p,8d,<v,>v,ad,+v,>v,ed,+p,>p,8d,+v,>v
+284 data ce,<v,>v,d0,?#,ce,+v,>v
+286 data @#,ad,<v,>v,c9,80,ad,+v,>v,e9,ff,50,?=,49,80
+288 data @=,10,?!,a2,0f,4c,37,a4
+290 data @!,ad,<v,>v,c9,80,ad,+v,>v,e9,00,50,?<,49,80
+292 data @<,30,?;,a2,0f,4c,37,a4
+294 data @;,ad,<v,>v,4c,<&,>&
+
+	; > - high byte
+	;	
+@(	ldy #$01 		a0,01
+	lda ($4b),y 	b1,4b
+
+	sta @i 			8d,<i,>i 	; v = symbol(i)
+	jsr @a 			20,<a,>a
+	jsr @b 			20,<b,>b
+
+	lda @v+1		ad,+v,>v
+
+	jmp @& 			4c,<&,>&
+
+300 data @(,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b,ad,+v,>v,4c,<&,>&
+
+	; X, Offset
+	;
+@x 	00
+
+	; <,+,# - low byte
+	;
+@'	ldy #$01 		a0,01
+	lda ($4b),y 	b1,4b
+
+	sta @i 			8d,<i,>i 	; v = symbol(i)
+	jsr @a 			20,<a,>a
+	jsr @b 			20,<b,>b
+
+	clc 			18
+	lda @v 			ad,<v,>v
+	adc @x 			6d,<x,>x
+
+	jmp @& 			4c,<&,>& 	
+
+320 data @x,00
+322 data @',a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
+324 data 18,ad,<v,>v,6d,<x,>x,4c,<&,>&
 
 	; PC
 	;
@@ -68,11 +287,9 @@
 	inc @p+1 		ee,+p,>p
 @4	rts 			60
 
-
-200 data @p,00,00
-210 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
-220 data @j,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
-
+330 data @p,00,00
+332 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
+334 data @j,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
 
 	; use variable S$
 	;
@@ -116,13 +333,12 @@
 
  	rts 			60
 
-200 data @f,a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
-202 data @s,00,00,00
-206 data @g,a9,98,85,11
-208 data a5,7a,85,4b,a5,7b,85,4c
-210 data a5,41,85,7a,a5,42,85,7b
-212 data 20,2c,ac,ad,+s,>s,85,4b,ad,#s,>s,85,4c,60
-
+340 data @f,a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
+342 data @s,00,00,00
+344 data @g,a9,98,85,11
+346 data a5,7a,85,4b,a5,7b,85,4c
+348 data a5,41,85,7a,a5,42,85,7b
+350 data 20,2c,ac,ad,+s,>s,85,4b,ad,#s,>s,85,4c,60
 
 	; get BASIC variables
 	; 	O defaults to C000, if not set
@@ -183,15 +399,14 @@
 @3	ldx #$c0 		a2,c0
 	rts				60
 
-240 data @e,a9,00,a2,c0,8d,+2,>2,8e,+3,>3
-241 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
-242 data 8d,+2,>2,8e,+3,>3
-243 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
-244 data 60
-245 data @o,00,00,@m,00,00
-250 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
-251 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
-
+360 data @e,a9,00,a2,c0,8d,+2,>2,8e,+3,>3
+362 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
+364 data 8d,+2,>2,8e,+3,>3
+366 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
+368 data 60
+370 data @o,00,00,@m,00,00
+372 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
+374 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 
 	; fd/fe = address of I-th word in ARYTAB
 	;	
@@ -248,14 +463,14 @@
 
 	; V, Value
 	;	
-@v 	0,0
+@v 	00,00
 
-200 data @a,a5,2f,85,fd,a5,30,85,fe
-201 data ad,<i,>i,f0,?1
-202 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
-203 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
-204 data @1,60
-205 data @i,00,@t,00,00
-210 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
-220 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
-230 data @v,00,00
+380 data @a,a5,2f,85,fd,a5,30,85,fe
+382 data ad,<i,>i,f0,?1
+384 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
+386 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
+388 data @1,60
+390 data @i,00,@t,00,00
+392 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
+394 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
+396 data @v,00,00
