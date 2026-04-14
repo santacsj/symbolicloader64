@@ -53,11 +53,11 @@ C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 
 ## The ML Version
 
-Copy and paste the content of `SELF` to VICE to get this version. Functionally it is almost identical to the BASIC version.
-
-This version survives resets. Pair it with a cartridge that can recover BASIC programs (aka the OLD command).
+This version survives resets. Pair it with a cartridge that can recover BASIC programs (aka the OLD command). Functionally it is almost identical to the BASIC version.
 
 Instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
+
+Copy and paste the content of `SELF` to VICE to get this version. 
 
 ### Usage
 ```
