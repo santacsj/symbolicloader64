@@ -463,7 +463,7 @@
 
 	; V, Value
 	;	
-@v 	0,0
+@v 	00,00
 
 380 data @a,a5,2f,85,fd,a5,30,85,fe
 382 data ad,<i,>i,f0,?1
