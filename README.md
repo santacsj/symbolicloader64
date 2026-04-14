@@ -55,7 +55,7 @@ C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 
 Copy and paste the content of `SELF` to VICE to get this version. Functionally it is almost identical to the BASIC version.
 
-This version survives resets. Pair it with a cartridge that can recover BASIC programs after reset (e.g. OLD command).
+This version survives resets. Pair it with a cartridge that can recover BASIC programs (aka the OLD command).
 
 Instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
 
@@ -74,4 +74,4 @@ Instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
 ```
 
 ### Addresses
-Setting `O` and `M` is optional. Variable `O` (origin), if not set defaults to `49152`. Variable `M` (memory), if not set defaults to the value of `O`.
+Setting `O` and `M` is optional. Variable `O` (origin), if not set, defaults to `49152`. Variable `M` (memory), if not set, defaults to the value of `O`.
