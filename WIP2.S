@@ -59,6 +59,16 @@
 
 	ldy #$00 		a0,00
 	lda ($4b),y 	b1,4b
+	jsr $ffd2 		20,d2,ff
+	iny 			c8
+	lda ($4b),y 	b1,4b
+	jsr $ffd2 		20,d2,ff
+	lda #$20 		a9,20
+	jsr $ffd2 		20,d2,ff
+	jsr $ffd2 		20,d2,ff
+
+	ldy #$00 		a0,00
+	lda ($4b),y 	b1,4b
 
 	cmp #$3b 		c9,3b 		; end of pass?
 	bne @9 			d0,?9
@@ -105,6 +115,7 @@
 
 230 data @7,ad,<m,>m,85,fb,ad,+m,>m,85,fc,20,<h,>h,20,1d,a8
 232 data @8,20,<g,>g
+233 data a0,00,b1,4b,20,d2,ff,c8,b1,4b,20,d2,ff,a9,20,20,d2,ff,20,d2,ff
 234 data a0,00,b1,4b,c9,3b,d0,?9,a2,80,4c,37,a4
 236 data @9,c9,40,f0,?8,c9,3f,d0,?0,4c,<$,>$
 238 data @0,c9,3e,d0,?/,4c,<(,>(
@@ -142,7 +153,8 @@
  	clc 			18
 	adc $02 		65,02
 
-@&	sta ($fb),y 	91,fb 		; store by to m
+@&	ldy #$00 		a0,00
+	sta ($fb),y 	91,fb 		; store by to m
 
 	jsr @j 			20,<j,>j 	; pc++
 
@@ -157,7 +169,7 @@
 264 data @*,85,02,88,b1,4b
 266 data 38,e9,30,c9,0a,90,?),e9,07
 268 data @),0a,0a,0a,0a,18,65,02
-270 data @&,91,fb,60,20,<j,>j,e6,fb,d0,?%,e6,fc
+270 data @&,a0,00,91,fb,20,<j,>j,e6,fb,d0,?%,e6,fc
 272 data @%,4c,<8,>8
 
 	; ? - relative address
@@ -250,7 +262,7 @@
 	lda @v 			ad,<v,>v
 	adc @x 			6d,<x,>x
 
-	jmp @& 			4c,<&,>&
+	jmp @& 			4c,<&,>& 	
 
 320 data @x,00
 322 data @',a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
