@@ -1,0 +1,102 @@
+10 rem symloader
+12 o=49152
+13 m=49152
+14 dim sy(256)
+16 pc=o
+18 read c$
+20 if c$=";" then 38
+26 if left$(c$,1)="@" then 34
+28 pc=pc+1
+32 goto 18
+34 sy(asc(right$(c$,1)))=pc
+36 goto 18
+38 restore
+39 of=0
+40 pc=o
+42 read c$
+44 print c$ spc(2);
+46 if c$=";" then end
+52 le$=left$(c$,1)
+54 if le$="@" then 42
+56 if le$="?" then 84
+58 if le$=">" then 92
+60 if le$="<" then of=0:goto 96
+62 if le$="+" then of=1:goto 96
+64 if le$="#" then of=2:goto 96
+66 ln=asc(right$(c$,1))-48
+68 if ln>9 then ln=ln-7
+70 hn=asc(le$)-48
+72 if hn>9 then hn=hn-7
+74 by=(hn*16)+ln
+76 poke m,by
+78 m=m+1:pc=pc+1
+82 goto 42
+84 by=sy(asc(right$(c$,1)))-pc-1
+86 if -128>by or by>127 then print"?out of range":stop
+88 if by<0 then by=(255 and not abs(by))+1
+90 goto 76
+92 by=int(sy(asc(right$(c$,1)))/256)
+94 goto 76
+96 ta=sy(asc(right$(c$,1)))+of
+98 by=ta-int(ta/256)*256
+99 goto 76
+200 data 20,<e,>e,20,<f,>f
+220 data 20,<h,>h,20,1d,a8
+222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6,20,<j,>j,4c,<5,>5
+224 data @6,c8,b1,4b,8d,<i,>i,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v
+226 data 20,<a,>a,20,<c,>c,4c,<5,>5
+230 data @7,ad,<m,>m,85,fb,ad,+m,>m,85,fc,20,<h,>h,20,1d,a8
+232 data @8,20,<g,>g
+233 data a0,00,b1,4b,20,d2,ff,c8,b1,4b,20,d2,ff,a9,20,20,d2,ff,20,d2,ff
+234 data a0,00,b1,4b,c9,3b,d0,?9,a2,80,4c,37,a4
+236 data @9,c9,40,f0,?8,c9,3f,d0,?0,4c,<$,>$
+238 data @0,c9,3e,d0,?/,4c,<(,>(
+240 data @/,c9,3c,d0,?.,a2,00,8e,<x,>x,4c,<',>'
+242 data @.,c9,2b,d0,?-,a2,01,8e,<x,>x,4c,<',>'
+244 data @-,c9,23,d0,?+,a2,02,8e,<x,>x,4c,<',>'
+260 data @+,a0,01,b1,4b
+262 data 38,e9,30,c9,0a,90,?*,e9,07
+264 data @*,85,02,88,b1,4b
+266 data 38,e9,30,c9,0a,90,?),e9,07
+268 data @),0a,0a,0a,0a,18,65,02
+270 data @&,a0,00,91,fb,20,<j,>j,e6,fb,d0,?%,e6,fc
+272 data @%,4c,<8,>8
+280 data @$,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
+282 data 38,ad,<v,>v,ed,<p,>p,8d,<v,>v,ad,+v,>v,ed,+p,>p,8d,+v,>v
+284 data ce,<v,>v,d0,?#,ce,+v,>v
+286 data @#,ad,<v,>v,c9,80,ad,+v,>v,e9,ff,50,?=,49,80
+288 data @=,10,?!,a2,0f,4c,37,a4
+290 data @!,ad,<v,>v,c9,80,ad,+v,>v,e9,00,50,?<,49,80
+292 data @<,30,?;,a2,0f,4c,37,a4
+294 data @;,ad,<v,>v,4c,<&,>&
+300 data @(,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b,ad,+v,>v,4c,<&,>&
+320 data @x,00
+322 data @',a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
+324 data 18,ad,<v,>v,6d,<x,>x,4c,<&,>&
+330 data @p,00,00
+332 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
+334 data @j,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
+340 data @f,a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
+342 data @s,00,00,00
+344 data @g,a9,98,85,11
+346 data a5,7a,85,4b,a5,7b,85,4c
+348 data a5,41,85,7a,a5,42,85,7b
+350 data 20,2c,ac,ad,+s,>s,85,4b,ad,#s,>s,85,4c,60
+360 data @e,a9,00,a2,c0,8d,+2,>2,8e,+3,>3
+362 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
+364 data 8d,+2,>2,8e,+3,>3
+366 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
+368 data 60
+370 data @o,00,00,@m,00,00
+372 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
+374 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
+380 data @a,a5,2f,85,fd,a5,30,85,fe
+382 data ad,<i,>i,f0,?1
+384 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
+386 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
+388 data @1,60
+390 data @i,00,@t,00,00
+392 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
+394 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
+396 data @v,00,00
+400 data ;
