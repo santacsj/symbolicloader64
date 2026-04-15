@@ -192,7 +192,7 @@
 	lda @v 			ad,<v,>v
 	sbc #$01 		e9,01
 	sta @v 			8d,<v,>v
-	bcs @" 			b0,?#
+	bcs @# 			b0,?#
 	dec @v+1 		ce,+v,>v
 
 @# 	lda @v 			ad,<v,>v 	; v < -128, overflow error if N = 1
