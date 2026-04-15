@@ -130,27 +130,25 @@
 
 	jmp @( 			4c,<(,>(
 
-@/	cmp #$3c 		c9,3c 		; <
+@/	ldx #$00 		a2,00 		; of = 0
+	stx @x 			8e,<x,>x
+
+	cmp #$3c 		c9,3c 		; <
 	bne @. 			d0,?.
 
-	ldx #$00 		a2,00 		; of = 0
-	stx @x 			8e,<x,>x
-
 	jmp @' 			4c,<',>'
 
-@.	cmp #$2b 		c9,2b 		; +
+@.	inc @x 			ee,<x,>x
+
+	cmp #$2b 		c9,2b 		; +
 	bne @- 			d0,?-
 
-	ldx #$01 		a2,01 		; of = 1
-	stx @x 			8e,<x,>x
-
 	jmp @' 			4c,<',>'
 
-@-	cmp #$23 		c9,23 		; #
-	bne @+ 			d0,?+
+@- 	inc @x 			ee,<x,>x	
 
-	ldx #$02 		a2,02 		; of = 2
-	stx @x 			8e,<x,>x
+	cmp #$23 		c9,23 		; #
+	bne @+ 			d0,?+
 
 	jmp @' 			4c,<',>'
 
@@ -160,9 +158,9 @@
 234 data a0,00,b1,4b,c9,3b,d0,?9,60
 236 data @9,c9,40,f0,?8,c9,3f,d0,?0,4c,<$,>$
 238 data @0,c9,3e,d0,?/,4c,<(,>(
-240 data @/,c9,3c,d0,?.,a2,00,8e,<x,>x,4c,<',>'
-242 data @.,c9,2b,d0,?-,a2,01,8e,<x,>x,4c,<',>'
-244 data @-,c9,23,d0,?+,a2,02,8e,<x,>x,4c,<',>'
+240 data @/,a2,00,8e,<x,>x,c9,3c,d0,?.,4c,<',>'
+244 data @.,ee,<x,>x,c9,2b,d0,?-,4c,<',>'
+246 data @-,ee,<x,>x,c9,23,d0,?+,4c,<',>'
 
 	; 2 char hex str to byte
 	;
@@ -290,7 +288,7 @@
 @'	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
 	jsr @f 			20,<f,>f 	; v = symbol(i)
-	
+
 	clc 			18
 	lda @v 			ad,<v,>v
 	adc @x 			6d,<x,>x
