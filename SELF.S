@@ -70,14 +70,21 @@
 	sta @v+1 		8d,+v,>v
 
 	jsr @a 			20,<a,>a	; fd/fe = symbol table address for i
-	jsr @c 			20,<c,>c 	; (fd/fe) = v
+	
+	ldy #$00 		a0,00 		; (fd/fe) = V
+	lda @v 			ad,<v,>v
+	sta ($fd),y 	91,fd
+	iny 			c8
+	lda @v+1 		ad,+v,>v
+	sta ($fd),y 	91,fd
 	
 	jmp @5 			4c,<5,>5
 
 220 data 20,<h,>h,20,1d,a8
 222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6,20,<j,>j,4c,<5,>5
 224 data @6,c8,b1,4b,8d,<i,>i,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v
-226 data 20,<a,>a,20,<c,>c,4c,<5,>5
+226 data 20,<a,>a,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd
+228 data 4c,<5,>5
 
 	; Pass 2
 	;
@@ -414,23 +421,12 @@
 	sta @v+1 		8d,+v,>v
 	rts 			60
 
-	; (fd/fe) = V
-	;
-@c	ldy #$00 		a0,00
-	lda @v 			ad,<v,>v
-	sta ($fd),y 	91,fd
-	iny 			c8
-	lda @v+1 		ad,+v,>v
-	sta ($fd),y 	91,fd
-	rts 			60
-
 380 data @a,a5,2f,85,fd,a5,30,85,fe
 382 data ad,<i,>i,f0,?1
 384 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
 386 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
 388 data @1,60
 392 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
-394 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
 
 	; S$
 	;
@@ -472,3 +468,6 @@
 410 data @x,00
 412 data @o,00,00
 414 data @m,00,00
+
+
+
