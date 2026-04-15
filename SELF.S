@@ -72,9 +72,8 @@
 
 	cmp #$3b 		c9,3b 		; end of pass?
 	bne @9 			d0,?9
-
-	ldx #$80  		a2,80 		; END
- 	jmp $a437 		4c,37,a4
+	
+	rts 			60 			; return to BASIC
 
 @9	cmp #$40 		c9,40 		; @
 	beq @8 			f0,?8
@@ -116,7 +115,7 @@
 230 data @7,ad,<m,>m,85,fb,ad,+m,>m,85,fc,20,<h,>h,20,1d,a8
 232 data @8,20,<g,>g
 233 data a0,00,b1,4b,20,d2,ff,c8,b1,4b,20,d2,ff,a9,20,20,d2,ff,20,d2,ff
-234 data a0,00,b1,4b,c9,3b,d0,?9,a2,80,4c,37,a4
+234 data a0,00,b1,4b,c9,3b,d0,?9,a2,80,60
 236 data @9,c9,40,f0,?8,c9,3f,d0,?0,4c,<$,>$
 238 data @0,c9,3e,d0,?/,4c,<(,>(
 240 data @/,c9,3c,d0,?.,a2,00,8e,<x,>x,4c,<',>'
@@ -189,8 +188,11 @@
 	sbc @p+1 		ed,+p,>p
 	sta @v+1 		8d,+v,>v
 
-	dec @v 			ce,<v,>v 	; v = v - 1
-	bne @# 			d0,?#
+	sec 			38 			; v = v - 1
+	lda @v 			ad,<v,>v
+	sbc #$01 		e9,01
+	sta @v 			8d,<v,>v
+	bcs @" 			b0,?#
 	dec @v+1 		ce,+v,>v
 
 @# 	lda @v 			ad,<v,>v 	; v < -128, overflow error if N = 1
@@ -223,7 +225,7 @@
 
 280 data @$,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
 282 data 38,ad,<v,>v,ed,<p,>p,8d,<v,>v,ad,+v,>v,ed,+p,>p,8d,+v,>v
-284 data ce,<v,>v,d0,?#,ce,+v,>v
+284 data 38,ad,<v,>v,e9,01,8d,<v,>v,b0,?#,ce,+v,>v
 286 data @#,ad,<v,>v,c9,80,ad,+v,>v,e9,ff,50,?=,49,80
 288 data @=,10,?!,a2,0f,4c,37,a4
 290 data @!,ad,<v,>v,c9,80,ad,+v,>v,e9,00,50,?<,49,80
