@@ -1,7 +1,7 @@
 
 	; get BASIC variables
 	; 	O defaults to C000, if not set
-	; 	M defaults to O, if not set
+	; 	$fb/fc defaults to O, if not set
 	;
 	lda #$00 		a9,00
 	ldx #$c0 		a2,c0
@@ -20,8 +20,8 @@
 	lda #$4f 		a9,4d
 	ldx #$00 		a2,00
 	jsr @d 			20,<d,>d
-	sta @m 			8d,<m,>m
-	stx @m+1 		8e,+m,>m
+	sta $fb 		85,fb
+	stx $fc 		86,fc
 
 	; READ into variable S$
 	;
@@ -36,7 +36,7 @@
 200 data a9,00,a2,c0,8d,+2,>2,8e,+3,>3
 202 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
 204 data 8d,+2,>2,8e,+3,>3
-206 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
+206 data a9,4d,a2,00,20,<d,>d,85,fb,86,fc
 208 data a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a
 
 	; Pass 1
@@ -88,12 +88,7 @@
 
 	; Pass 2
 	;
-@7	lda @m 			ad,<m,>m 	; $fb/fc = m
-	sta $fb 		85,fb
-	lda @m 			ad,+m,>m
-	sta $fc 		85,fc
-
- 	jsr @h 			20,<h,>h 	; pc = O
+@7 	jsr @h 			20,<h,>h 	; pc = O
 
 	jsr @a81d 		20,1d,a8 	; RESTORE
 
@@ -152,7 +147,7 @@
 
 	jmp @' 			4c,<',>'
 
-230 data @7,ad,<m,>m,85,fb,ad,+m,>m,85,fc,20,<h,>h,20,1d,a8
+230 data @7,20,<h,>h,20,1d,a8
 232 data @8,20,<g,>g
 233 data a0,00,b1,4b,20,d2,ff,c8,b1,4b,20,d2,ff,a9,20,20,d2,ff,20,d2,ff
 234 data a0,00,b1,4b,c9,3b,d0,?9,60
@@ -454,10 +449,6 @@
 	;
 @o 	00,00
 
-	; M, Memory
-	;
-@m 	00,00
-
 400 data @s,00,00,00
 402 data @i,00
 404 data @t,00,00
@@ -465,4 +456,3 @@
 408 data @p,00,00
 410 data @x,00
 412 data @o,00,00
-414 data @m,00,00
