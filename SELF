@@ -48,7 +48,8 @@
 220 data 20,<h,>h,20,1d,a8
 222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6,20,<j,>j,4c,<5,>5
 224 data @6,c8,b1,4b,8d,<i,>i,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v
-226 data 20,<a,>a,20,<c,>c,4c,<5,>5
+226 data 20,<a,>a,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd
+228 data 4c,<5,>5
 230 data @7,ad,<m,>m,85,fb,ad,+m,>m,85,fc,20,<h,>h,20,1d,a8
 232 data @8,20,<g,>g
 233 data a0,00,b1,4b,20,d2,ff,c8,b1,4b,20,d2,ff,a9,20,20,d2,ff,20,d2,ff
@@ -90,7 +91,6 @@
 386 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
 388 data @1,60
 392 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
-394 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
 400 data @s,00,00,00
 402 data @i,00
 404 data @t,00,00
