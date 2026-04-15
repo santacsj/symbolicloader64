@@ -26,7 +26,7 @@ Variable `O` (as origin), holds the start address for the PC which is used for a
 4. `"[token],[token], ... ,[token]"` a series of tokens, should be separated by comma
 5. `";"` marks end of data
 
-### Example
+### Usage
 
 The following program
 ```
