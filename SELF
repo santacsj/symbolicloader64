@@ -65,7 +65,7 @@
 270 data @&,a0,00,91,fb,20,<j,>j,e6,fb,d0,?%,e6,fc
 272 data @%,4c,<8,>8
 274 data @e,38,e9,30,c9,0a,90,?*,e9,07,@*,60
-280 data @$,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
+280 data @$,a0,01,b1,4b,20,<f,>f
 282 data 38,ad,<v,>v,ed,<p,>p,8d,<v,>v,ad,+v,>v,ed,+p,>p,8d,+v,>v
 284 data 38,ad,<v,>v,e9,01,8d,<v,>v,b0,?#,ce,+v,>v
 286 data @#,ad,<v,>v,c9,80,ad,+v,>v,e9,ff,50,?=,49,80
@@ -73,8 +73,8 @@
 290 data @!,ad,<v,>v,c9,80,ad,+v,>v,e9,00,50,?<,49,80
 292 data @<,30,?;,a2,0f,4c,37,a4
 294 data @;,ad,<v,>v,4c,<&,>&
-300 data @(,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b,ad,+v,>v,4c,<&,>&
-322 data @',a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
+300 data @(,a0,01,b1,4b,20,<f,>f,ad,+v,>v,4c,<&,>&
+322 data @',a0,01,b1,4b,20,<f,>f
 324 data 18,ad,<v,>v,6d,<x,>x,4c,<&,>&
 332 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
 334 data @j,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
@@ -84,11 +84,12 @@
 350 data 20,2c,ac,ad,+s,>s,85,4b,ad,#s,>s,85,4c,60
 372 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
 374 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
-380 data @a,a5,2f,85,fd,a5,30,85,fe
-382 data ad,<i,>i,f0,?1
-384 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
-386 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
-388 data @1,60
+380 data @f,8d,<i,>i,20,<a,>a,20,<b,>b,60
+382 data @a,a5,2f,85,fd,a5,30,85,fe
+384 data ad,<i,>i,f0,?1
+386 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
+388 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
+390 data @1,60
 392 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
 400 data @s,00,00,00
 402 data @i,00
