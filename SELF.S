@@ -384,11 +384,18 @@
 
 	; V = symbol(i)
 	: in:
-	; 	ar - index
+	; 	ac - asc of symbol
 	;
 @f	sta @i 			8d,<i,>i
 	jsr @a 			20,<a,>a
-	jsr @b 			20,<b,>b
+
+	ldy #$00  		a0,00 		; V = (fd/fe)
+	lda ($fd),y 	b1,fd
+	sta @v 			8d,<v,>v
+	iny 			c8
+	lda ($fd),y 	b1,fd
+	sta @v+1 		8d,+v,>v
+	
 	rts
 
 	; fd/fe = address of I-th word in ARYTAB
@@ -416,23 +423,13 @@
 	sta $fe 		85,fe
 @1	rts 			60
 
-	; V = (fd/fe)
-	;
-@b	ldy #$00  		a0,00
-	lda ($fd),y 	b1,fd
-	sta @v 			8d,<v,>v
-	iny 			c8
-	lda ($fd),y 	b1,fd
-	sta @v+1 		8d,+v,>v
-	rts 			60
-
-380 data @f,8d,<i,>i,20,<a,>a,20,<b,>b,60
-382 data @a,a5,2f,85,fd,a5,30,85,fe
-384 data ad,<i,>i,f0,?1
-386 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
-388 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
-390 data @1,60
-392 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
+380 data @f,8d,<i,>i,20,<a,>a
+382 data a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
+384 data @a,a5,2f,85,fd,a5,30,85,fe
+386 data ad,<i,>i,f0,?1
+388 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
+390 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
+392 data @1,60
 
 	; S$
 	;
@@ -474,6 +471,3 @@
 410 data @x,00
 412 data @o,00,00
 414 data @m,00,00
-
-
-
