@@ -247,10 +247,6 @@
 
 300 data @(,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b,ad,+v,>v,4c,<&,>&
 
-	; X, Offset
-	;
-@x 	00
-
 	; <,+,# - low byte
 	;
 @'	ldy #$01 		a0,01
@@ -266,13 +262,8 @@
 
 	jmp @& 			4c,<&,>& 	
 
-320 data @x,00
 322 data @',a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
 324 data 18,ad,<v,>v,6d,<x,>x,4c,<&,>&
-
-	; PC
-	;
-@p 	00,00
 
 	; PC = O
 	;
@@ -289,7 +280,6 @@
 	inc @p+1 		ee,+p,>p
 @4	rts 			60
 
-330 data @p,00,00
 332 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
 334 data @j,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
 
@@ -303,10 +293,6 @@
  	lda #>s 		a9,>s
  	sta $4a 		85,4a
  	rts 			60
-
-	; S$
-	;
-@s 	00,00,00
 
 	; READ S$
 	;
@@ -336,7 +322,6 @@
  	rts 			60
 
 340 data @f,a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
-342 data @s,00,00,00
 344 data @g,a9,98,85,11
 346 data a5,7a,85,4b,a5,7b,85,4c
 348 data a5,41,85,7a,a5,42,85,7b
@@ -366,14 +351,6 @@
 	sta @m 			8d,<m,>m
 	stx @m+1 		8e,+m,>m
 	rts 			60
-
-	; O, Origin
-	;
-@o 	00,00
-
-	; M, Memory
-	;
-@m 	00,00
 
 	; ac/xr = (int) var
 	;
@@ -406,7 +383,6 @@
 364 data 8d,+2,>2,8e,+3,>3
 366 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
 368 data 60
-370 data @o,00,00,@m,00,00
 372 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
 374 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 
@@ -435,14 +411,6 @@
 	sta $fe 		85,fe
 @1	rts 			60
 
-	; I, Index
-	;
-@i	00
-
-	; T, Temp
-	;
-@t  00,00
-
 	; V = (fd/fe)
 	;
 @b	ldy #$00  		a0,00
@@ -463,16 +431,52 @@
 	sta ($fd),y 	91,fd
 	rts 			60
 
-	; V, Value
-	;	
-@v 	00,00
-
 380 data @a,a5,2f,85,fd,a5,30,85,fe
 382 data ad,<i,>i,f0,?1
 384 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
 386 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
 388 data @1,60
-390 data @i,00,@t,00,00
 392 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
 394 data @c,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd,60
-396 data @v,00,00
+
+	; S$
+	;
+@s 	00,00,00
+
+	; I, Index
+	;
+@i	00
+
+	; T, Temp
+	;
+@t  00,00
+
+	; V, Value
+	;	
+@v 	00,00
+
+	; PC
+	;
+@p 	00,00
+
+	; X, Offset
+	;
+@x 	00
+
+	; O, Origin
+	;
+@o 	00,00
+
+	; M, Memory
+	;
+@m 	00,00
+
+400 data @s,00,00,00
+402 data @i,00
+404 data @t,00,00
+406 data @v,00,00
+408 data @p,00,00
+410 data @x,00
+412 data @o,00,00
+414 data @m,00,00
+
