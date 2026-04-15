@@ -1,8 +1,43 @@
 
-	jsr @e 			20,<e,>e 	; set O and M
-	jsr @f 			20,<f,>f 	; use S$ as a string variable
+	; get BASIC variables
+	; 	O defaults to C000, if not set
+	; 	M defaults to O, if not set
+	;
+	lda #$00 		a9,00
+	ldx #$c0 		a2,c0
+	sta @2+1 		8d,+2,>2
+	stx @3+1 		8e,+3,>3
 
-200 data 20,<e,>e,20,<f,>f
+	lda #$4f 		a9,4f
+	ldx #$00 		a2,00
+	jsr @d 			20,<d,>d
+	sta @o 			8d,<o,>o
+	stx @o+1 		8e,+o,>o
+
+	sta @2+1 		8d,+2,>2
+	stx @3+1 		8e,+3,>3
+
+	lda #$4f 		a9,4d
+	ldx #$00 		a2,00
+	jsr @d 			20,<d,>d
+	sta @m 			8d,<m,>m
+	stx @m+1 		8e,+m,>m
+
+	; READ into variable S$
+	;
+	lda #$ff 		a9,ff
+ 	sta $0d 		85,0d
+
+ 	lda #<s 		a9,<s
+ 	sta $49 		85,49
+ 	lda #>s 		a9,>s
+ 	sta $4a 		85,4a
+
+200 data a9,00,a2,c0,8d,+2,>2,8e,+3,>3
+202 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
+204 data 8d,+2,>2,8e,+3,>3
+206 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
+208 data a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a
 
 	; Pass 1
 	;
@@ -283,17 +318,6 @@
 332 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
 334 data @j,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
 
-	; use variable S$
-	;
-@f 	lda #$ff 		a9,ff 	; variable is a string
- 	sta $0d 		85,0d
-
- 	lda #<s 		a9,<s
- 	sta $49 		85,49
- 	lda #>s 		a9,>s
- 	sta $4a 		85,4a
- 	rts 			60
-
 	; READ S$
 	;
 	; out:
@@ -321,36 +345,10 @@
 
  	rts 			60
 
-340 data @f,a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a,60
 344 data @g,a9,98,85,11
 346 data a5,7a,85,4b,a5,7b,85,4c
 348 data a5,41,85,7a,a5,42,85,7b
 350 data 20,2c,ac,ad,+s,>s,85,4b,ad,#s,>s,85,4c,60
-
-	; get BASIC variables
-	; 	O defaults to C000, if not set
-	; 	M defaults to O, if not set
-	;
-@e 	lda #$00 		a9,00
-	ldx #$c0 		a2,c0
-	sta @2+1 		8d,+2,>2
-	stx @3+1 		8e,+3,>3
-
-	lda #$4f 		a9,4f
-	ldx #$00 		a2,00
-	jsr @d 			20,<d,>d
-	sta @o 			8d,<o,>o
-	stx @o+1 		8e,+o,>o
-
-	sta @2+1 		8d,+2,>2
-	stx @3+1 		8e,+3,>3
-
-	lda #$4f 		a9,4d
-	ldx #$00 		a2,00
-	jsr @d 			20,<d,>d
-	sta @m 			8d,<m,>m
-	stx @m+1 		8e,+m,>m
-	rts 			60
 
 	; ac/xr = (int) var
 	;
@@ -378,11 +376,6 @@
 @3	ldx #$c0 		a2,c0
 	rts				60
 
-360 data @e,a9,00,a2,c0,8d,+2,>2,8e,+3,>3
-362 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
-364 data 8d,+2,>2,8e,+3,>3
-366 data a9,4d,a2,00,20,<d,>d,8d,<m,>m,8e,+m,>m
-368 data 60
 372 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
 374 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 
@@ -479,4 +472,3 @@
 410 data @x,00
 412 data @o,00,00
 414 data @m,00,00
-
