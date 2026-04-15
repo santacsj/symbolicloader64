@@ -2,7 +2,7 @@
 
 Learn C64 machine code the hard way, by programming on paper :). You do the assembling and this short BASIC program automates the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
 
-A machine code version is also available. For details, see below.
+A machine language version is also available. For details, see below.
 
 ## BASIC Version
 
@@ -55,7 +55,7 @@ C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 
 ## ML Version
 
-This version survives resets. Pair it with a cartridge that can recover BASIC programs (aka the OLD command). Functionally it is almost identical to the BASIC version, but instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
+This version survives resets. Pair it with a cartridge that can recover BASIC programs (aka the `OLD` command). Functionally it is almost identical to the BASIC version, but instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
 
 Copy and paste the content of `SELF` to VICE to get this version. 
 
