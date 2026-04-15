@@ -4,7 +4,9 @@ Learn C64 machine code the hard way, by programming on paper :). You do the asse
 
 A machine code version is also available. For details, see below.
 
-## The BASIC Version
+## BASIC Version
+
+Copy and paste the content of `SYMLOADER` to VICE to get this version. 
 
 ### Addresses
 Variable `M` (as memory) holds the address where the program is loaded to.
@@ -51,11 +53,9 @@ which in turn is loaded to memory as
 C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 ```
 
-## The ML Version
+## ML Version
 
-This version survives resets. Pair it with a cartridge that can recover BASIC programs (aka the OLD command). Functionally it is almost identical to the BASIC version.
-
-Instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
+This version survives resets. Pair it with a cartridge that can recover BASIC programs (aka the OLD command). Functionally it is almost identical to the BASIC version, but instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
 
 Copy and paste the content of `SELF` to VICE to get this version. 
 
