@@ -278,9 +278,7 @@
 	;	
 @(	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
-
 	jsr @f 			20,<f,>f 	; v = symbol(i)
-
 	lda @v+1		ad,+v,>v
 
 	jmp @& 			4c,<&,>&
@@ -291,9 +289,8 @@
 	;
 @'	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
-
 	jsr @f 			20,<f,>f 	; v = symbol(i)
-
+	
 	clc 			18
 	lda @v 			ad,<v,>v
 	adc @x 			6d,<x,>x
