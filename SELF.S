@@ -168,25 +168,15 @@
 	;
 @+	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
+	jsr @e 			20,<e,>e
 
-	sec 			38
-	sbc #$30 		e9,30
-	cmp #$0a 		c9,0a
-	bcc @* 			90,?*
-	sbc #$07 		e9,07
-
-@*	sta $02			85,02		; unused zero-page byte as temp
+	sta $02			85,02		; unused zero-page byte as temp
 
 	dey 			88
 	lda ($4b),y 	b1,4b
+	jsr @e 			20,<e,>e
 
-	sec 			38
-	sbc #$30 		e9,30
-	cmp #$0a 		c9,0a
-	bcc @) 			90,?)
-	sbc #$07 		e9,07
-
-@)	asl a 			0a
+	asl a 			0a
 	asl a 			0a
 	asl a 			0a
 	asl a 			0a
@@ -205,13 +195,25 @@
 
 @% 	jmp @8 			4c,<8,>8
 
-260 data @+,a0,01,b1,4b
-262 data 38,e9,30,c9,0a,90,?*,e9,07
-264 data @*,85,02,88,b1,4b
-266 data 38,e9,30,c9,0a,90,?),e9,07
-268 data @),0a,0a,0a,0a,18,65,02
+	; hex digit to byte
+	; in:
+	; 	ar - asc of hex digit
+	; out:
+	; 	ar - byte
+	;
+@e	sec 			38
+	sbc #$30 		e9,30
+	cmp #$0a 		c9,0a
+	bcc @* 			90,?*
+	sbc #$07 		e9,07
+@* 	rts 			60
+
+260 data @+,a0,01,b1,4b,20,<e,>e
+264 data 85,02,88,b1,4b,20,<e,>e
+268 data 0a,0a,0a,0a,18,65,02
 270 data @&,a0,00,91,fb,20,<j,>j,e6,fb,d0,?%,e6,fc
 272 data @%,4c,<8,>8
+274 data @e,38,e9,30,c9,0a,90,?*,e9,07,@*,60
 
 	; ? - relative address
 	;	
@@ -468,6 +470,3 @@
 410 data @x,00
 412 data @o,00,00
 414 data @m,00,00
-
-
-
