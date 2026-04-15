@@ -220,9 +220,7 @@
 @$	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
 	
-	sta @i 			8d,<i,>i 	; v = symbol(i)
-	jsr @a 			20,<a,>a
-	jsr @b 			20,<b,>b
+	jsr @f 			20,<f,>f 	; v = symbol(i)
 
 	sec   			38 			; v = v - pc
 	lda @v 			ad,<v,>v
@@ -267,7 +265,7 @@
 
 	jmp @& 			4c,<&,>&
 
-280 data @$,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
+280 data @$,a0,01,b1,4b,20,<f,>f
 282 data 38,ad,<v,>v,ed,<p,>p,8d,<v,>v,ad,+v,>v,ed,+p,>p,8d,+v,>v
 284 data 38,ad,<v,>v,e9,01,8d,<v,>v,b0,?#,ce,+v,>v
 286 data @#,ad,<v,>v,c9,80,ad,+v,>v,e9,ff,50,?=,49,80
@@ -281,24 +279,20 @@
 @(	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
 
-	sta @i 			8d,<i,>i 	; v = symbol(i)
-	jsr @a 			20,<a,>a
-	jsr @b 			20,<b,>b
+	jsr @f 			20,<f,>f 	; v = symbol(i)
 
 	lda @v+1		ad,+v,>v
 
 	jmp @& 			4c,<&,>&
 
-300 data @(,a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b,ad,+v,>v,4c,<&,>&
+300 data @(,a0,01,b1,4b,20,<f,>f,ad,+v,>v,4c,<&,>&
 
 	; <,+,# - low byte
 	;
 @'	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
 
-	sta @i 			8d,<i,>i 	; v = symbol(i)
-	jsr @a 			20,<a,>a
-	jsr @b 			20,<b,>b
+	jsr @f 			20,<f,>f 	; v = symbol(i)
 
 	clc 			18
 	lda @v 			ad,<v,>v
@@ -306,7 +300,7 @@
 
 	jmp @& 			4c,<&,>& 	
 
-322 data @',a0,01,b1,4b,8d,<i,>i,20,<a,>a,20,<b,>b
+322 data @',a0,01,b1,4b,20,<f,>f
 324 data 18,ad,<v,>v,6d,<x,>x,4c,<&,>&
 
 	; PC = O
@@ -388,6 +382,15 @@
 372 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
 374 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 
+	; V = symbol(i)
+	: in:
+	; 	ar - index
+	;
+@f	sta @i 			8d,<i,>i
+	jsr @a 			20,<a,>a
+	jsr @b 			20,<b,>b
+	rts
+
 	; fd/fe = address of I-th word in ARYTAB
 	;	
 @a 	lda $2f 		a5,2f 		; fd/fe = 2f/30, ARYTAB
@@ -423,11 +426,12 @@
 	sta @v+1 		8d,+v,>v
 	rts 			60
 
-380 data @a,a5,2f,85,fd,a5,30,85,fe
-382 data ad,<i,>i,f0,?1
-384 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
-386 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
-388 data @1,60
+380 data @f,8d,<i,>i,20,<a,>a,20,<b,>b,60
+382 data @a,a5,2f,85,fd,a5,30,85,fe
+384 data ad,<i,>i,f0,?1
+386 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
+388 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
+390 data @1,60
 392 data @b,a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
 
 	; S$
@@ -470,3 +474,6 @@
 410 data @x,00
 412 data @o,00,00
 414 data @m,00,00
+
+
+
