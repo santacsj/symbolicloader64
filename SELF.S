@@ -55,9 +55,10 @@
 	cmp #$40 		c9,40 		; symbol?
 	beq @6 			f0,?6
 
-	jsr @j 			20,<j,>j 	; PC++
-
-	jmp @5 			4c,<5,>5
+	inc $f9			e6,f9 		; PC++
+	bne @5 			d0,?5
+	inc $fa			e6,fa
+	beq @5 			f0,?5
 
 @6 	iny 			c8 			; store PC to symbol table
 	lda ($4b),y 	b1,4b
@@ -76,7 +77,8 @@
 	jmp @5 			4c,<5,>5
 
 220 data 20,<h,>h,20,1d,a8
-222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6,20,<j,>j,4c,<5,>5
+222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6
+223 data e6,f9,d0,?5,e6,fa,f0,?5
 224 data @6,c8,b1,4b,aa
 226 data 20,<a,>a,88,a5,f9,91,fd,c8,a5,fa,91,fd
 228 data 4c,<5,>5
@@ -175,9 +177,11 @@
 @&	ldy #$00 		a0,00
 	sta ($fb),y 	91,fb 		; store by to m
 
-	jsr @j 			20,<j,>j 	; PC++
+	inc $f9			e6,f9 		; PC++
+	bne @4 			d0,?4
+	inc $fa			e6,fa
 
-	inc $fb 		e6,fb 		; M++
+@4	inc $fb 		e6,fb 		; M++
 	bne @% 			d0,?%
 	inc $fc 		e6,fc
 
@@ -200,7 +204,8 @@
 260 data @+,a0,01,b1,4b,20,<e,>e
 264 data 85,02,88,b1,4b,20,<e,>e
 268 data 0a,0a,0a,0a,18,65,02
-270 data @&,a0,00,91,fb,20,<j,>j,e6,fb,d0,?%,e6,fc
+270 data @&,a0,00,91,fb,e6,f9,d0,?4,e6,fa
+271 data @4,e6,fb,d0,?%,e6,fc
 272 data @%,4c,<8,>8
 274 data @e,38,e9,30,c9,0a,90,?*,e9,07,@*,60
 
@@ -297,15 +302,7 @@
 	sta $fa			85,fa
 	rts 			60
 
-	; PC++
-	;
-@j	inc $f9			e6,f9
-	bne @4 			d0,?4
-	inc $fa			e6,fa
-@4	rts 			60
-
 332 data @h,ad,<o,>o,85,f9,ad,+o,>o,85,fa,60
-334 data @j,e6,f9,d0,?4,e6,fa,@4,60
 
 	; READ S$
 	;
