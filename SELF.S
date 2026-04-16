@@ -211,23 +211,23 @@
 	jsr @f 			20,<f,>f 	; v = symbol(i)
 
 	sec   			38 			; v = v - pc
-	lda @v 			ad,<v,>v
+	lda $f7			a5,f7
 	sbc @p 			ed,<p,>p
-	sta @v 			8d,<v,>v
-	lda @v+1 		ad,+v,>v
+	sta $f7			85,f7
+	lda $f8			a5,f8
 	sbc @p+1 		ed,+p,>p
-	sta @v+1 		8d,+v,>v
+	sta $f8			85,f8
 
 	sec 			38 			; v = v - 1
-	lda @v 			ad,<v,>v
+	lda $f7			a5,f7
 	sbc #$01 		e9,01
-	sta @v 			8d,<v,>v
+	sta $f7			85,f7
 	bcs @# 			b0,?#
-	dec @v+1 		ce,+v,>v
+	dec $f8 		c6,f8
 
-@# 	lda @v 			ad,<v,>v 	; v < -128, overflow error if N = 1
+@# 	lda $f7			a5,f7 		; v < -128, overflow error if N = 1
 	cmp #$80		c9,80
-	lda @v+1 		ad,+v,>v
+	lda $f8			a5,f8
 	sbc #$ff 		e9,ff
 	bvc @= 			50,?=
 	eor #$80 		49,80
@@ -237,9 +237,9 @@
 	ldx #$0f  		a2,0f 		; ?OVERFLOW ERROR
  	jmp $a437 		4c,37,a4
 
-@! 	lda @v 			ad,<v,>v 	; v >= 128, overflow error if N = 0
+@! 	lda $f7			a5,f7 		; v >= 128, overflow error if N = 0
 	cmp #$80		c9,80
-	lda @v+1 		ad,+v,>v
+	lda $f8			a5,f8
 	sbc #$00 		e9,00
 	bvc @: 			50,?<
 	eor #$80 		49,80
@@ -249,29 +249,29 @@
 	ldx #$0f  		a2,0f 		; ?OVERFLOW ERROR
  	jmp $a437 		4c,37,a4
 
-@;  lda @v 			ad,<v,>v
+@;  lda $f7			a5,f7
 
 	jmp @& 			4c,<&,>&
 
 280 data @$,a0,01,b1,4b,20,<f,>f
-282 data 38,ad,<v,>v,ed,<p,>p,8d,<v,>v,ad,+v,>v,ed,+p,>p,8d,+v,>v
-284 data 38,ad,<v,>v,e9,01,8d,<v,>v,b0,?#,ce,+v,>v
-286 data @#,ad,<v,>v,c9,80,ad,+v,>v,e9,ff,50,?=,49,80
+282 data 38,a5,f7,ed,<p,>p,85,f7,a5,f8,ed,+p,>p,85,f8
+284 data 38,a5,f7,e9,01,85,f7,b0,?#,c6,f8
+286 data @#,a5,f7,c9,80,a5,f8,e9,ff,50,?=,49,80
 288 data @=,10,?!,a2,0f,4c,37,a4
-290 data @!,ad,<v,>v,c9,80,ad,+v,>v,e9,00,50,?<,49,80
+290 data @!,a5,f7,c9,80,a5,f8,e9,00,50,?<,49,80
 292 data @<,30,?;,a2,0f,4c,37,a4
-294 data @;,ad,<v,>v,4c,<&,>&
+294 data @;,a5,f7,4c,<&,>&
 
 	; > - high byte
 	;	
 @(	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
 	jsr @f 			20,<f,>f 	; v = symbol(i)
-	lda @v+1		ad,+v,>v
+	lda $f8			a5,f8
 
 	jmp @& 			4c,<&,>&
 
-300 data @(,a0,01,b1,4b,20,<f,>f,ad,+v,>v,4c,<&,>&
+300 data @(,a0,01,b1,4b,20,<f,>f,a5,f8,4c,<&,>&
 
 	; <,+,# - low byte
 	;
@@ -280,13 +280,13 @@
 	jsr @f 			20,<f,>f 	; v = symbol(i)
 
 	clc 			18
-	lda @v 			ad,<v,>v
+	lda $f7			a5,f7
 	adc @x 			6d,<x,>x
 
 	jmp @& 			4c,<&,>& 	
 
 322 data @',a0,01,b1,4b,20,<f,>f
-324 data 18,ad,<v,>v,6d,<x,>x,4c,<&,>&
+324 data 18,a5,f7,6d,<x,>x,4c,<&,>&
 
 	; PC = O
 	;
@@ -376,10 +376,10 @@
 
 	ldy #$00  		a0,00 		; V = (fd/fe)
 	lda ($fd),y 	b1,fd
-	sta @v 			8d,<v,>v
+	sta $f7			85,f7
 	iny 			c8
 	lda ($fd),y 	b1,fd
-	sta @v+1 		8d,+v,>v
+	sta $f8			85,f8
 	
 	rts
 
@@ -409,7 +409,7 @@
 @1	rts 			60
 
 380 data @f,8d,<i,>i,20,<a,>a
-382 data a0,00,b1,fd,8d,<v,>v,c8,b1,fd,8d,+v,>v,60
+382 data a0,00,b1,fd,85,f7,c8,b1,fd,85,f8,60
 384 data @a,a5,2f,85,fd,a5,30,85,fe
 386 data ad,<i,>i,f0,?1
 388 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
@@ -428,10 +428,6 @@
 	;
 @t  00,00
 
-	; V, Value
-	;	
-@v 	00,00
-
 	; PC
 	;
 @p 	00,00
@@ -447,7 +443,6 @@
 400 data @s,00,00,00
 402 data @i,00
 404 data @t,00,00
-406 data @v,00,00
 408 data @p,00,00
 410 data @x,00
 412 data @o,00,00
