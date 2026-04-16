@@ -63,7 +63,7 @@ Copy and paste the content of `SELF` to VICE to get this version.
 ```
 10 O=49152
 15 M=49152
-20 SYS 52714
+20 SYS 52777
 30 DATA @1,A2,FF
 40 DATA A9,40
 50 DATA @2,20,D2,FF
