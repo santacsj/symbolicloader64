@@ -398,17 +398,17 @@
 	beq @1			f0,?1 		; if I = 0, end
 
 	asl a 			0a 			; T = I * 2
-	sta @t 			8d,<t,>t
+	sta $bb			85,bb
 	lda #$00 		a9,00
 	rol a 			2a
-	sta @t+1 		8d,+t,>t
+	sta $bc			85,bc
 
 	clc 			18 			; fd/fe = fd/fe + T
 	lda $fd 		a5,fd
-	adc @t 			6d,<t,>t
+	adc $bb			65,bb
 	sta $fd 		85,fd
 	lda $fe 		a5,fe
-	adc @t+1 		6d,+t,>t
+	adc $bc			65,bc
 	sta $fe 		85,fe
 @1	rts 			60
 
@@ -416,8 +416,8 @@
 382 data a0,00,b1,fd,85,f7,c8,b1,fd,85,f8,60
 384 data @a,a5,2f,85,fd,a5,30,85,fe
 386 data ad,<i,>i,f0,?1
-388 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
-390 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
+388 data 0a,85,bb,a9,00,2a,85,bc
+390 data 18,a5,fd,65,bb,85,fd,a5,fe,65,bc,85,fe
 392 data @1,60
 
 	; S$
@@ -428,15 +428,10 @@
 	;
 @i	00
 
-	; T, Temp
-	;
-@t  00,00
-
 	; O, Origin
 	;
 @o 	00,00
 
 400 data @s,00,00,00
 402 data @i,00
-404 data @t,00,00
 412 data @o,00,00
