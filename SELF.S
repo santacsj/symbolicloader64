@@ -367,14 +367,17 @@
 372 data @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
 374 data a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 
-	; V = symbol(i)
+	; $f7/f8 = symbol(i)
+	;
 	: in:
 	; 	ac - asc of symbol
+	; out:
+	; 	$f7/f8 - symbol value
 	;
 @f	sta @i 			8d,<i,>i
 	jsr @a 			20,<a,>a
 
-	ldy #$00  		a0,00 		; V = (fd/fe)
+	ldy #$00  		a0,00 		; $f7/f8 = (fd/fe)
 	lda ($fd),y 	b1,fd
 	sta $f7			85,f7
 	iny 			c8
