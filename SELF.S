@@ -64,14 +64,9 @@
 	
 	sta @i 			8d,<i,>i 	; i = asc(symbol)
 
-	lda @p  		ad,<p,>p 	; v = pc
-	sta @v 			8d,<v,>v
-	lda @p+1 		ad,+p,>p
-	sta @v+1 		8d,+v,>v
-
 	jsr @a 			20,<a,>a	; fd/fe = symbol table address for i
 	
-	ldy #$00 		a0,00 		; (fd/fe) = V
+	ldy #$00 		a0,00 		; (fd/fe) = pc
 	lda @v 			ad,<v,>v
 	sta ($fd),y 	91,fd
 	iny 			c8
@@ -82,8 +77,8 @@
 
 220 data 20,<h,>h,20,1d,a8
 222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6,20,<j,>j,4c,<5,>5
-224 data @6,c8,b1,4b,8d,<i,>i,ad,<p,>p,8d,<v,>v,ad,+p,>p,8d,+v,>v
-226 data 20,<a,>a,a0,00,ad,<v,>v,91,fd,c8,ad,+v,>v,91,fd
+224 data @6,c8,b1,4b,8d,<i,>i
+226 data 20,<a,>a,a0,00,ad,<p,>p,91,fd,c8,ad,+p,>p,91,fd
 228 data 4c,<5,>5
 
 	; Pass 2
