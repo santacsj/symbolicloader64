@@ -62,7 +62,7 @@
 @6 	iny 			c8 			; store PC to symbol table
 	lda ($4b),y 	b1,4b
 	
-	sta @i 			8d,<i,>i 	; I = asc(symbol)
+	tax 			aa 		 	; I = asc(symbol)
 
 	jsr @a 			20,<a,>a	; fd/fe = symbol table address for I
 	
@@ -77,7 +77,7 @@
 
 220 data 20,<h,>h,20,1d,a8
 222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6,20,<j,>j,4c,<5,>5
-224 data @6,c8,b1,4b,8d,<i,>i
+224 data @6,c8,b1,4b,aa
 226 data 20,<a,>a,a0,00,a5,f9,91,fd,c8,a5,fa,91,fd
 228 data 4c,<5,>5
 
@@ -375,7 +375,7 @@
 	; out:
 	; 	$f7/f8 - symbol value
 	;
-@f	sta @i 			8d,<i,>i
+@f	tax 			aa
 	jsr @a 			20,<a,>a
 
 	ldy #$00  		a0,00 		; $f7/f8 = (fd/fe)
@@ -388,13 +388,16 @@
 	rts
 
 	; fd/fe = address of I-th word in ARYTAB
+	;
+	; in:
+	; 	xr - index
 	;	
 @a 	lda $2f 		a5,2f 		; fd/fe = 2f/30, ARYTAB
 	sta $fd 		85,fd
 	lda $30 		a5,30
 	sta $fe 		85,fe
 
-	lda @i 			ad,<i,>i
+	txa 			8a
 	beq @1			f0,?1 		; if I = 0, end
 
 	asl a 			0a 			; T = I * 2
@@ -412,10 +415,10 @@
 	sta $fe 		85,fe
 @1	rts 			60
 
-380 data @f,8d,<i,>i,20,<a,>a
+380 data @f,aa,20,<a,>a
 382 data a0,00,b1,fd,85,f7,c8,b1,fd,85,f8,60
 384 data @a,a5,2f,85,fd,a5,30,85,fe
-386 data ad,<i,>i,f0,?1
+386 data 8a,f0,?1
 388 data 0a,85,bb,a9,00,2a,85,bc
 390 data 18,a5,fd,65,bb,85,fd,a5,fe,65,bc,85,fe
 392 data @1,60
@@ -424,14 +427,9 @@
 	;
 @s 	00,00,00
 
-	; I, Index
-	;
-@i	00
-
 	; O, Origin
 	;
 @o 	00,00
 
 400 data @s,00,00,00
-402 data @i,00
 412 data @o,00,00
