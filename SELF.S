@@ -369,6 +369,7 @@
 	;
 	: in:
 	; 	ac - asc of symbol
+	;	xr - index
 	; out:
 	; 	$f7/f8 - symbol value
 	;
