@@ -67,10 +67,10 @@
 	jsr @a 			20,<a,>a	; fd/fe = symbol table address for i
 	
 	ldy #$00 		a0,00 		; (fd/fe) = pc
-	lda @v 			ad,<v,>v
+	lda @p 			ad,<p,>p
 	sta ($fd),y 	91,fd
 	iny 			c8
-	lda @v+1 		ad,+v,>v
+	lda @p+1 		ad,+p,>p
 	sta ($fd),y 	91,fd
 	
 	jmp @5 			4c,<5,>5
