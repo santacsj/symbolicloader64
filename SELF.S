@@ -41,7 +41,7 @@
 
 	; Pass 1
 	;
-	jsr @h 			20,<h,>h 	; pc = O
+	jsr @h 			20,<h,>h 	; PC = O
 	jsr @a81d 		20,1d,a8 	; RESTORE
 
 @5	jsr @g 			20,<g,>g 	; READ S$
@@ -55,22 +55,22 @@
 	cmp #$40 		c9,40 		; symbol?
 	beq @6 			f0,?6
 
-	jsr @j 			20,<j,>j 	; pc++
+	jsr @j 			20,<j,>j 	; PC++
 
 	jmp @5 			4c,<5,>5
 
-@6 	iny 			c8 			; store pc to symbol table
+@6 	iny 			c8 			; store PC to symbol table
 	lda ($4b),y 	b1,4b
 	
-	sta @i 			8d,<i,>i 	; i = asc(symbol)
+	sta @i 			8d,<i,>i 	; I = asc(symbol)
 
-	jsr @a 			20,<a,>a	; fd/fe = symbol table address for i
+	jsr @a 			20,<a,>a	; fd/fe = symbol table address for I
 	
-	ldy #$00 		a0,00 		; (fd/fe) = pc
-	lda @p 			ad,<p,>p
+	ldy #$00 		a0,00 		; (fd/fe) = PC
+	lda $f9 		a5,f9
 	sta ($fd),y 	91,fd
 	iny 			c8
-	lda @p+1 		ad,+p,>p
+	lda $fa 		a5,fa
 	sta ($fd),y 	91,fd
 	
 	jmp @5 			4c,<5,>5
@@ -78,7 +78,7 @@
 220 data 20,<h,>h,20,1d,a8
 222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6,20,<j,>j,4c,<5,>5
 224 data @6,c8,b1,4b,8d,<i,>i
-226 data 20,<a,>a,a0,00,ad,<p,>p,91,fd,c8,ad,+p,>p,91,fd
+226 data 20,<a,>a,a0,00,a5,f9,91,fd,c8,a5,fa,91,fd
 228 data 4c,<5,>5
 
 	; Pass 2
@@ -184,6 +184,7 @@
 @% 	jmp @8 			4c,<8,>8
 
 	; hex digit to byte
+	;
 	; in:
 	; 	ar - asc of hex digit
 	; out:
@@ -208,24 +209,24 @@
 @$	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
 	
-	jsr @f 			20,<f,>f 	; v = symbol(i)
+	jsr @f 			20,<f,>f 	; V = symbol(I)
 
-	sec   			38 			; v = v - pc
+	sec   			38 			; V = V - PC
 	lda $f7			a5,f7
-	sbc @p 			ed,<p,>p
+	sbc $f9			e5,f9
 	sta $f7			85,f7
 	lda $f8			a5,f8
-	sbc @p+1 		ed,+p,>p
+	sbc $fa			e5,fa
 	sta $f8			85,f8
 
-	sec 			38 			; v = v - 1
+	sec 			38 			; V = V - 1
 	lda $f7			a5,f7
 	sbc #$01 		e9,01
 	sta $f7			85,f7
 	bcs @# 			b0,?#
 	dec $f8 		c6,f8
 
-@# 	lda $f7			a5,f7 		; v < -128, overflow error if N = 1
+@# 	lda $f7			a5,f7 		; V < -128, overflow error, if N = 1
 	cmp #$80		c9,80
 	lda $f8			a5,f8
 	sbc #$ff 		e9,ff
@@ -237,7 +238,7 @@
 	ldx #$0f  		a2,0f 		; ?OVERFLOW ERROR
  	jmp $a437 		4c,37,a4
 
-@! 	lda $f7			a5,f7 		; v >= 128, overflow error if N = 0
+@! 	lda $f7			a5,f7 		; V >= 128, overflow error, if N = 0
 	cmp #$80		c9,80
 	lda $f8			a5,f8
 	sbc #$00 		e9,00
@@ -254,7 +255,7 @@
 	jmp @& 			4c,<&,>&
 
 280 data @$,a0,01,b1,4b,20,<f,>f
-282 data 38,a5,f7,ed,<p,>p,85,f7,a5,f8,ed,+p,>p,85,f8
+282 data 38,a5,f7,e5,f9,85,f7,a5,f8,e5,fa,85,f8
 284 data 38,a5,f7,e9,01,85,f7,b0,?#,c6,f8
 286 data @#,a5,f7,c9,80,a5,f8,e9,ff,50,?=,49,80
 288 data @=,10,?!,a2,0f,4c,37,a4
@@ -291,20 +292,20 @@
 	; PC = O
 	;
 @h	lda @o  		ad,<o,>o
-	sta @p 			8d,<p,>p
+	sta $f9			85,f9
 	lda @o+1 		ad,+o,>o
-	sta @p+1 		8d,+p,>p
+	sta $fa			85,fa
 	rts 			60
 
 	; PC++
 	;
-@j	inc @p 			ee,<p,>p
+@j	inc $f9			e6,f9
 	bne @4 			d0,?4
-	inc @p+1 		ee,+p,>p
+	inc $fa			e6,fa
 @4	rts 			60
 
-332 data @h,ad,<o,>o,8d,<p,>p,ad,+o,>o,8d,+p,>p,60
-334 data @j,ee,<p,>p,d0,?4,ee,+p,>p,@4,60
+332 data @h,ad,<o,>o,85,f9,ad,+o,>o,85,fa,60
+334 data @j,e6,f9,d0,?4,e6,fa,@4,60
 
 	; READ S$
 	;
@@ -431,10 +432,6 @@
 	;
 @t  00,00
 
-	; PC
-	;
-@p 	00,00
-
 	; X, Offset
 	;
 @x 	00
@@ -446,6 +443,5 @@
 400 data @s,00,00,00
 402 data @i,00
 404 data @t,00,00
-408 data @p,00,00
 410 data @x,00
 412 data @o,00,00
