@@ -368,7 +368,7 @@
 	; $f7/f8 = symbol(i)
 	;
 	: in:
-	;	xr - index
+	;	ac - asc of symbol
 	; out:
 	; 	$f7/f8 - symbol value
 	;
