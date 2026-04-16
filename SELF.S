@@ -83,7 +83,7 @@
 
 	; Pass 2
 	;
-@7 	jsr @h 			20,<h,>h 	; pc = O
+@7 	jsr @h 			20,<h,>h 	; PC = O
 
 	jsr @a81d 		20,1d,a8 	; RESTORE
 
@@ -120,7 +120,7 @@
 
 	jmp @( 			4c,<(,>(
 
-@/	ldx #$00 		a2,00 		; of = 0
+@/	ldx #$00 		a2,00 		; OF = 0
 	stx @x 			8e,<x,>x
 
 	cmp #$3c 		c9,3c 		; <
@@ -175,9 +175,9 @@
 @&	ldy #$00 		a0,00
 	sta ($fb),y 	91,fb 		; store by to m
 
-	jsr @j 			20,<j,>j 	; pc++
+	jsr @j 			20,<j,>j 	; PC++
 
-	inc $fb 		e6,fb 		; m++
+	inc $fb 		e6,fb 		; M++
 	bne @% 			d0,?%
 	inc $fc 		e6,fc
 
@@ -267,7 +267,7 @@
 	;	
 @(	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
-	jsr @f 			20,<f,>f 	; v = symbol(i)
+	jsr @f 			20,<f,>f 	; V = symbol(I)
 	lda $f8			a5,f8
 
 	jmp @& 			4c,<&,>&
@@ -278,7 +278,7 @@
 	;
 @'	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
-	jsr @f 			20,<f,>f 	; v = symbol(i)
+	jsr @f 			20,<f,>f 	; V = symbol(I)
 
 	clc 			18
 	lda $f7			a5,f7
@@ -395,15 +395,15 @@
 	sta $fe 		85,fe
 
 	lda @i 			ad,<i,>i
-	beq @1			f0,?1 		; if i = 0, end
+	beq @1			f0,?1 		; if I = 0, end
 
-	asl a 			0a 			; t = i * 2
+	asl a 			0a 			; T = I * 2
 	sta @t 			8d,<t,>t
 	lda #$00 		a9,00
 	rol a 			2a
 	sta @t+1 		8d,+t,>t
 
-	clc 			18 			; fd/fe = fd/fe + t
+	clc 			18 			; fd/fe = fd/fe + T
 	lda $fd 		a5,fd
 	adc @t 			6d,<t,>t
 	sta $fd 		85,fd
