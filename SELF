@@ -88,12 +88,11 @@
 382 data a0,00,b1,fd,85,f7,c8,b1,fd,85,f8,60
 384 data @a,a5,2f,85,fd,a5,30,85,fe
 386 data ad,<i,>i,f0,?1
-388 data 0a,8d,<t,>t,a9,00,2a,8d,+t,>t
-390 data 18,a5,fd,6d,<t,>t,85,fd,a5,fe,6d,+t,>t,85,fe
+388 data 0a,85,bb,a9,00,2a,85,bc
+390 data 18,a5,fd,65,bb,85,fd,a5,fe,65,bc,85,fe
 392 data @1,60
 400 data @s,00,00,00
 402 data @i,00
-404 data @t,00,00
 406 data @v,00,00
 412 data @o,00,00
 500 data ;
