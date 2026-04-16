@@ -66,7 +66,7 @@
 
 	jsr @a 			20,<a,>a	; fd/fe = symbol table address for I
 	
-	ldy #$00 		a0,00 		; (fd/fe) = PC
+	dey 			88  		; (fd/fe) = PC
 	lda $f9 		a5,f9
 	sta ($fd),y 	91,fd
 	iny 			c8
@@ -78,7 +78,7 @@
 220 data 20,<h,>h,20,1d,a8
 222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6,20,<j,>j,4c,<5,>5
 224 data @6,c8,b1,4b,aa
-226 data 20,<a,>a,a0,00,a5,f9,91,fd,c8,a5,fa,91,fd
+226 data 20,<a,>a,88,a5,f9,91,fd,c8,a5,fa,91,fd
 228 data 4c,<5,>5
 
 	; Pass 2
