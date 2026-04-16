@@ -11,9 +11,9 @@
 300 data @#,ea,>#,<#,+#,##,;
 
 10 sys 52777
-20 print:print" 208  0  169  255  208  252"
-30 fori=0to5:printpeek(49152+i);:nexti
-300 data d0,?1,@1,a9,ff,d0,?1,;
+20 print:print" 208  0  234  208  254"
+30 fori=0to4:printpeek(49152+i);:nexti
+300 data d0,?1,@1,ea,@2,d0,?2,;
 
 10 sys 52777
 200 data d0,?1
