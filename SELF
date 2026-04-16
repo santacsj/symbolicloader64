@@ -92,6 +92,5 @@
 390 data 18,a5,fd,65,bb,85,fd,a5,fe,65,bc,85,fe
 392 data @1,60
 400 data @s,00,00,00
-406 data @v,00,00
 412 data @o,00,00
 500 data ;
