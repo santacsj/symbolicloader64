@@ -18,7 +18,7 @@ Variable `O` (as origin), holds the start address for the PC which is used for a
 3. `label`, one single PETSCII character
 4. `token`, fixed length, two characters, can be any of ...
     - `[hex][hex]` stored as a byte
-    - `@[label]` save the address of the next byte as 'label'
+    - `@[label]` save the address of the next byte under 'label'
     - `?[label]` calculate and store a relative address between the current and the saved address
     - `>[label]` recall and store the saved address' high byte
     - `<[label]` recall and store the saved address' low byte
