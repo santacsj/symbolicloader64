@@ -277,6 +277,9 @@
 
 	; <,+,# - low byte
 	;
+	; in:
+	; 	xr - offset
+	;
 @'	stx $02 		86,02
 
 	ldy #$01 		a0,01
