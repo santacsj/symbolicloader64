@@ -6,6 +6,8 @@ A machine language version is also available. For details, see below.
 
 ## BASIC Version
 
+Pair this version with a cartridge that can recover BASIC programs after a reset or NEW (aka the `OLD` command).
+
 Copy and paste the content of `SYMLOADER` to VICE to get this version. 
 
 ### Addresses
@@ -55,7 +57,7 @@ C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 
 ## ML Version
 
-This version survives resets. Pair it with a cartridge that can recover BASIC programs (aka the `OLD` command). Functionally it is almost identical to the BASIC version, but instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
+This version is fast and survives resets, however you still would like to pair it with a cartridge that can recover BASIC programs (aka the `OLD` command) to recover your source code. Functionally it is almost identical to the BASIC version, but instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
 
 Copy and paste the content of `SELF` to VICE to get this version. 
 
