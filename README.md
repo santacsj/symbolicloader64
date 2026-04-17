@@ -15,7 +15,7 @@ Variable `M` (as memory) holds the address where the program is loaded to.
 Variable `O` (as origin), holds the start address for the PC which is used for address calculations. By default `O` equals `M`.
 
 ### Syntax
-1. `;` marks end of data
+1. `;` marks the end of data
 2. `hex`, one single PETSCII character, can only be 0-9 or A-F
 3. `label`, one single PETSCII character
 4. `token`, fixed length, two characters, can be any of ...
@@ -26,7 +26,7 @@ Variable `O` (as origin), holds the start address for the PC which is used for a
     - `<[label]` recall and store the saved address' low byte
     - `+[label]` recall and store the saved address' low byte + 1
     - `#[label]` recall and store the saved address' low byte + 2
-5. `[token],[token], ... ,[token],;` a series of tokens, should be separated by comma
+5. `[token],[token], ... ,[token],;` a series of tokens should be separated by comma and the last token should be followed by a `;`
 
 ### Usage
 
