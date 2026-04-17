@@ -278,6 +278,7 @@
 	; <,+,# - low byte
 	;
 @'	stx $02 		86,02
+
 	ldy #$01 		a0,01
 	lda ($4b),y 	b1,4b
 	jsr @f 			20,<f,>f 	; V = symbol(I)
