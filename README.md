@@ -6,19 +6,14 @@ A machine language version is also available. For details, see below.
 
 ## BASIC Version
 
-Pair this version with a cartridge that can recover BASIC programs after a reset or NEW (aka the `OLD` command).
-
-Copy and paste the content of `SYMLOADER` to VICE to get this version. 
-
 ### Addresses
-Variable `M` (as memory) holds the address where the program is loaded to.
-Variable `O` (as origin), holds the start address for the PC which is used for address calculations. By default `O` equals `M`.
+Variable `O` (as origin) sets the address for the PC which is used for address calculations. Variable `M` (as memory) sets the address where the program is actually loaded to in memory.
 
 ### Syntax
 1. `;` marks the end of data
-2. `hex`, one single PETSCII character, can only be 0-9 or A-F
-3. `label`, one single PETSCII character
-4. `token`, fixed length, two characters, can be any of ...
+2. `hex`, a single PETSCII character, can only be 0-9 or A-F
+3. `label`, a single PETSCII character
+4. `token`, fixed two characters, can be any of ...
     - `[hex][hex]` stored as a byte
     - `@[label]` save the address of the next byte under 'label'
     - `?[label]` calculate and store a relative address between the current and the saved address
@@ -29,7 +24,6 @@ Variable `O` (as origin), holds the start address for the PC which is used for a
 5. `[token],[token], ... ,[token],;` a series of tokens should be separated by comma and the last token should be followed by a `;`
 
 ### Usage
-
 The following program
 ```
                 *=  $c000
@@ -57,9 +51,8 @@ C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 
 ## ML Version
 
-This version is fast and survives resets, however you still would like to pair it with a cartridge that can recover BASIC programs (aka the `OLD` command) to recover your source code. Functionally it is almost identical to the BASIC version, but instead of `?OUT OF RANGE`, this version prints `?OVERFLOW ERROR IN nn`.
-
-Copy and paste the content of `SELF` to VICE to get this version. 
+### Memory
+The code is stored on pages $CE-CF. Another 512 bytes are used for symbols, starting at the BASIC array variable area (ARYTAB).
 
 ### Usage
 ```
