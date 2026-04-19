@@ -28,7 +28,7 @@
 	lda #$ff 		a9,ff
  	sta $0d 		85,0d
 
- 	lda #$69 		a9,65
+ 	lda #$69 		a9,69
  	sta $49 		85,49
  	lda #$00 		a9,00
  	sta $4a 		85,4a
@@ -37,7 +37,7 @@
 202 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
 204 data 8d,+2,>2,8e,+3,>3
 206 data a9,4d,a2,00,20,<d,>d,85,fb,86,fc
-208 data a9,ff,85,0d,a9,65,85,49,a9,00,85,4a
+208 data a9,ff,85,0d,a9,69,85,49,a9,00,85,4a
 
 	; Pass 1
 	;
@@ -77,9 +77,9 @@
 	jmp @5 			4c,<5,>5
 
 220 data 20,<h,>h,20,1d,a8
-222 data @5,20,<g,>g,a0,00,b1,66,c9,3b,f0,?7,c9,40,f0,?6
+222 data @5,20,<g,>g,a0,00,b1,6a,c9,3b,f0,?7,c9,40,f0,?6
 223 data e6,f9,d0,?5,e6,fa,f0,?5
-224 data @6,c8,b1,66,aa
+224 data @6,c8,b1,6a,aa
 226 data 20,<a,>a,88,a5,f9,91,fd,c8,a5,fa,91,fd
 228 data 4c,<5,>5
 
@@ -88,25 +88,20 @@
 @7 	jsr @h 			20,<h,>h 	; PC = O
 	jsr @a81d 		20,1d,a8 	; RESTORE
 
-	lda #$00 		a9,00 		; init out buffer
-	sta $6d 		85,70
-	lda #$20 		a9,20
-	sta $6e 		85,6c
-	sta $6f 		85,6b
-
 @8	jsr @g 			20,<g,>g 	; READ S$
 
-	ldy #$01 		a0,01 		; fill out buffer
-	lda ($66),y 	b1,66
-	sta $6a 		85,6a
-	dey 			88
-	lda ($66),y 	b1,66
-	sta $69 		85,69
-	
-	lda #$69 		a9,69 		; print out buffer
-	jsr $ab1e 		20,1e,ab
+	ldy #$00 		a0,00
+	lda ($6a),y 	b1,4b
+	jsr $ffd2 		20,d2,ff
+	iny 			c8
+	lda ($6a),y 	b1,4b
+	jsr $ffd2 		20,d2,ff
+	lda #$20 		a9,20
+	jsr $ffd2 		20,d2,ff
+	jsr $ffd2 		20,d2,ff
 
-	lda $69 		a5,69
+	ldy #$00 		a0,00
+	lda ($6a),y 	b1,4b
 
 	cmp #$3b 		c9,3b 		; end of pass?
 	bne @9 			d0,?9
@@ -145,10 +140,9 @@
 	jmp @' 			4c,<',>'
 
 230 data @7,20,<h,>h,20,1d,a8
-231 data a9,00,85,6d,a9,20,85,6c,85,6b
 232 data @8,20,<g,>g
-233 data a0,01,b1,66,85,6a,88,b1,66,85,69,a9,69,20,1e,ab
-234 data a5,69,c9,3b,d0,?9,60
+233 data a0,00,b1,6a,20,d2,ff,c8,b1,6a,20,d2,ff,a9,20,20,d2,ff,20,d2,ff
+234 data a0,00,b1,6a,c9,3b,d0,?9,60
 236 data @9,c9,40,f0,?8,c9,3f,d0,?0,4c,<$,>$
 238 data @0,c9,3e,d0,?/,4c,<(,>(
 240 data @/,c9,3c,d0,?.,a2,00,4c,<',>'
@@ -157,12 +151,14 @@
 
 	; 2 char hex str to byte
 	;
-@+	lda $6a 		a5,6a
+@+	ldy #$01 		a0,01
+	lda ($6a),y 	b1,6a
 	jsr @e 			20,<e,>e
 
 	sta $02			85,02		; unused zero-page byte as temp
 
-	lda $69 		a5,69
+	dey 			88
+	lda ($6a),y 	b1,6a
 	jsr @e 			20,<e,>e
 
 	asl a 			0a
@@ -200,8 +196,8 @@
 	sbc #$07 		e9,07
 @* 	rts 			60
 
-260 data @+,a5,6a,20,<e,>e
-264 data 85,02,a5,69,20,<e,>e
+260 data @+,a0,01,b1,6a,20,<e,>e
+264 data 85,02,88,b1,6a,20,<e,>e
 268 data 0a,0a,0a,0a,18,65,02
 270 data @&,a0,00,91,fb,e6,f9,d0,?4,e6,fa
 271 data @4,e6,fb,d0,?%,e6,fc
@@ -210,7 +206,9 @@
 
 	; ? - relative address
 	;	
-@$	lda $6a 		a5,6a
+@$	ldy #$01 		a0,01
+	lda ($6a),y 	b1,6a
+	
 	jsr @f 			20,<f,>f 	; V = symbol(I)
 
 	sec   			38 			; V = V - PC
@@ -256,7 +254,7 @@
 
 	jmp @& 			4c,<&,>&
 
-280 data @$,a5,6a,20,<f,>f
+280 data @$,a0,01,b1,6a,20,<f,>f
 282 data 38,a5,f7,e5,f9,85,f7,a5,f8,e5,fa,85,f8
 284 data 38,a5,f7,e9,01,85,f7,b0,?#,c6,f8
 286 data @#,a5,f7,c9,80,a5,f8,e9,ff,50,?=,49,80
@@ -267,13 +265,14 @@
 
 	; > - high byte
 	;	
-@(	lda $6a 		a5,6a
+@(	ldy #$01 		a0,01
+	lda ($6a),y 	b1,6a
 	jsr @f 			20,<f,>f 	; V = symbol(I)
 	lda $f8			a5,f8
 
 	jmp @& 			4c,<&,>&
 
-300 data @(,a5,6a,20,<f,>f,a5,f8,4c,<&,>&
+300 data @(,a0,01,b1,6a,20,<f,>f,a5,f8,4c,<&,>&
 
 	; <,+,# - low byte
 	;
@@ -282,7 +281,8 @@
 	;
 @'	stx $02 		86,02
 
-	lda $6a 		a5,6a
+	ldy #$01 		a0,01
+	lda ($6a),y 	b1,6a
 	jsr @f 			20,<f,>f 	; V = symbol(I)
 
 	clc 			18
@@ -291,7 +291,7 @@
 
 	jmp @& 			4c,<&,>& 	
 
-322 data @',86,02,a5,6a,20,<f,>f
+322 data @',86,02,a0,01,b1,6a,20,<f,>f
 324 data 18,a5,f7,65,02,4c,<&,>&
 
 	; PC = O
