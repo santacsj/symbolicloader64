@@ -23,21 +23,21 @@
 	sta $fb 		85,fb
 	stx $fc 		86,fc
 
-	; READ into variable S$
+	; READ into $69-6b FAC#2 area
 	;
 	lda #$ff 		a9,ff
  	sta $0d 		85,0d
 
- 	lda #<s 		a9,<s
+ 	lda #$69 		a9,69
  	sta $49 		85,49
- 	lda #>s 		a9,>s
+ 	lda #$00 		a9,00
  	sta $4a 		85,4a
 
 200 data a9,00,a2,c0,8d,+2,>2,8e,+3,>3
 202 data a9,4f,a2,00,20,<d,>d,8d,<o,>o,8e,+o,>o
 204 data 8d,+2,>2,8e,+3,>3
 206 data a9,4d,a2,00,20,<d,>d,85,fb,86,fc
-208 data a9,ff,85,0d,a9,<s,85,49,a9,>s,85,4a
+208 data a9,ff,85,0d,a9,69,85,49,a9,00,85,4a
 
 	; Pass 1
 	;
@@ -47,7 +47,7 @@
 @5	jsr @g 			20,<g,>g 	; READ S$
 
 	ldy #$00 		a0,00
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,4b
 
 	cmp #$3b 		c9,3b 		; end of pass?
 	beq @7 			f0,?7
@@ -61,7 +61,7 @@
 	beq @5 			f0,?5
 
 @6 	iny 			c8 			; store PC to symbol table
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,4b
 	
 	tax 			aa 		 	; I = asc(symbol)
 
@@ -77,9 +77,9 @@
 	jmp @5 			4c,<5,>5
 
 220 data 20,<h,>h,20,1d,a8
-222 data @5,20,<g,>g,a0,00,b1,4b,c9,3b,f0,?7,c9,40,f0,?6
+222 data @5,20,<g,>g,a0,00,b1,6a,c9,3b,f0,?7,c9,40,f0,?6
 223 data e6,f9,d0,?5,e6,fa,f0,?5
-224 data @6,c8,b1,4b,aa
+224 data @6,c8,b1,6a,aa
 226 data 20,<a,>a,88,a5,f9,91,fd,c8,a5,fa,91,fd
 228 data 4c,<5,>5
 
@@ -92,17 +92,17 @@
 @8	jsr @g 			20,<g,>g 	; READ S$
 
 	ldy #$00 		a0,00
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,4b
 	jsr $ffd2 		20,d2,ff
 	iny 			c8
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,4b
 	jsr $ffd2 		20,d2,ff
 	lda #$20 		a9,20
 	jsr $ffd2 		20,d2,ff
 	jsr $ffd2 		20,d2,ff
 
 	ldy #$00 		a0,00
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,4b
 
 	cmp #$3b 		c9,3b 		; end of pass?
 	bne @9 			d0,?9
@@ -142,8 +142,8 @@
 
 230 data @7,20,<h,>h,20,1d,a8
 232 data @8,20,<g,>g
-233 data a0,00,b1,4b,20,d2,ff,c8,b1,4b,20,d2,ff,a9,20,20,d2,ff,20,d2,ff
-234 data a0,00,b1,4b,c9,3b,d0,?9,60
+233 data a0,00,b1,6a,20,d2,ff,c8,b1,6a,20,d2,ff,a9,20,20,d2,ff,20,d2,ff
+234 data a0,00,b1,6a,c9,3b,d0,?9,60
 236 data @9,c9,40,f0,?8,c9,3f,d0,?0,4c,<$,>$
 238 data @0,c9,3e,d0,?/,4c,<(,>(
 240 data @/,c9,3c,d0,?.,a2,00,4c,<',>'
@@ -153,13 +153,13 @@
 	; 2 char hex str to byte
 	;
 @+	ldy #$01 		a0,01
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,6a
 	jsr @e 			20,<e,>e
 
 	sta $02			85,02		; unused zero-page byte as temp
 
 	dey 			88
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,6a
 	jsr @e 			20,<e,>e
 
 	asl a 			0a
@@ -197,8 +197,8 @@
 	sbc #$07 		e9,07
 @* 	rts 			60
 
-260 data @+,a0,01,b1,4b,20,<e,>e
-264 data 85,02,88,b1,4b,20,<e,>e
+260 data @+,a0,01,b1,6a,20,<e,>e
+264 data 85,02,88,b1,6a,20,<e,>e
 268 data 0a,0a,0a,0a,18,65,02
 270 data @&,a0,00,91,fb,e6,f9,d0,?4,e6,fa
 271 data @4,e6,fb,d0,?%,e6,fc
@@ -208,7 +208,7 @@
 	; ? - relative address
 	;	
 @$	ldy #$01 		a0,01
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,6a
 	
 	jsr @f 			20,<f,>f 	; V = symbol(I)
 
@@ -255,7 +255,7 @@
 
 	jmp @& 			4c,<&,>&
 
-280 data @$,a0,01,b1,4b,20,<f,>f
+280 data @$,a0,01,b1,6a,20,<f,>f
 282 data 38,a5,f7,e5,f9,85,f7,a5,f8,e5,fa,85,f8
 284 data 38,a5,f7,e9,01,85,f7,b0,?#,c6,f8
 286 data @#,a5,f7,c9,80,a5,f8,e9,ff,50,?=,49,80
@@ -267,13 +267,13 @@
 	; > - high byte
 	;	
 @(	ldy #$01 		a0,01
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,6a
 	jsr @f 			20,<f,>f 	; V = symbol(I)
 	lda $f8			a5,f8
 
 	jmp @& 			4c,<&,>&
 
-300 data @(,a0,01,b1,4b,20,<f,>f,a5,f8,4c,<&,>&
+300 data @(,a0,01,b1,6a,20,<f,>f,a5,f8,4c,<&,>&
 
 	; <,+,# - low byte
 	;
@@ -283,7 +283,7 @@
 @'	stx $02 		86,02
 
 	ldy #$01 		a0,01
-	lda ($4b),y 	b1,4b
+	lda ($6a),y 	b1,6a
 	jsr @f 			20,<f,>f 	; V = symbol(I)
 
 	clc 			18
@@ -292,7 +292,7 @@
 
 	jmp @& 			4c,<&,>& 	
 
-322 data @',86,02,a0,01,b1,4b,20,<f,>f
+322 data @',86,02,a0,01,b1,6a,20,<f,>f
 324 data 18,a5,f7,65,02,4c,<&,>&
 
 	; PC = O
@@ -308,7 +308,7 @@
 	; READ S$
 	;
 	; out:
-	; 	$4b/4c - points to S$ data
+	; 	$6a/6b - points to S$ data
 	;
 @g	lda #$98 		a9,98 		; data entry method is READ
  	sta $11 		85,11
@@ -324,18 +324,12 @@
  	sta $7b 		85,7b
 
  	jsr $ac2c 		20,2c,ac
-
- 	lda @s+1 		ad,+s,>s 	; $4b/4c = $S
-	sta $fb 		85,4b
-	lda @s+2 		ad,#s,>s
-	sta $fc 		85,4c
-
  	rts 			60
 
 344 data @g,a9,98,85,11
 346 data a5,7a,85,4b,a5,7b,85,4c
 348 data a5,41,85,7a,a5,42,85,7b
-350 data 20,2c,ac,ad,+s,>s,85,4b,ad,#s,>s,85,4c,60
+350 data 20,2c,ac,60
 
 	; ac/xr = (int) var
 	;
@@ -421,13 +415,8 @@
 390 data 18,a5,fd,65,bb,85,fd,a5,fe,65,bc,85,fe
 392 data @1,60
 
-	; S$
-	;
-@s 	00,00,00
-
 	; O, Origin
 	;
 @o 	00,00
 
-400 data @s,00,00,00
 412 data @o,00,00
