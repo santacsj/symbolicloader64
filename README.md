@@ -57,7 +57,7 @@ The code is stored on pages $CE-CF. Another 512 bytes are used for symbols, star
 ```
 10 O=49152
 15 M=49152
-20 SYS 52777
+20 SYS 52796
 30 DATA @1,A2,FF
 40 DATA A9,40
 50 DATA @2,20,D2,FF
