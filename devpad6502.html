@@ -165,7 +165,7 @@ function fmt(mode, ops){
 // ----------------------
 // disassemble line
 // ----------------------
-function disLine(tokens){
+function disLine(tokens, comment){
     let out=[], i=0;
 
     while(i<tokens.length){
@@ -186,16 +186,19 @@ function disLine(tokens){
 
         let f = fmt(mode, ops);
 
-        if(f===null){
-            out.push(mn+" "+tokens.slice(i+1,i+size).map(t=>sym(t)));
-        }else{
-            out.push(mn+(f?" "+f:""));
-        }
+        cmt = (i+size<tokens.length) ?  "" : (comment?" "+comment:"");
+
+        let aop = (f===null)
+            ? "\t"+mn+" "+tokens.slice(i+1,i+size).map(t=>sym(t))
+            : "\t"+mn+(f?" "+f:"");
+
+        aop = cmt.length > 0 ? aop.padEnd(15, " ") : aop;
+        out.push(aop+cmt+"\n");
 
         i+=size;
     }
 
-    return out.join("\n");
+    return out.join("");
 }
 
 // ----------------------
@@ -217,9 +220,8 @@ function process(input){
         if (tokens.length < 1)
             return comment;
 
-        let dis = disLine(tokens);
+        return disLine(tokens, comment);
 
-        return dis.padEnd(15," ") + (comment?" "+comment:"");
     }).join("\n");
 }
 
