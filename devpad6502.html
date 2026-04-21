@@ -15,7 +15,17 @@ body {
     font-family: monospace;
 }
 #output {
-    width: 50%;
+    width: 35%;
+    height: 90vh;
+    background: #282a36;
+    padding: 10px;
+    overflow-y: auto;
+    white-space: pre;
+/*    color: #0ff;*/
+    font-size: 14px;
+}
+#basicdata {
+    width: 25%;
     height: 90vh;
     background: #282a36;
     padding: 10px;
@@ -25,7 +35,7 @@ body {
     font-size: 14px;
 }
 #editor { 
-    width: 50%;
+    width: 40%;
     height: 93vh;
 }
 </style>
@@ -34,6 +44,7 @@ body {
 
 <div id="editor"></div>
 <div id="output"></div>
+<div id="basicdata">100 data ;</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js" integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -226,6 +237,37 @@ function process(input){
     }).join("\n");
 }
 
+// ----------------------
+// process basic data
+// ----------------------
+function processData(input){
+    let tokens = input.split("\n").flatMap(line=>{
+        let [code,comment]=line.split(/;(.+)/s);
+
+        let tokens = (code||"")
+            .split(",")
+            .map(x=>x.trim())
+            .filter(x=>x.length);
+
+        return tokens;
+    });
+
+    tokens.push("; ");
+
+    let lines = [];
+    let ln = 100;
+    let it = tokens.values();
+
+    while (true) {
+        let seq = it.take(10).toArray();
+        if (seq.length < 1)
+            break;
+        lines.push(""+ln+" data "+seq.join(","));
+        ln++;
+    }
+    return lines.join("\n");
+}
+
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/dracula");
 editor.session.setUseWrapMode(true);
@@ -239,6 +281,7 @@ editorElement.style.fontSize='16px';
 // ----------------------
 editor.session.on('change', function(delta) {
     document.getElementById('output').textContent = process(editor.getValue());
+    document.getElementById('basicdata').textContent = processData(editor.getValue());
 });
 
 </script>
