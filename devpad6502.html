@@ -208,7 +208,7 @@ function disLine(tokens, comment){
 function process(input){
     return input.split("\n").map(line=>{
         let [code,comment]=line.split(/;(.+)/s);
-        if (comment === ".byte")
+        if ((comment||"").includes(".byte"))
             return code;
 
         comment = comment ? ";"+comment : "";
