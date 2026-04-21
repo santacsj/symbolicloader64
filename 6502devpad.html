@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>6502 Devpad</title>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
 body {
@@ -236,7 +235,7 @@ editorElement.style.fontSize='16px';
 // live update
 // ----------------------
 editor.session.on('change', function(delta) {
-    $("#output").text(process(editor.getValue()));
+    document.getElementById('output').textContent = process(editor.getValue());
 });
 
 </script>
