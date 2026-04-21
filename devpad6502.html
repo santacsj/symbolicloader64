@@ -101,7 +101,7 @@ function sym(b){
     const c=b[0], v=b[1];
     switch(c){
         case '@': return '@'+v;
-        case '?': return '?'+v;
+        case '?': return '@'+v;
         case '>': return '>'+v;
         case '<': return '<'+v;
         case '+': return '@'+v+'+1';
