@@ -4,7 +4,7 @@ Learn C64 machine code the hard way, by programming on paper :). You do the asse
 
 A machine language version is also available. For details, see below.
 
-A code editor named `6502 Devpad`, is also available to help with learning machine code.
+A code editor called `6502 Devpad` is also available to help with learning machine code. For details, see below.
 
 ## BASIC Version
 
@@ -71,3 +71,17 @@ The code is stored on pages $CE-CF. Another 512 bytes are used for symbols, star
 
 ### Addresses
 Setting `O` and `M` is optional. Variable `O` (origin), if not set, defaults to `49152`. Variable `M` (memory), if not set, defaults to the value of `O`.
+
+
+## 6502 Devpad
+
+Devpad understands the syntax above and disassembles machine code back to assembly source code on the fly. One exception is, `;` is used for single line comments.
+
+### Usage
+Paste this code in the left editor pane and see it disassembled back to assembly while you edit it.
+```
+; print HELLO
+a9,<s,a0,>s,20,1e,ab,60
+@s 48,45,4c,4c,4f,00 ;.byte
+```
+Note: `;.byte` is a special comment used to denote data which is not disassembled, but left as it is
