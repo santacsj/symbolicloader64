@@ -3,6 +3,7 @@
 Learn C64 machine code the hard way, by programming on paper :). You do the assembling and this short BASIC program automates the annoying address calculations for you. Copy and paste the BASIC source to VICE and start practicing!
 
 A machine language version is also available. For details, see below.
+A code editor, 6502 Devpad, is also available to help with learning machine code.
 
 ## BASIC Version
 
