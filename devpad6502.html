@@ -186,14 +186,15 @@ function disLine(tokens, comment){
 
         let f = fmt(mode, ops);
 
-        cmt = (i+size<tokens.length) ?  "" : (comment?" "+comment:"");
-
         let aop = (f===null)
             ? "\t"+mn+" "+tokens.slice(i+1,i+size).map(t=>sym(t))
             : "\t"+mn+(f?" "+f:"");
 
-        aop = cmt.length > 0 ? aop.padEnd(15, " ") : aop;
-        out.push(aop+cmt+"\n");
+        if (i+size<tokens.length) {
+            out.push(aop+"\n");
+        } else {
+            out.push(aop.padEnd(15, " ") + (comment?" "+comment:""));
+        }
 
         i+=size;
     }
