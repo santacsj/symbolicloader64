@@ -187,7 +187,7 @@ function disLine(tokens){
         let f = fmt(mode, ops);
 
         if(f===null){
-            out.push(mn+" "+tokens.slice(i+1,i+size));
+            out.push(mn+" "+tokens.slice(i+1,i+size).map(t=>sym(t)));
         }else{
             out.push(mn+(f?" "+f:""));
         }
