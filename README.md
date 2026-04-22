@@ -78,13 +78,13 @@ Setting `O` and `M` is optional. Variable `O` (origin), if not set, defaults to 
 Devpad understands the syntax above and disassembles machine code back to assembly source code on the fly. One exception is, `;` is used for single line comments.
 
 ### Usage
-Paste this code in the left editor pane and see it disassembled back to assembly while you edit it.
+Paste this code in the left editor panel and see it disassembled as you edit it.
 ```
 ; print HELLO
 a9,<s,a0,>s,20,1e,ab,60
-@s 48,45,4c,4c,4f,00 ;.byte
+@s,48,45,4c,4c,4f,00 ; .byte
 ```
-Note: `;.byte` is a special comment used to denote data not to be disassembled
+Note: `; .byte` is a special comment used to denote lines not to be disassembled
 
 ### Credits
 
