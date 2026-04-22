@@ -236,7 +236,7 @@ function process(input){
 // ----------------------
 function processData(input){
     let tokens = input.split("\n").flatMap(line=>{
-        let [code,comment]=line.split(/;(.+)/s);
+        let [code,comment]=line.split(/(;.*)/s);
 
         let tokens = (code||"")
             .split(",")
