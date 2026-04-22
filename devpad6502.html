@@ -14,37 +14,33 @@ body {
     color: #eee;
     font-family: monospace;
 }
-#output {
-    width: 35%;
-    height: 90vh;
+.code {
     background: #282a36;
-    padding: 10px;
     overflow-y: auto;
     white-space: pre;
 /*    color: #0ff;*/
     font-size: 14px;
+    tab-size: 4;
+}
+#output {
+    width: 30%;
+    height: 95vh;
 }
 #basicdata {
     width: 25%;
-    height: 90vh;
-    background: #282a36;
-    padding: 10px;
-    overflow-y: auto;
-    white-space: pre;
-/*    color: #0ff;*/
-    font-size: 14px;
+    height: 95vh;
 }
 #editor { 
-    width: 40%;
-    height: 93vh;
+    width: 45%;
+    height: 95vh;
 }
 </style>
 </head>
 <body>
 
 <div id="editor"></div>
-<div id="output"></div>
-<div id="basicdata">100 data ;</div>
+<div id="output" class="code"></div>
+<div id="basicdata" class="code">100 data ;</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js" integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -218,19 +214,17 @@ function disLine(tokens, comment){
 // ----------------------
 function process(input){
     return input.split("\n").map(line=>{
-        let [code,comment]=line.split(/;(.+)/s);
+        let [code,comment]=line.split(/(;.*)/s);
         if ((comment||"").includes(".byte"))
             return code;
-
-        comment = comment ? ";"+comment : "";
 
         let tokens = (code||"")
             .split(",")
             .map(x=>x.trim())
             .filter(x=>x.length);
 
-        if (tokens.length < 1)
-            return comment;
+        if (tokens.length < 1 && comment)
+            return "\t"+comment;
 
         return disLine(tokens, comment);
 
