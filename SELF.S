@@ -307,7 +307,7 @@
 	; READ S$
 	;
 	; out:
-	; 	$6a/6b - points to S$ data
+	; 	$7a/7b - points to S$ data
 	;
 @g	lda #$98 		a9,98 		; data entry method is READ
  	sta $11 		85,11
