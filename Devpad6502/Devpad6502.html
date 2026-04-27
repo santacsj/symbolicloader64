@@ -21,18 +21,18 @@ body {
 /*    color: #0ff;*/
     font-size: 14px;
     tab-size: 4;
+    padding-top: 2px;
+    padding-left: 10px;
 }
 #output {
     width: 40%;
     height: 95vh;
-}
-#basicdata {
-    width: 25%;
-    height: 95vh;
+    float: right;
 }
 #editor { 
     width: 60%;
     height: 95vh;
+    float: left;
 }
 </style>
 </head>
@@ -41,7 +41,6 @@ body {
 <div id="editor"></div>
 <div id="output" class="code">
 100 data ;</div>
-<!-- <div id="basicdata" class="code">100 data ;</div> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js" integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -263,21 +262,49 @@ function processData(input){
     return lines.join("\n");
 }
 
+function updateOutput() {
+    let assembly = process(editor.getValue());
+    let basicdata = processData(editor.getValue());
+    document.getElementById('output').textContent = assembly+"\n"+basicdata+"\n\n";
+}
+
+let storageKey = "devpad_content";
+
+function loadEditorContentFromStorage() {
+    var content = localStorage.getItem(storageKey);
+    if (content) {
+        editor.setValue(content, -1);
+        updateOutput();
+    }
+}
+
+function saveEditorContent() {
+    let content = editor.getValue();
+    if (content) {
+        localStorage.setItem(storageKey, content);
+    }
+}
+
+function updateStorage() {
+    if (!editor.getValue()) {
+        localStorage.removeItem(storageKey);
+    }
+}
+
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/dracula");
 editor.session.setUseWrapMode(true);
 
 var editorElement = document.getElementById('editor');
-// editorElement.style.color='#0f0';
 editorElement.style.fontSize='16px';
 
-// ----------------------
-// live update
-// ----------------------
+loadEditorContentFromStorage();
+
+window.onbeforeunload = saveEditorContent;
+
 editor.session.on('change', function(delta) {
-    let assembly = process(editor.getValue());
-    let basicdata = processData(editor.getValue());
-    document.getElementById('output').textContent = assembly+"\n"+basicdata+"\n\n";
+    updateOutput();
+    updateStorage();
 });
 
 </script>
