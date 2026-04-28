@@ -7,7 +7,7 @@ A machine language version is also available. For details, see below.
 ## BASIC Version
 
 ### Addresses
-Variable `O` (as origin) sets the address for the PC which is used for address calculations. Variable `M` (as memory) sets the address where the program is actually loaded to in memory.
+Variable `O` (as origin) sets the address for the PC which is used for address calculations. Variable `M` (as memory) sets the address where the program is actually loaded to.
 
 ### Syntax
 1. `;` marks the end of data
