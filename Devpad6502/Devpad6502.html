@@ -246,6 +246,8 @@ function processData(input){
         return tokens;
     });
 
+    let byteCount = tokens.length;
+
     tokens.push("; ");
 
     let lines = [];
@@ -259,13 +261,13 @@ function processData(input){
         lines.push(""+ln+" data "+seq.join(","));
         ln++;
     }
-    return lines.join("\n");
+    return [byteCount, lines.join("\n")];
 }
 
 function updateOutput() {
     let assembly = process(editor.getValue());
-    let basicdata = processData(editor.getValue());
-    document.getElementById('output').textContent = assembly+"\n"+basicdata+"\n\n";
+    let data = processData(editor.getValue());
+    document.getElementById('output').textContent = assembly+"\nTotal: "+data[0]+" bytes\n\n"+data[1]+"\n\n";
 }
 
 let storageKey = "devpad_content";
