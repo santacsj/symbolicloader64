@@ -246,8 +246,6 @@ function processData(input){
         return tokens;
     });
 
-    let byteCount = tokens.length;
-
     tokens.push("; ");
 
     let lines = [];
@@ -261,7 +259,10 @@ function processData(input){
         lines.push(""+ln+" data "+seq.join(","));
         ln++;
     }
-    return [byteCount, lines.join("\n")];
+    return [
+        tokens.filter(x=>!x.startsWith("@")).length,
+        lines.join("\n")
+    ];
 }
 
 function updateOutput() {
