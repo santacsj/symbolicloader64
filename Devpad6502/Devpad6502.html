@@ -248,7 +248,20 @@ function processData(input){
         return tokens;
     });
 
-    let byteCount = tokens.filter(x=>!x.startsWith("@")).length;
+    let bytes = [];
+    let symbols = [];
+
+    tokens.forEach(x=>{
+        if (x.startsWith("@")) {
+            symbols.push(x.substring(1));
+        } else {
+            bytes.push(x);
+        }
+    });
+
+    let byteCount = bytes.length;
+
+    symbols.sort();
 
     tokens.push("; ");
 
@@ -263,13 +276,17 @@ function processData(input){
         lines.push(""+ln+" data "+seq.join(","));
         ln++;
     }
-    return [byteCount, lines.join("\n")];
+    return [byteCount, symbols, lines.join("\n")];
 }
 
 function updateOutput() {
     let assembly = process(editor.getValue());
     let data = processData(editor.getValue());
-    document.getElementById('output').textContent = assembly+"\nTotal: "+data[0]+" bytes\n\n"+data[1]+"\n\n";
+    let content = assembly
+        + "\nTotal: "+data[0]+" bytes, "+data[1].length+" symbols\n\n"
+        + "Symbols: "+data[1]+"\n\n"
+        + data[2] + "\n\n";
+    document.getElementById('output').textContent = content;
 }
 
 let storageKey = "devpad_content";
