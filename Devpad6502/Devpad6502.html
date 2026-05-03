@@ -214,7 +214,7 @@ function disLine(tokens, comment){
 // ----------------------
 function process(input){
     return input.split("\n").map(line=>{
-        let [code,comment]=line.split(/([^@?];.*)/s);
+        let [code,comment]=line.split(/([^@?;];.*)/s);
         if ((comment||"").includes(".byte"))
             return code;
 
@@ -236,16 +236,16 @@ function process(input){
 // ----------------------
 function processData(input){
     let tokens = input.split("\n").flatMap(line=>{
-        let [code,comment]=line.split(/([^@?];.*)/s);
+        let [code,comment]=line.split(/([^@?;];.*)/s);
 
         let tokens = (code||"")
             .split(",")
+            .filter(x=>!x.trim().startsWith(";"))
             .map(x=>x.startsWith("@")||x.startsWith("?")?x.slice(0,2):x.trim())
             .filter(x=>x.length);
 
         return tokens;
     });
-
     let bytes = [];
     let symbols = [];
 
