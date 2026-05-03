@@ -40,9 +40,7 @@ body {
 
 <div id="editor"></div>
 <div id="output" class="code">
-Total: 0 bytes
-
-100 data ;</div>
+Total: 0 bytes, 0 symbols</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js" integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -259,8 +257,6 @@ function processData(input){
         }
     });
 
-    let byteCount = bytes.length;
-
     symbols.sort();
 
     tokens.push("; ");
@@ -276,7 +272,7 @@ function processData(input){
         lines.push(""+ln+" data "+seq.join(","));
         ln++;
     }
-    return [byteCount, symbols, lines.join("\n")];
+    return [bytes.length, symbols, lines.join("\n")];
 }
 
 function updateOutput() {
@@ -284,7 +280,7 @@ function updateOutput() {
     let data = processData(editor.getValue());
     let content = assembly
         + "\nTotal: "+data[0]+" bytes, "+data[1].length+" symbols\n\n"
-        + "Symbols: "+data[1]+"\n\n"
+        + (data[1].length>0?"Symbols: "+data[1]+"\n\n":"")
         + data[2] + "\n\n";
     document.getElementById('output').textContent = content;
 }
