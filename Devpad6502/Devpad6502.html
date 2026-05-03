@@ -283,7 +283,7 @@ function updateOutput() {
     let data = processData(editor.getValue());
     let content = assembly
         + "\nTotal: "+data[0]+" bytes, "+data[1].length+" symbols\n\n"
-        + (data[1].length>0?"Used: "+data[1].join(" ")+"\n"+"Free: "+data[2].join("")+"\n\n":"")
+        + (data[1].length>0?"Used: "+data[1].join("")+"\n"+"Free: "+data[2].join("")+"\n\n":"")
         + (data[3].length>0?data[3]:"")
         + "\n\n";
     document.getElementById('output').textContent = content;
