@@ -259,18 +259,21 @@ function processData(input){
 
     symbols.sort();
 
-    tokens.push("; ");
-
     let lines = [];
-    let ln = 100;
-    let it = tokens.values();
 
-    while (true) {
-        let seq = it.take(10).toArray();
-        if (seq.length < 1)
-            break;
-        lines.push(""+ln+" data "+seq.join(","));
-        ln++;
+    if (tokens.length > 0) {
+        tokens.push("; ");
+
+        let ln = 100;
+        let it = tokens.values();
+
+        while (true) {
+            let seq = it.take(10).toArray();
+            if (seq.length < 1)
+                break;
+            lines.push(""+ln+" data "+seq.join(","));
+            ln++;
+        }
     }
     return [bytes.length, symbols, lines.join("\n")];
 }
@@ -281,7 +284,8 @@ function updateOutput() {
     let content = assembly
         + "\nTotal: "+data[0]+" bytes, "+data[1].length+" symbols\n\n"
         + (data[1].length>0?"Symbols: "+data[1]+"\n\n":"")
-        + data[2] + "\n\n";
+        + (data[2].length>0?data[2]:"")
+        + "\n\n";
     document.getElementById('output').textContent = content;
 }
 
