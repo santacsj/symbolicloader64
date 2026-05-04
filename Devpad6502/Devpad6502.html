@@ -39,8 +39,7 @@ body {
 <body>
 
 <div id="editor"></div>
-<div id="output" class="code">
-Total: 0 bytes, 0 symbols</div>
+<div id="output" class="code"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js" integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -214,7 +213,7 @@ function disLine(tokens, comment){
 // ----------------------
 function process(input){
     return input.split("\n").map(line=>{
-        let [code,comment]=line.split(/([^@?;];.*)/s);
+        let [code,comment]=line.split(/([^@?;];.*|^;.*)/s);
         if ((comment||"").includes(".byte"))
             return code;
 
@@ -223,8 +222,9 @@ function process(input){
             .map(x=>x.startsWith("@")||x.startsWith("?")?x.slice(0,2):x.trim())
             .filter(x=>x.length);
 
-        if (tokens.length < 1 && comment)
+        if (tokens.length < 1 && comment) {
             return "\t"+comment;
+        }
 
         return disLine(tokens, comment);
 
@@ -236,11 +236,10 @@ function process(input){
 // ----------------------
 function processData(input){
     let tokens = input.split("\n").flatMap(line=>{
-        let [code,comment]=line.split(/([^@?;];.*)/s);
+        let [code,comment]=line.split(/([^@?;];.*|^;.*)/s);
 
         let tokens = (code||"")
             .split(",")
-            .filter(x=>!x.trim().startsWith(";"))
             .map(x=>x.startsWith("@")||x.startsWith("?")?x.slice(0,2):x.trim())
             .filter(x=>x.length);
 
@@ -282,10 +281,12 @@ function updateOutput() {
     let assembly = process(editor.getValue());
     let data = processData(editor.getValue());
     let content = assembly
-        + "\nTotal: "+data[0]+" bytes, "+data[1].length+" symbols\n\n"
-        + (data[1].length>0?"Used: "+data[1].join("")+"\n"+"Free: "+data[2].join("")+"\n\n":"")
-        + (data[3].length>0?data[3]:"")
-        + "\n\n";
+        +"\nTotal: "+data[0]+" bytes, "+data[1].length+" symbols\n\n"
+        +"Free: "+data[2].join("")+"\n"
+        +(data[1].length>0?"Used: "+data[1].join("")+"\n":"")
+        +"\n"
+        +(data[3].length>0?data[3]:"")
+        +"\n\n";
     document.getElementById('output').textContent = content;
 }
 
@@ -322,6 +323,7 @@ editorElement.style.fontSize='16px';
 loadEditorContentFromStorage();
 
 window.onbeforeunload = saveEditorContent;
+window.onload = updateOutput;
 
 editor.session.on('change', function(delta) {
     updateOutput();
