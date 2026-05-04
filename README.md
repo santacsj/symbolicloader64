@@ -51,7 +51,7 @@ C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 
 ## ML Version
 
-The code is stored on pages $CE-CF. Another 512 bytes are used for symbols, starting at the BASIC array variable area (ARYTAB).
+The loader is stored on pages $CE-CF. Another 512 bytes are used for symbols, starting at the BASIC array variable area (ARYTAB).
 
 ### Usage
 ```
