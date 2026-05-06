@@ -50,7 +50,7 @@
 430 data d0,?1,;
 
 
-10 o=49407:rem $c0ff, lo byte incr at page boundary will not work!
+10 o=49407:rem $c0ff, lo byte incr at page boundary cannot be made to work
 20 sys 52777
 30 print:print" 0  193"
 40 fori=1to2:printpeek(o+i);:nexti
