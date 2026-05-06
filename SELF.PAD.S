@@ -1,4 +1,4 @@
-; get BASIC variables
+; Get BASIC variables
 ; 	O defaults to C000, if not set
 ; 	$fb/fc defaults to O, if not set
 ;
@@ -31,7 +31,7 @@ c9,40,f0,?6 ; symbol?
 
 e6,f9,d0,?5,e6,fa,f0,?5 ; PC++
 
-@6,c8,b1,22 ; store PC to symbol table
+@6,c8,b1,22
 aa ; I = asc(symbol)
 20,<a,>a ; fd/fe = symbol table address for I
 
@@ -46,7 +46,7 @@ a5,fa,91,fd,88,a5,f9,91,fd ; (fd/fe) = PC
 
 @8,20,<g,>g ; READ S$
 
-a5,21,20,24,ab,a9,20,20,d2,ff,20,d2,ff
+a5,21,20,24,ab,a9,20,20,d2,ff,20,d2,ff ; print c$ spc(2)
 
 a0,00,b1,22
 
@@ -56,11 +56,9 @@ c9,3b,d0,?9 ; end of pass?
 
 @9,c9,40,f0,?8 ; @
 
-c9,3f,d0,?0 ; ?
+c9,3f,f0,?$ ; ?
 
-4c,<$,>$
-
-@0,c9,3e,d0,?/ ; >
+c9,3e,d0,?/ ; >
 
 4c,<(,>(
 
