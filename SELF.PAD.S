@@ -32,7 +32,6 @@ c9,40,f0,?6 ; symbol?
 e6,f9,d0,?5,e6,fa,f0,?5 ; PC++
 
 @6,c8,b1,22
-aa ; I = asc(symbol)
 20,<a,>a ; fd/fe = symbol table address for I
 
 a5,fa,91,fd,88,a5,f9,91,fd ; (fd/fe) = PC
@@ -88,7 +87,6 @@ a2,02 ; OF = 2
 20,<f,>f ; V = symbol(I)
 
 18,a5,f7,65,02
-
 4c,<&,>&
 
 @%,e0,3f,f0,?$ ; ?
@@ -182,7 +180,7 @@ a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 ; out:
 ; 	$f7/f8 - symbol value
 ;
-@f,aa,20,<a,>a
+@f,20,<a,>a
 
 a0,00,b1,fd,85,f7,c8,b1,fd,85,f8 ; $f7/f8 = (fd/fe)
 60
@@ -192,7 +190,7 @@ a0,00,b1,fd,85,f7,c8,b1,fd,85,f8 ; $f7/f8 = (fd/fe)
 ; in:
 ; 	xr - index
 ;
-@a,8a,0a,85,bb,a9,00,2a,85,bc ; T = I * 2
+@a,0a,85,bb,a9,00,2a,85,bc ; T = I * 2
 
 18,a5,2f,65,bb,85,fd,a5,30,65,bc,85,fe ; fd/fe = 2f/30 + T
 60
