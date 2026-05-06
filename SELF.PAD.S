@@ -48,35 +48,37 @@ a5,fa,91,fd,88,a5,f9,91,fd ; (fd/fe) = PC
 
 a5,21,20,24,ab,a9,20,20,d2,ff,20,d2,ff ; print c$ spc(2)
 
-a0,00,b1,22
+a0,00,b1,22,aa
 
-c9,3b,d0,?9 ; end of pass?
+e0,3b,d0,?9 ; end of pass?
 
 60 ; return to BASIC
 
-@9,c9,40,f0,?8 ; @
+@9,c8,b1,22
 
-c9,3f,f0,?$ ; ?
+e0,40,f0,?8 ; @
 
-c9,3e,d0,?/ ; >
+e0,3f,f0,?$ ; ?
+
+e0,3e,d0,?/ ; >
 
 4c,<(,>(
 
-@/,c9,3c,d0,?. ; <
+@/,e0,3c,d0,?. ; <
 
 a2,00,4c,<',>' ; OF = 0
 
-@.,c9,2b,d0,?- ; +
+@.,e0,2b,d0,?- ; +
 
 a2,01,4c,<',>' ; OF = 1
 
-@-,c9,23,d0,?+ ; #
+@-,e0,23,d0,?+ ; #
 
 a2,02,4c,<',>' ; OF = 2
 
 ; 2 char hex str to byte
 ;
-@+,c8,b1,22,20,<e,>e
+@+,20,<e,>e
 
 85,02 ; unused zero-page byte as temp
 
@@ -105,9 +107,7 @@ e6,fb,d0,02,e6,fc ; M++
 
 ; ? - relative address
 ;
-@$,c8,b1,22
-
-20,<f,>f ; V = symbol(I)
+@$,20,<f,>f ; V = symbol(I)
 
 38,a5,f7,e5,f9,85,f7,a5,f8,e5,fa,85,f8 ; V = V - PC
 
@@ -131,9 +131,8 @@ a2,0f,4c,37,a4 ; ?OVERFLOW ERROR
 
 ; > - high byte
 ;
-@(,c8,b1,22,20,<f,>f ; V = symbol(I)
+@(,20,<f,>f ; V = symbol(I)
 a5,f8
-
 4c,<&,>&
 
 ; <,+,# - low byte
@@ -143,7 +142,7 @@ a5,f8
 ;
 @',86,02
 
-c8,b1,22,20,<f,>f ; V = symbol(I)
+20,<f,>f ; V = symbol(I)
 
 18,a5,f7,65,02
 
