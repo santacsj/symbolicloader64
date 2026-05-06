@@ -15,12 +15,6 @@
 30 fori=0to3:printpeek(49152+i);:nexti
 300 data d0,?1,@1,d0,?1,;
 
-10 o=49407:rem $c0ff
-20 sys 52777
-30 print:print" 0  193"
-40 fori=1to2:printpeek(o+i);:nexti
-300 data @#,ad,+#,>#,;
-
 10 sys 52777
 200 data d0,?1
 300 data 00,00,00,00,00,00,00,00,00,00
@@ -56,3 +50,8 @@
 430 data d0,?1,;
 
 
+10 o=49407:rem $c0ff, lo byte incr at page boundary will not work!
+20 sys 52777
+30 print:print" 0  193"
+40 fori=1to2:printpeek(o+i);:nexti
+300 data @#,ad,+#,>#,;
