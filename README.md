@@ -55,8 +55,8 @@ The loader is stored on pages $CE-CF. Another 512 bytes are used for symbols, st
 
 ### Usage
 ```
-10 O=49152
-15 M=49152
+10 O=52855
+15 M=52855
 20 SYS 52796
 30 DATA @1,A2,FF
 40 DATA A9,40
