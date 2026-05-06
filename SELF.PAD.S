@@ -88,11 +88,11 @@ a2,02,4c,<',>' ; OF = 2
 
 @&,a0,00,91,fb ; store by to m
 
-e6,f9,d0,?4,e6,fa ; PC++
+e6,f9,d0,02,e6,fa ; PC++
 
-@4,e6,fb,d0,?%,e6,fc ; M++
+e6,fb,d0,02,e6,fc ; M++
 
-@%,4c,<8,>8
+4c,<8,>8
 
 ; hex digit to byte
 ;
@@ -113,7 +113,7 @@ e6,f9,d0,?4,e6,fa ; PC++
 
 38,a5,f7,e9,01,85,f7,b0,?#,c6,f8 ; V = V - 1
 
-@#,a5,f7,c9,80,a5,f8,e9,ff,50,?=,49,80 ; V < -128, overflow error, if N = 1
+@#,c9,80,a5,f8,e9,ff,50,?=,49,80 ; V < -128, overflow error, if N = 1
 
 @=,10,?!
 
@@ -199,3 +199,4 @@ a0,00,b1,fd,85,f7,c8,b1,fd,85,f8 ; $f7/f8 = (fd/fe)
 
 18,a5,2f,65,bb,85,fd,a5,30,65,bc,85,fe ; fd/fe = 2f/30 + T
 60
+
