@@ -54,31 +54,48 @@ e0,3b,d0,?9 ; end of pass?
 
 60 ; return to BASIC
 
-@9,c8,b1,22
+@9,c8,b1,22 
 
 e0,40,f0,?8 ; @
 
-e0,3f,f0,?$ ; ?
-
 e0,3e,d0,?/ ; >
 
-4c,<(,>(
+; > - high byte
+;
+20,<f,>f ; V = symbol(I)
+a5,f8
+4c,<&,>&
 
 @/,e0,3c,d0,?. ; <
 
-a2,00,4c,<',>' ; OF = 0
+a2,00,f0,?' ; OF = 0
 
 @.,e0,2b,d0,?- ; +
 
-a2,01,4c,<',>' ; OF = 1
+a2,01,d0,?' ; OF = 1
 
-@-,e0,23,d0,?+ ; #
+@-,e0,23,d0,?% ; #
 
-a2,02,4c,<',>' ; OF = 2
+a2,02 ; OF = 2
+
+; <,+,# - low byte
+;
+; in:
+; 	xr - offset
+;
+@',86,02
+
+20,<f,>f ; V = symbol(I)
+
+18,a5,f7,65,02
+
+4c,<&,>&
+
+@%,e0,3f,f0,?$ ; ?
 
 ; 2 char hex str to byte
 ;
-@+,20,<e,>e
+20,<e,>e
 
 85,02 ; unused zero-page byte as temp
 
@@ -126,25 +143,6 @@ a2,0f,4c,37,a4 ; ?OVERFLOW ERROR
 a2,0f,4c,37,a4 ; ?OVERFLOW ERROR
 
 @>,a5,f7
-
-4c,<&,>&
-
-; > - high byte
-;
-@(,20,<f,>f ; V = symbol(I)
-a5,f8
-4c,<&,>&
-
-; <,+,# - low byte
-;
-; in:
-; 	xr - offset
-;
-@',86,02
-
-20,<f,>f ; V = symbol(I)
-
-18,a5,f7,65,02
 
 4c,<&,>&
 
