@@ -61,8 +61,8 @@ e0,3e,d0,?/ ; >
 
 ; > - high byte
 ;
-20,<f,>f ; V = symbol(I)
-a5,f8
+20,<a,>a ; V = symbol(I)
+b1,fd
 4c,<&,>&
 
 @/,e0,3c,d0,?. ; <
@@ -84,9 +84,10 @@ a2,02 ; OF = 2
 ;
 @',86,02
 
-20,<f,>f ; V = symbol(I)
+20,<a,>a ; V = symbol(I)
 
-18,a5,f7,65,02
+88,b1,fd
+18,65,02
 4c,<&,>&
 
 @%,e0,3f,f0,?$ ; ?
@@ -122,9 +123,9 @@ e6,fb,d0,02,e6,fc ; M++
 
 ; ? - relative address
 ;
-@$,20,<f,>f ; V = symbol(I)
+@$,20,<a,>a ; V = symbol(I)
 
-38,a5,f7,e5,f9,85,f7,a5,f8,e5,fa,85,f8 ; V = V - PC
+38,88,b1,fd,e5,f9,85,f7,c8,b1,fd,e5,fa,85,f8 ; V = ($fd/fe) - PC
 
 38,a5,f7,e9,01,85,f7,b0,?#,c6,f8 ; V = V - 1
 
@@ -173,25 +174,12 @@ a5,41,85,7a,a5,42,85,7b ; set current CHRGET position to next DATA element
 @d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
 a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 
-; $f7/f8 = symbol(i)
-;
-; in:
-;	ac - asc of symbol
-; out:
-; 	$f7/f8 - symbol value
-;
-@f,20,<a,>a
-
-a0,00,b1,fd,85,f7,c8,b1,fd,85,f8 ; $f7/f8 = (fd/fe)
-60
-
 ; fd/fe = address of I-th word in ARYTAB
 ;
 ; in:
-; 	xr - index
+; 	ac - index
 ;
 @a,0a,85,bb,a9,00,2a,85,bc ; T = I * 2
 
 18,a5,2f,65,bb,85,fd,a5,30,65,bc,85,fe ; fd/fe = 2f/30 + T
 60
-
