@@ -29,7 +29,7 @@ c9,3b,f0,?7 ; end of pass?
 
 c9,40,f0,?6 ; symbol?
 
-e6,f9,d0,?5,e6,fa,f0,?5 ; PC++
+e6,f9,d0,?5,e6,fa,4c,<5,>5 ; PC++
 
 @6,c8,b1,22
 20,<a,>a ; fd/fe = symbol table address for I
@@ -183,4 +183,3 @@ a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 
 18,a5,2f,65,bb,85,fd,a5,30,65,bc,85,fe ; fd/fe = 2f/30 + T
 60
-
