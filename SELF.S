@@ -129,13 +129,13 @@ e6,fb,d0,02,e6,fc ; M++
 
 c6,f7,a5,f7,c9,ff,d0,02,c6,f8 ; V = V - 1
 
-@#,c9,80,a5,f8,e9,ff,50,?=,49,80 ; V < -128, overflow error, if N = 1
+c9,80,a5,f8,e9,ff,50,02,49,80 ; V < -128, overflow error, if N = 1
 
-@=,30,?x
+30,?x
 
-@!,a5,f7,c9,80,a5,f8,e9,00,50,?<,49,80 ; V >= 128, overflow error, if N = 0
+a5,f7,c9,80,a5,f8,e9,00,50,02,49,80 ; V >= 128, overflow error, if N = 0
 
-@<,10,?x
+10,?x
 
 a5,f7
 4c,<&,>&
