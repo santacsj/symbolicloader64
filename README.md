@@ -12,7 +12,7 @@ Variable `O` (as origin) sets the address for the PC which is used for address c
 ### Syntax
 1. `;` marks the end of data
 2. `hex`, a single PETSCII character, can only be 0-9 or A-F
-3. `label`, a single PETSCII character
+3. `label`, a single PETSCII character with codes btwn $20 and $5f incl.
 4. `token`, fixed two characters, can be any of ...
     - `[hex][hex]` stored as a byte
     - `@[label]` save the address of the next byte under 'label'
@@ -51,7 +51,9 @@ C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 
 ## ML Version
 
-The loader is stored on pages $CE-CF. Another 512 bytes are used for symbols, starting at the BASIC array variable area (ARYTAB).
+The loader is stored on pages $CE and $CF.
+
+Symbols are stored starting at the BASIC array variable area (ARYTAB, $2f/30). DATA lines allow chars with codes between $20 and $5f be stored without apostrophes, resulting in a 150 byte area used for storing symbols.
 
 ### Usage
 ```
