@@ -115,9 +115,9 @@ e6,fb,d0,02,e6,fc ; M++
 ; hex digit to byte
 ;
 ; in:
-; 	ar - asc of hex digit
+; 	ac - asc of hex digit
 ; out:
-; 	ar - byte
+; 	ac - byte
 ;
 @e,38,e9,30,c9,0a,90,02,e9,07,60
 
@@ -152,7 +152,7 @@ a2,0f,4c,37,a4 ; ?OVERFLOW ERROR
 ; READ S$
 ;
 ; out:
-; 	$6a/6b - points to S$ data
+; 	$22/23 - points to S$ data
 ;
 @g,a9,98,85,11 ; data entry method is READ
 
