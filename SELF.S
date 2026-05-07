@@ -127,23 +127,24 @@ e6,fb,d0,02,e6,fc ; M++
 
 38,88,b1,fd,e5,f9,85,f7,c8,b1,fd,e5,fa,85,f8 ; V = ($fd/fe) - PC
 
-38,a5,f7,e9,01,85,f7,b0,?#,c6,f8 ; V = V - 1
+; 38,a5,f7,e9,01,85,f7,b0,?#,c6,f8 ; V = V - 1
+
+c6,f7,a5,f7,c9,ff,d0,02,c6,f8 ; V = V - 1
 
 @#,c9,80,a5,f8,e9,ff,50,?=,49,80 ; V < -128, overflow error, if N = 1
 
-@=,10,?!
-
-a2,0f,4c,37,a4 ; ?OVERFLOW ERROR
+@=,30,?x
 
 @!,a5,f7,c9,80,a5,f8,e9,00,50,?<,49,80 ; V >= 128, overflow error, if N = 0
 
-@<,30,?>
+@<,10,?x
 
-a2,0f,4c,37,a4 ; ?OVERFLOW ERROR
-
-@>,a5,f7
-
+a5,f7
 4c,<&,>&
+
+; ?OVERFLOW ERROR
+;
+@x,a2,0f,4c,37,a4
 
 ; PC = O
 ;
