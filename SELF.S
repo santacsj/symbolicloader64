@@ -180,7 +180,9 @@ a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
 ; in:
 ; 	ac - index
 ;
-@a,0a,85,bb,a9,00,2a,85,bc ; T = I * 2
+@a,38,e9,20 ; store spc to address 0
+
+0a,85,bb,a9,00,2a,85,bc ; T = I * 2
 
 18,a5,2f,65,bb,85,fd,a5,30,65,bc,85,fe ; fd/fe = 2f/30 + T
 60
