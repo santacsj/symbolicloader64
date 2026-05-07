@@ -12,7 +12,7 @@ Variable `O` (as origin) sets the address for the PC which is used for address c
 ### Syntax
 1. `;` marks the end of data
 2. `hex`, a single PETSCII character, can only be 0-9 or A-F
-3. `label`, a single PETSCII character with codes btwn $20 and $5f incl.
+3. `label`, a single PETSCII character with codes btwn $20 and $5f incl. except `:` and `"`
 4. `token`, fixed two characters, can be any of ...
     - `[hex][hex]` stored as a byte
     - `@[label]` save the address of the next byte under 'label'
