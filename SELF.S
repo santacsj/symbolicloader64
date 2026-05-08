@@ -16,6 +16,10 @@ a9,ff,85,0d
 
 a9,21,85,49,a9,00,85,4a
 
+; clear symbol space
+;
+a0,00,@1,91,2f,c8,d0,?1
+
 ; Pass 1
 ;
 20,<h,>h ; PC = O
@@ -44,8 +48,6 @@ a5,fa,91,fd,88,a5,f9,91,fd ; (fd/fe) = PC
 20,1d,a8 ; RESTORE
 
 @8,20,<g,>g ; READ S$
-
-a5,21,20,24,ab,a9,20,20,d2,ff,20,d2,ff ; print c$ spc(2)
 
 a0,00,b1,22,aa
 
@@ -142,7 +144,8 @@ a5,f7
 
 ; ?OVERFLOW ERROR
 ;
-@x,a5,3f,85,39,a5,40,85,3a ; copy last READ line num to current
+@x,a5,21,20,24,ab
+a5,3f,85,39,a5,40,85,3a ; copy last READ line num to current
 a2,0f,4c,37,a4
 
 ; PC = O
