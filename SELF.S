@@ -105,7 +105,7 @@ a2,02 ; OF = 2
 
 18,65,02
 
-@&,a0,00,91,fb ; store by to m
+@&,a0,00,91,fb ; store by at M
 
 e6,f9,d0,02,e6,fa ; PC++
 
