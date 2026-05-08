@@ -1,12 +1,11 @@
-; Get BASIC variables
-; 	O defaults to C000, if not set
-; 	$fb/fc defaults to O, if not set
+
+; Get BASIC vars O and M
 ;
-a9,00,a2,c0,8d,+2,>2,8e,+3,>3
+a9,00,a2,c0,8d,+2,>2,8e,+3,>3 ; O defaults to $C000
 
 a9,4f,a2,00,20,<d,>d,85,69,86,6a
 
-8d,+2,>2,8e,+3,>3
+8d,+2,>2,8e,+3,>3 ; M ($fb/fc) defaults to O
 
 a9,4d,a2,00,20,<d,>d,85,fb,86,fc
 
@@ -16,7 +15,7 @@ a9,ff,85,0d
 
 a9,21,85,49,a9,00,85,4a
 
-; clear symbol space
+; Clear symbol table
 ;
 a0,80,@1,91,2f,88,d0,?1
 
@@ -142,11 +141,12 @@ a5,f7,c9,80,a5,f8,e9,00,50,02,49,80 ; V >= 128, overflow error, if N = 0
 a5,f7
 4c,<&,>&
 
-; ?OVERFLOW ERROR
+; ?Overflow Error
 ;
 @x,a5,21,20,24,ab ; print token
-a5,3f,85,39,a5,40,85,3a ; copy last READ line num to current
-a2,0f,4c,37,a4
+a5,3f,85,39,a5,40,85,3a ; set curr line num to last READ
+a2,0f ; overflow error code
+4c,37,a4 ; END
 
 ; PC = O
 ;
