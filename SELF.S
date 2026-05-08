@@ -144,7 +144,7 @@ a5,f7
 
 ; ?OVERFLOW ERROR
 ;
-@x,a5,21,20,24,ab
+@x,a5,21,20,24,ab ; print token
 a5,3f,85,39,a5,40,85,3a ; copy last READ line num to current
 a2,0f,4c,37,a4
 
