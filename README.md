@@ -53,7 +53,7 @@ C000: A2 FF A9 40 20 D2 FF CA D0 FA 4C 00 C0
 
 The loader is stored on pages $CE and $CF.
 
-Symbols are stored starting at the BASIC array variable area (ARYTAB, $2f/30). DATA lines allow chars with codes between $20 and $5f be stored without apostrophes, resulting in a 150 byte area used for storing symbols. `:` and `"` cannot be used.
+Symbols are stored starting at the BASIC array variable area (ARYTAB, $2f/30). DATA lines allow chars with codes between $20 and $5f be stored without apostrophes, resulting in a ~128 byte area used for storing symbols. `:` and `"` cannot be used.
 
 ### Usage
 ```
