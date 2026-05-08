@@ -159,9 +159,9 @@ a2,0f ; overflow error code
 ;
 @g,a9,98,85,11 ; data entry method is READ
 
-a5,7a,85,4b,a5,7b,85,4c ; save current CHRGET position to temp
+a5,7a,85,4b,a5,7b,85,4c ; save curr CHRGET pos to temp
 
-a5,41,85,7a,a5,42,85,7b ; set current CHRGET position to next DATA element
+a5,41,85,7a,a5,42,85,7b ; set curr CHRGET pos to next DATA elem
 
 20,2c,ac,60
 
@@ -174,8 +174,13 @@ a5,41,85,7a,a5,42,85,7b ; set current CHRGET position to next DATA element
 ; 	ac - low byte, default $00
 ; 	xr - high byte, default $c0
 ;
-@d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0,20,a2,bb
-a5,61,f0,?2,20,9b,bc,a5,65,a6,64,60,@2,a9,00,@3,a2,c0,60
+@d,a0,00,85,45,86,46,a5,2d,a6,2e,20,ef,b0 ; find/create variable
+20,a2,bb ; load var value to FAC#1
+a5,61,f0,?2 ; not set?
+20,9b,bc,a5,65,a6,64 ; FAC#1 to int
+60
+@2,a9,00,@3,a2,c0 ; use default
+60
 
 ; fd/fe = address of I-th word in ARYTAB
 ;
