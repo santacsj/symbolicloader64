@@ -27,12 +27,12 @@ Variable `O` (as origin) sets the address for the PC which is used for address c
 The following program
 ```
                 *=  $c000
-A2 FF       @1  ldx #$ff
+A2 FF       1   ldx #$ff
 A9 40           lda #$40  ; the @ char
-20 D2 FF    @2  jsr $ffd2
+20 D2 FF    2   jsr $ffd2
 CA              dex
-D0 FA           bne @2
-4C 00 C0        jmp @1
+D0 FA           bne 2
+4C 00 C0        jmp 1
 ```
 can be stored in BASIC as
 ```
