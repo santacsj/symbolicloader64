@@ -142,7 +142,8 @@ a5,f7
 
 ; ?OVERFLOW ERROR
 ;
-@x,a2,0f,4c,37,a4
+@x,a5,3f,85,39,a5,40,85,3a ; set BASIC line number
+a2,0f,4c,37,a4
 
 ; PC = O
 ;
