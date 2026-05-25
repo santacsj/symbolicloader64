@@ -5,7 +5,7 @@ A digital notepad to help learning machine code programming using the Symbolic M
 ## Features
 
 - Disassembles machine code on the fly to assembly language source code to aid in learning MOS 6502 opcodes
-- Counts used bytes to aid optimization for space
+- Counts bytes used to aid optimizing for space
 - Keeps track of available and already used symbols
 - Outputs formatted BASIC DATA lines for the Symbolic Machine Code Loader, ready to be pasted into VICE
 - Saves the edited source code to browser local storage
