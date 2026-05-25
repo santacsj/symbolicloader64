@@ -9,7 +9,7 @@ A digital notepad to help learning machine code programming using the Symbolic M
 - Keeps track of available and already used symbols
 - Outputs formatted BASIC DATA lines for the Symbolic Machine Code Loader, ready to be pasted into VICE
 - Saves the edited source code to browser local storage
-- Uses [ace.c9.io](https://ace.c9.io/) for the code editor (Thanks, guys!)
+- Uses [ace.c9.io](https://ace.c9.io/) for the code editor
 
 ## Syntax
 
