@@ -8,6 +8,7 @@ A digital notepad to help machine code programming using the Symbolic Machine Co
 - Counts used bytes to aid space optimization
 - Keeps track of available to use and already used symbols
 - Output formatted BASIC DATA lines in Symbolic Machine Code Loader syntax (just copy and paste it into VICE)
+- Saves the edited source code to browser local storage
 
 ## Syntax
 
