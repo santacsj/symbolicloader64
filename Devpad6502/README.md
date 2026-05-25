@@ -1,6 +1,6 @@
 # Devpad 6502
 
-A digital notepad to help learning machine code programming using the Symbolic Machine Code Loader syntax.
+A digital notepad that helps learning machine code programming using the Symbolic Machine Code Loader syntax.
 
 ## Features
 
