@@ -18,4 +18,15 @@ The syntax is the same as with the Symbolic Machine Code Loader, except ...
 - `;` is used for comments in Devpad 6502
 - `; .byte` a special comment to denote the line as byte input (and be formatted as such)
 
-for an example, see `SELF.S`.
+## Example
+
+Copy and paste the following into the editor:
+```
+; Print 'ABC'
+;
+a9,<s,a0,>s,20,1e,ab ; print zero terminated string
+60
+
+@s,41,42,43,00 ;.byte
+```
+... or for a longer example, see `SELF.S`.
