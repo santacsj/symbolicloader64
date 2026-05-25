@@ -56,9 +56,9 @@ Symbols are stored starting at the BASIC array variable area (ARYTAB, $2f/30). D
 
 ### Usage
 ```
-10 O=52850
-15 M=52850
-20 SYS 52796
+10 O=49152
+15 M=49152
+20 SYS 52850
 30 DATA @1,A2,FF
 40 DATA A9,40
 50 DATA @2,20,D2,FF
