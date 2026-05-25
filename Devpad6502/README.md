@@ -6,10 +6,10 @@ A digital notepad to help machine code programming using the Symbolic Machine Co
 
 - Disassembles machine code to assembly language source code on the fly to aid in learning MOS 6502 opcodes
 - Counts used bytes to aid space optimization
-- Keeps track of available to use and already used symbols
+- Keeps track of available and already used symbols
 - Output formatted BASIC DATA lines in Symbolic Machine Code Loader syntax (just copy and paste it into VICE)
 - Saves the edited source code to browser local storage
-- Uses the [ace.c9.io](https://ace.c9.io/) for the code editor
+- Uses [ace.c9.io](https://ace.c9.io/) for the code editor (Thanks, guys!)
 
 ## Syntax
 
