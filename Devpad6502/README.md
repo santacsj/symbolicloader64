@@ -13,7 +13,7 @@ A digital notepad to help learning machine code programming using the Symbolic M
 
 ## Syntax
 
-The syntax is the same as with the Symbolic Machine Code Loader, except ...
+The syntax is the same as the Symbolic Machine Code Loader, except ...
 
 - `;` is used for comments in Devpad 6502
 - `; .byte` a special comment to denote the line as byte input (and be formatted as such)
