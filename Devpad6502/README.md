@@ -7,7 +7,7 @@ A digital notepad to help learning machine code programming using the Symbolic M
 - Disassembles machine code on the fly to assembly language source code to aid in learning MOS 6502 opcodes
 - Counts used bytes to aid space optimization
 - Keeps track of available and already used symbols
-- Outputs formatted BASIC DATA lines for Symbolic Machine Code Loader, ready to be pasted into VICE
+- Outputs formatted BASIC DATA lines for the Symbolic Machine Code Loader, ready to be pasted into VICE
 - Saves the edited source code to browser local storage
 - Uses [ace.c9.io](https://ace.c9.io/) for the code editor (Thanks, guys!)
 
