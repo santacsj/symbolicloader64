@@ -16,7 +16,7 @@ A digital notepad that helps learning machine code programming using the Symboli
 Syntax is the same as the Symbolic Machine Code Loader, except ...
 
 - `;` is used for comments in Devpad 6502
-- `; .byte` a special comment to denote the line as byte input (and be formatted as such)
+- `; .byte` a special comment to denote a line as byte input (and be formatted as such)
 
 ## Example
 
